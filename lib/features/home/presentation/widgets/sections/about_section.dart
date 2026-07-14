@@ -40,15 +40,9 @@ class AboutSection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          flex: 5,
-          child: _AboutContent(isDark: isDark),
-        ),
+        Expanded(flex: 5, child: _AboutContent(isDark: isDark)),
         SizedBox(width: 64.w),
-        Expanded(
-          flex: 4,
-          child: _AboutVisual(isDark: isDark),
-        ),
+        Expanded(flex: 4, child: _AboutVisual(isDark: isDark)),
       ],
     );
   }
@@ -181,23 +175,10 @@ class _StatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _StatItem(
-          value: '1+',
-          label: 'Years',
-          isDark: isDark,
-        ),
+        _StatItem(value: '1+', label: 'Years', isDark: isDark),
         SizedBox(width: 32.w),
-        _StatItem(
-          value: '2',
-          label: 'Projects',
-          isDark: isDark,
-        ),
+        _StatItem(value: '2', label: 'Projects', isDark: isDark),
         SizedBox(width: 32.w),
-        _StatItem(
-          value: '12',
-          label: 'Team Size',
-          isDark: isDark,
-        ),
       ],
     );
   }
