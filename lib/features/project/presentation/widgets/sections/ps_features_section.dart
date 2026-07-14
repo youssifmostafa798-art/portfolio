@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -20,7 +20,7 @@ class FeaturesSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,13 +28,13 @@ class FeaturesSection extends StatelessWidget {
           Text('Features',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Key capabilities that make VitaGuard a production-grade medical system.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           LayoutBuilder(builder: (context, constraints) {
-            final spacing = AppSpacing.lg;
+            final spacing = 16.w;
             final childWidth =
                 (constraints.maxWidth - (spacing * (crossAxisCount - 1))) / crossAxisCount;
             return Wrap(
@@ -60,28 +60,28 @@ class _FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: const EdgeInsets.all(AppSpacing.xl),
+      padding: EdgeInsets.all(24.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 44, height: 44,
+            width: 44.r, height: 44.r,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               gradient: const LinearGradient(
                 colors: [AppColors.primary, AppColors.secondary],
                 begin: Alignment.topLeft, end: Alignment.bottomRight,
               ),
             ),
-            child: Icon(feature.icon, color: Colors.white, size: 22),
+            child: Icon(feature.icon, color: Colors.white, size: 22.r),
           ),
-          const SizedBox(height: AppSpacing.md),
+          SizedBox(height: 12.h),
           Text(feature.title,
               style: AppTypography.textTheme.titleSmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Expanded(
             child: Text(feature.description,
                 style: AppTypography.textTheme.bodyMedium?.copyWith(

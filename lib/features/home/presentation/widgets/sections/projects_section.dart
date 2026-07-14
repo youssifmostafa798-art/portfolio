@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/widgets/project_card.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
 import 'package:portfolio/features/home/models/project.dart';
@@ -57,7 +57,7 @@ class ProjectsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,10 +66,10 @@ class ProjectsSection extends StatelessWidget {
             label: 'Projects',
             subtitle: 'Featured work and case studies.',
           ),
-          SizedBox(height: isMobile ? AppSpacing.xxl : AppSpacing.xxxl),
+          SizedBox(height: isMobile ? 32.h : 48.h),
           ..._projects.map((project) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.xxl),
+              padding: EdgeInsets.only(bottom: 32.h),
               child: ProjectCard(
                 project: project,
                 onCaseStudyTap: () {

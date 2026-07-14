@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -18,7 +18,7 @@ class ResultsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,15 +26,15 @@ class ResultsSection extends StatelessWidget {
           Text('Results',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Outcomes and achievements from the VitaGuard project.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           if (isMobile)
             Column(
               children: vitaguardResults.map((r) => Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                padding: EdgeInsets.only(bottom: 12.h),
                 child: _ResultCard(text: r, isDark: isDark),
               )).toList(),
             )
@@ -43,13 +43,13 @@ class ResultsSection extends StatelessWidget {
               final start = rowIndex * 2;
               final end = (start + 2).clamp(0, vitaguardResults.length);
               return Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                padding: EdgeInsets.only(bottom: 12.h),
                 child: Row(
                   children: vitaguardResults.sublist(start, end).map((r) => Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
-                        left: rowIndex > 0 || start > 0 ? AppSpacing.sm : 0,
-                        right: rowIndex > 0 || end < vitaguardResults.length ? AppSpacing.sm : 0,
+                        left: rowIndex > 0 || start > 0 ? 8.w : 0,
+                        right: rowIndex > 0 || end < vitaguardResults.length ? 8.w : 0,
                       ),
                       child: _ResultCard(text: r, isDark: isDark),
                     ),
@@ -71,20 +71,20 @@ class _ResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(16.r),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 2),
-            width: 20, height: 20,
+            margin: EdgeInsets.only(top: 2.h),
+            width: 20.r, height: 20.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.success.withValues(alpha: 0.1),
             ),
-            child: const Icon(Icons.check_rounded, size: 12, color: AppColors.success),
+            child: Icon(Icons.check_rounded, size: 12.r, color: AppColors.success),
           ),
-          const SizedBox(width: AppSpacing.md),
+          SizedBox(width: 12.w),
           Expanded(
             child: Text(text,
                 style: AppTypography.textTheme.bodyMedium?.copyWith(

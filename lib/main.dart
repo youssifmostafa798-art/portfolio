@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'core/constants/app_constants.dart';
 import 'core/router/app_router.dart';
@@ -18,21 +19,26 @@ class PortfolioApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider);
 
-    return MaterialApp.router(
-      title: '${AppConstants.appName} | ${AppConstants.title}',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeMode,
-      routerConfig: AppRouter.router,
-      builder: (context, child) => ResponsiveBreakpoints.builder(
-        child: child!,
-        breakpoints: [
-          const Breakpoint(start: 0, end: 599, name: MOBILE),
-          const Breakpoint(start: 600, end: 1023, name: TABLET),
-          const Breakpoint(start: 1024, end: 1439, name: DESKTOP),
-          const Breakpoint(start: 1440, end: double.infinity, name: 'ULTRA_WIDE'),
-        ],
+    return ScreenUtilInit(
+      designSize: const Size(1440, 900),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp.router(
+        title: '${AppConstants.appName} | ${AppConstants.title}',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: themeMode,
+        routerConfig: AppRouter.router,
+        builder: (context, child) => ResponsiveBreakpoints.builder(
+          child: child!,
+          breakpoints: [
+            const Breakpoint(start: 0, end: 599, name: MOBILE),
+            const Breakpoint(start: 600, end: 1023, name: TABLET),
+            const Breakpoint(start: 1024, end: 1439, name: DESKTOP),
+            const Breakpoint(start: 1440, end: double.infinity, name: 'ULTRA_WIDE'),
+          ],
+        ),
       ),
     );
   }

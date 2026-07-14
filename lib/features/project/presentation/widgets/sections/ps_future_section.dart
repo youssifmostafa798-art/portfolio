@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -20,7 +20,7 @@ class FutureSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,13 +28,13 @@ class FutureSection extends StatelessWidget {
           Text('Future Improvements',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Planned enhancements and roadmap for the project.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           LayoutBuilder(builder: (context, constraints) {
-            final spacing = AppSpacing.lg;
+            final spacing = 16.w;
             final childWidth =
                 (constraints.maxWidth - (spacing * (crossAxisCount - 1))) / crossAxisCount;
             return Wrap(
@@ -60,7 +60,7 @@ class _FutureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: EdgeInsets.all(16.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -68,18 +68,18 @@ class _FutureCard extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 36, height: 36,
+                width: 36.r, height: 36.r,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                   color: AppColors.primary.withValues(alpha: 0.1),
                 ),
-                child: Icon(item.icon, color: AppColors.primary, size: 20),
+                child: Icon(item.icon, color: AppColors.primary, size: 20.r),
               ),
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(100.r),
                   color: AppColors.warning.withValues(alpha: 0.1),
                 ),
                 child: Text('Planned',
@@ -88,12 +88,12 @@ class _FutureCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md),
+          SizedBox(height: 12.h),
           Text(item.title,
               style: AppTypography.textTheme.titleSmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: 4.h),
           Expanded(
             child: Text(item.description,
                 style: AppTypography.textTheme.bodyMedium?.copyWith(

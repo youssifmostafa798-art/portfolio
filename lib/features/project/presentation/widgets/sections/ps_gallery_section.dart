@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
@@ -21,7 +21,7 @@ class GallerySection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,13 +29,13 @@ class GallerySection extends StatelessWidget {
           Text('Gallery',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Screenshots and visuals from the application.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           LayoutBuilder(builder: (context, constraints) {
-            final spacing = AppSpacing.lg;
+            final spacing = 16.w;
             final childWidth =
                 (constraints.maxWidth - (spacing * (crossAxisCount - 1))) / crossAxisCount;
             return Wrap(
@@ -47,7 +47,7 @@ class GallerySection extends StatelessWidget {
               )),
             );
           }),
-          const SizedBox(height: AppSpacing.xl),
+          SizedBox(height: 24.h),
           Center(
             child: Semantics(
               button: true,
@@ -57,16 +57,16 @@ class GallerySection extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => UrlUtils.openUrl(VitaguardData.screenshotsUrl),
                   child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                     color: AppColors.primary,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.photo_library_rounded, size: 18, color: Colors.white),
-                      const SizedBox(width: 8),
+                      Icon(Icons.photo_library_rounded, size: 18.r, color: Colors.white),
+                      SizedBox(width: 8.w),
                       Text('View All Screenshots on Google Drive',
                           style: AppTypography.textTheme.labelLarge?.copyWith(
                               color: Colors.white, fontWeight: FontWeight.w600)),
@@ -106,9 +106,9 @@ class _GalleryCard extends StatelessWidget {
         child: GlassCard(
           padding: EdgeInsets.zero,
           child: Container(
-            height: 200,
+            height: 200.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),
               gradient: LinearGradient(
                 colors: [colors[index], colors[index].withValues(alpha: 0.7)],
               ),
@@ -119,9 +119,9 @@ class _GalleryCard extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.phone_android_rounded, size: 48,
+                      Icon(Icons.phone_android_rounded, size: 48.r,
                           color: Colors.white.withValues(alpha: 0.3)),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8.h),
                       Text(screens[index],
                           style: AppTypography.textTheme.titleSmall?.copyWith(
                               color: Colors.white.withValues(alpha: 0.7))),
@@ -129,11 +129,11 @@ class _GalleryCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 12, right: 12,
+                  top: 12.h, right: 12.w,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(6.r),
                       color: Colors.black.withValues(alpha: 0.3),
                     ),
                     child: Text('Screenshot ${index + 1}',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 import '../utils/url_utils.dart';
 import '../widgets/project_image.dart';
@@ -38,11 +38,11 @@ class _ProjectCardState extends State<ProjectCard> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
         transform: _isHovered
-            ? Matrix4.translationValues(0, -2, 0)
+            ? Matrix4.translationValues(0, -2.h, 0)
             : Matrix4.identity(),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(24.r),
             color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
             border: Border.all(
               color: isDark
@@ -54,8 +54,8 @@ class _ProjectCardState extends State<ProjectCard> {
                 color: isDark
                     ? Colors.black.withValues(alpha: 0.3)
                     : Colors.black.withValues(alpha: 0.06),
-                blurRadius: _isHovered ? 40 : 20,
-                offset: const Offset(0, 10),
+                blurRadius: _isHovered ? 40.r : 20.r,
+                offset: Offset(0, 10.h),
               ),
             ],
           ),
@@ -73,7 +73,7 @@ class _ProjectCardState extends State<ProjectCard> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: 440,
+            width: 440.w,
             child: ProjectImage(
               imageUrl: project.imageUrl,
               title: project.title,
@@ -83,7 +83,7 @@ class _ProjectCardState extends State<ProjectCard> {
           ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.xxl),
+              padding: EdgeInsets.all(32.w),
               child: _buildContent(context, project, isDark),
             ),
           ),
@@ -100,11 +100,11 @@ class _ProjectCardState extends State<ProjectCard> {
         ProjectImage(
           imageUrl: project.imageUrl,
           title: project.title,
-          height: 240,
+          height: 240.h,
           borderRadius: 0,
         ),
         Padding(
-          padding: const EdgeInsets.all(AppSpacing.xl),
+          padding: EdgeInsets.all(24.w),
           child: _buildContent(context, project, isDark),
         ),
       ],
@@ -125,7 +125,7 @@ class _ProjectCardState extends State<ProjectCard> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: AppSpacing.xs),
+        SizedBox(height: 4.h),
         Text(
           project.subtitle,
           style: context.textTheme.titleMedium?.copyWith(
@@ -133,7 +133,7 @@ class _ProjectCardState extends State<ProjectCard> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: AppSpacing.md),
+        SizedBox(height: 12.h),
         Text(
           project.description,
           style: context.textTheme.bodyMedium?.copyWith(
@@ -143,17 +143,17 @@ class _ProjectCardState extends State<ProjectCard> {
             height: 1.7,
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         Wrap(
-          spacing: 8,
-          runSpacing: 8,
+          spacing: 8.w,
+          runSpacing: 8.h,
           children: project.technologies.map((tech) {
             return _TechChip(label: tech, isDark: isDark);
           }).toList(),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         _InfoRow(label: 'Role', value: project.role, isDark: isDark),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         Text(
           'Key Highlights',
           style: context.textTheme.titleSmall?.copyWith(
@@ -162,12 +162,12 @@ class _ProjectCardState extends State<ProjectCard> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(height: AppSpacing.sm),
+        SizedBox(height: 8.h),
         ...project.highlights.map((h) => _HighlightItem(
               text: h,
               isDark: isDark,
             )),
-        const SizedBox(height: AppSpacing.xl),
+        SizedBox(height: 24.h),
         _buildActions(project, isDark),
       ],
     );
@@ -175,8 +175,8 @@ class _ProjectCardState extends State<ProjectCard> {
 
   Widget _buildActions(Project project, bool isDark) {
     return Wrap(
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
+      spacing: 8.w,
+      runSpacing: 8.h,
       children: [
         if (project.githubUrl != null)
           _ActionButton(
@@ -254,7 +254,7 @@ class _ActionButtonState extends State<_ActionButton> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: _isHovered
-            ? Matrix4.translationValues(0, -1, 0)
+            ? Matrix4.translationValues(0, -1.h, 0)
             : Matrix4.identity(),
         child: Semantics(
           button: true,
@@ -263,14 +263,14 @@ class _ActionButtonState extends State<_ActionButton> {
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 10,
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 10.h,
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 color: isPrimary
                     ? AppColors.primary
                     : (widget.isDark
@@ -289,14 +289,14 @@ class _ActionButtonState extends State<_ActionButton> {
                 children: [
                   Icon(
                     widget.icon,
-                    size: 16,
+                    size: 16.r,
                     color: isPrimary
                         ? Colors.white
                         : (widget.isDark
                             ? AppColors.textSecondaryDark
                             : AppColors.textSecondaryLight),
                   ),
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6.w),
                   Text(
                     widget.label,
                     style: AppTypography.textTheme.labelMedium?.copyWith(
@@ -314,7 +314,7 @@ class _ActionButtonState extends State<_ActionButton> {
           ),
         ),
       ),
-    ),
+      ),
     );
   }
 }
@@ -328,9 +328,9 @@ class _TechChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(100.r),
         color: AppColors.primary.withValues(alpha: 0.1),
       ),
       child: Text(
@@ -389,22 +389,22 @@ class _HighlightItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
+      padding: EdgeInsets.only(bottom: 6.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 6),
+            padding: EdgeInsets.only(top: 6.h),
             child: Container(
-              width: 5,
-              height: 5,
+              width: 5.r,
+              height: 5.r,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.primary,
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Expanded(
             child: Text(
               text,

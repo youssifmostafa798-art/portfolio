@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
 
@@ -17,7 +17,7 @@ class AboutSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +26,7 @@ class AboutSection extends StatelessWidget {
             label: 'About Me',
             subtitle: 'A brief introduction to who I am and what I do.',
           ),
-          SizedBox(height: isMobile ? AppSpacing.xxl : AppSpacing.xxxl),
+          SizedBox(height: isMobile ? 32.h : 48.h),
           if (isMobile)
             _buildMobileLayout(context, isDark)
           else
@@ -44,7 +44,7 @@ class AboutSection extends StatelessWidget {
           flex: 5,
           child: _AboutContent(isDark: isDark),
         ),
-        const SizedBox(width: AppSpacing.huge),
+        SizedBox(width: 64.w),
         Expanded(
           flex: 4,
           child: _AboutVisual(isDark: isDark),
@@ -58,7 +58,7 @@ class AboutSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _AboutVisual(isDark: isDark),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: 32.h),
         _AboutContent(isDark: isDark),
       ],
     );
@@ -84,7 +84,7 @@ class _AboutContent extends StatelessWidget {
             height: 1.3,
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         Text(
           'I build production-grade mobile applications with clean architecture, '
           'real-time capabilities, and premium user experiences. '
@@ -98,7 +98,7 @@ class _AboutContent extends StatelessWidget {
             height: 1.8,
           ),
         ),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         Text(
           'I graduated in 2026 with a degree in Communications and Electronics '
           'Engineering, where I developed a strong foundation in embedded systems, '
@@ -111,7 +111,7 @@ class _AboutContent extends StatelessWidget {
             height: 1.8,
           ),
         ),
-        const SizedBox(height: AppSpacing.xl),
+        SizedBox(height: 24.h),
         _StatsRow(isDark: isDark),
       ],
     );
@@ -125,12 +125,12 @@ class _AboutVisual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: const EdgeInsets.all(AppSpacing.xxl),
+      padding: EdgeInsets.all(32.r),
       child: Column(
         children: [
           Container(
-            width: 120,
-            height: 120,
+            width: 120.r,
+            height: 120.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: const LinearGradient(
@@ -149,7 +149,7 @@ class _AboutVisual extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          SizedBox(height: 16.h),
           Text(
             'Youssif Mostafa',
             style: context.textTheme.titleLarge?.copyWith(
@@ -158,7 +158,7 @@ class _AboutVisual extends StatelessWidget {
                   : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: 4.h),
           Text(
             'Flutter Mobile Application Developer',
             style: context.textTheme.bodyMedium?.copyWith(
@@ -186,13 +186,13 @@ class _StatsRow extends StatelessWidget {
           label: 'Years',
           isDark: isDark,
         ),
-        const SizedBox(width: AppSpacing.xxl),
+        SizedBox(width: 32.w),
         _StatItem(
           value: '2',
           label: 'Projects',
           isDark: isDark,
         ),
-        const SizedBox(width: AppSpacing.xxl),
+        SizedBox(width: 32.w),
         _StatItem(
           value: '12',
           label: 'Team Size',
@@ -226,7 +226,7 @@ class _StatItem extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2.h),
         Text(
           label,
           style: context.textTheme.bodySmall?.copyWith(

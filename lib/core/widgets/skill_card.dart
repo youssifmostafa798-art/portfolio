@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
 import '../widgets/glass_card.dart';
 import '../../features/home/models/skill.dart';
 
@@ -28,18 +28,18 @@ class _SkillCardState extends State<SkillCard> {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
         transform: _isHovered
-            ? Matrix4.translationValues(0, -4, 0)
+            ? Matrix4.translationValues(0, -4.h, 0)
             : Matrix4.identity(),
         child: GlassCard(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: EdgeInsets.all(16.r),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 48,
-                height: 48,
+                width: 48.r,
+                height: 48.r,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14.r),
                   gradient: const LinearGradient(
                     colors: [AppColors.primary, AppColors.secondary],
                     begin: Alignment.topLeft,
@@ -49,10 +49,10 @@ class _SkillCardState extends State<SkillCard> {
                 child: Icon(
                   widget.skill.icon,
                   color: Colors.white,
-                  size: 24,
+                  size: 24.r,
                 ),
               ),
-              const SizedBox(height: AppSpacing.md),
+              SizedBox(height: 12.h),
               Text(
                 widget.skill.name,
                 style: context.textTheme.titleSmall?.copyWith(
@@ -62,12 +62,12 @@ class _SkillCardState extends State<SkillCard> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: AppSpacing.md),
+              SizedBox(height: 12.h),
               _ProficiencyDots(
                 dotCount: widget.skill.proficiency.dotCount,
                 isDark: isDark,
               ),
-              const SizedBox(height: AppSpacing.sm),
+              SizedBox(height: 8.h),
               Text(
                 widget.skill.category,
                 style: context.textTheme.bodySmall?.copyWith(
@@ -103,9 +103,9 @@ class _ProficiencyDots extends StatelessWidget {
         final filled = i < dotCount;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: 8,
-          height: 8,
-          margin: const EdgeInsets.symmetric(horizontal: 3),
+          width: 8.r,
+          height: 8.r,
+          margin: EdgeInsets.symmetric(horizontal: 3.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: filled
@@ -117,7 +117,7 @@ class _ProficiencyDots extends StatelessWidget {
                   : (isDark
                       ? AppColors.textTertiaryDark
                       : AppColors.textTertiaryLight),
-              width: 1.5,
+              width: 1.5.w,
             ),
           ),
         );

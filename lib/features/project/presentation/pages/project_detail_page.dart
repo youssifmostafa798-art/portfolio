@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
@@ -72,60 +73,65 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           SingleChildScrollView(
             controller: _scrollController,
             physics: const ClampingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AnimatedSection(
-                  child: ProjectHeroSection(onBackTap: _goBack),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 1440.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedSection(
+                      child: ProjectHeroSection(onBackTap: _goBack),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const ProjectOverviewSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const ContributionSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const FeaturesSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const ArchitectureSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const TechSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const ChallengesSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const PerformanceSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const GallerySection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const ResultsSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const LessonsSection(),
+                    ),
+                    const DividerWidget(),
+                    AnimatedSection(
+                      child: const FutureSection(),
+                    ),
+                    AnimatedSection(
+                      child: BottomCTASection(onBackTap: _goBack),
+                    ),
+                  ],
                 ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const ProjectOverviewSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const ContributionSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const FeaturesSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const ArchitectureSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const TechSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const ChallengesSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const PerformanceSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const GallerySection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const ResultsSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const LessonsSection(),
-                ),
-                const DividerWidget(),
-                AnimatedSection(
-                  child: const FutureSection(),
-                ),
-                AnimatedSection(
-                  child: BottomCTASection(onBackTap: _goBack),
-                ),
-              ],
+              ),
             ),
           ),
           Positioned(

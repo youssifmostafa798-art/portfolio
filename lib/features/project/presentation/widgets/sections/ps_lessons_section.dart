@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -17,7 +17,7 @@ class LessonsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,27 +25,27 @@ class LessonsSection extends StatelessWidget {
           Text('Lessons Learned',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Technical and professional growth from building VitaGuard.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           ...vitaguardLessons.map((l) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.md),
+            padding: EdgeInsets.only(bottom: 12.h),
             child: GlassCard(
-              padding: const EdgeInsets.all(AppSpacing.xl),
+              padding: EdgeInsets.all(24.r),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(top: 4),
-                    width: 8, height: 8,
+                    margin: EdgeInsets.only(top: 4.h),
+                    width: 8.r, height: 8.r,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.primary,
                     ),
                   ),
-                  const SizedBox(width: AppSpacing.md),
+                  SizedBox(width: 12.w),
                   Expanded(
                     child: Text(l,
                         style: AppTypography.textTheme.bodyMedium?.copyWith(

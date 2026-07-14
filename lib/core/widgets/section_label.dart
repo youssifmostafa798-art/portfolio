@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
 
 class SectionLabel extends StatelessWidget {
   final String label;
@@ -26,7 +26,7 @@ class SectionLabel extends StatelessWidget {
           ),
         ),
         if (subtitle != null) ...[
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text(
             subtitle!,
             style: context.textTheme.bodyLarge?.copyWith(

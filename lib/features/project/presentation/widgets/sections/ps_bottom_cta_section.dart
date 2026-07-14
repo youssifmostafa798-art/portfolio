@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
@@ -17,16 +17,16 @@ class BottomCTASection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.massive,
+        vertical: 80.h,
       ),
       child: Column(
         children: [
           Container(
             width: double.infinity,
-            constraints: const BoxConstraints(maxWidth: 600),
-            padding: const EdgeInsets.all(AppSpacing.xxl),
+            constraints: BoxConstraints(maxWidth: 600.w),
+            padding: EdgeInsets.all(32.r),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
+              borderRadius: BorderRadius.circular(24.r),
               gradient: const LinearGradient(
                 colors: [AppColors.primary, AppColors.secondary],
                 begin: Alignment.topLeft,
@@ -39,15 +39,15 @@ class BottomCTASection extends StatelessWidget {
                     style: AppTypography.textTheme.headlineSmall?.copyWith(
                         color: Colors.white, fontWeight: FontWeight.w700),
                     textAlign: TextAlign.center),
-                const SizedBox(height: AppSpacing.sm),
+                SizedBox(height: 8.h),
                 Text('Explore the code, watch the demo, or get in touch.',
                     style: AppTypography.textTheme.bodyLarge?.copyWith(
                         color: Colors.white.withValues(alpha: 0.8)),
                     textAlign: TextAlign.center),
-                const SizedBox(height: AppSpacing.xl),
+                SizedBox(height: 24.h),
                 Wrap(
-                  spacing: AppSpacing.sm,
-                  runSpacing: AppSpacing.sm,
+                  spacing: 8.w,
+                  runSpacing: 8.h,
                   alignment: WrapAlignment.center,
                   children: [
                     _CTAButton(
@@ -102,7 +102,7 @@ class _CTAButtonState extends State<_CTAButton> {
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: _isHovered ? Matrix4.translationValues(0, -1, 0) : Matrix4.identity(),
+        transform: _isHovered ? Matrix4.translationValues(0, -1.h, 0) : Matrix4.identity(),
         child: Semantics(
           button: true,
           label: widget.label,
@@ -110,20 +110,20 @@ class _CTAButtonState extends State<_CTAButton> {
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 color: widget.isPrimary
                     ? Colors.white
                     : Colors.white.withValues(alpha: 0.15),
                 border: widget.isPrimary ? null : Border.all(color: Colors.white.withValues(alpha: 0.3)),
               ),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(widget.icon, size: 16,
+                Icon(widget.icon, size: 16.r,
                     color: widget.isPrimary ? AppColors.primary : Colors.white),
-                const SizedBox(width: 6),
+                SizedBox(width: 6.w),
                 Text(widget.label,
                     style: AppTypography.textTheme.labelMedium?.copyWith(
                         color: widget.isPrimary ? AppColors.primary : Colors.white,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 
 class ResponsivePadding extends StatelessWidget {
@@ -15,7 +16,7 @@ class ResponsivePadding extends StatelessWidget {
   Widget build(BuildContext context) {
     final padding = customPadding ?? EdgeInsets.symmetric(
       horizontal: context.responsivePadding,
-      vertical: context.isMobile ? 40 : 80,
+      vertical: context.isMobile ? 40.h : 80.h,
     );
 
     return Center(

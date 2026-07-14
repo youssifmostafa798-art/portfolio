@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
@@ -95,41 +96,46 @@ class _HomePageState extends State<HomePage> {
           SingleChildScrollView(
             controller: _scrollController,
             physics: const ClampingScrollPhysics(),
-            child: Column(
-              children: [
-                SizedBox(
-                  key: _sectionKeys[0],
-                  child: const HeroSection(),
-                ),
-                AnimatedSection(
-                  child: SizedBox(
-                    key: _sectionKeys[1],
-                    child: const AboutSection(),
-                  ),
-                ),
-                AnimatedSection(
-                  child: SizedBox(
-                    key: _sectionKeys[2],
-                    child: const SkillsSection(),
-                  ),
-                ),
-                AnimatedSection(
-                  child: SizedBox(
-                    key: _sectionKeys[3],
-                    child: ProjectsSection(
-                      onCaseStudyTap: (projectId) {
-                        if (projectId == 'vitaguard') {
-                          context.push('/project/vitaguard');
-                        }
-                      },
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 1440.w),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      key: _sectionKeys[0],
+                      child: const HeroSection(),
                     ),
-                  ),
+                    AnimatedSection(
+                      child: SizedBox(
+                        key: _sectionKeys[1],
+                        child: const AboutSection(),
+                      ),
+                    ),
+                    AnimatedSection(
+                      child: SizedBox(
+                        key: _sectionKeys[2],
+                        child: const SkillsSection(),
+                      ),
+                    ),
+                    AnimatedSection(
+                      child: SizedBox(
+                        key: _sectionKeys[3],
+                        child: ProjectsSection(
+                          onCaseStudyTap: (projectId) {
+                            if (projectId == 'vitaguard') {
+                              context.push('/project/vitaguard');
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      key: _sectionKeys[4],
+                      height: 400.h,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  key: _sectionKeys[4],
-                  height: 400,
-                ),
-              ],
+              ),
             ),
           ),
           Positioned(

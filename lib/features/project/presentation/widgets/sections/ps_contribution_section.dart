@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -17,7 +17,7 @@ class ContributionSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,21 +25,21 @@ class ContributionSection extends StatelessWidget {
           Text('My Contribution',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('As the Flutter Mobile Application Developer on a 12-person team.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           ...List.generate(VitaguardData.contributions.length, (i) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+              padding: EdgeInsets.only(bottom: 16.h),
               child: GlassCard(
-                padding: const EdgeInsets.all(AppSpacing.xl),
+                padding: EdgeInsets.all(24.r),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      width: 32, height: 32,
+                      width: 32.r, height: 32.r,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.primary.withValues(alpha: 0.1),
@@ -50,7 +50,7 @@ class ContributionSection extends StatelessWidget {
                                 color: AppColors.primary, fontWeight: FontWeight.w700)),
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.md),
+                    SizedBox(width: 12.w),
                     Expanded(
                       child: Text(VitaguardData.contributions[i],
                           style: AppTypography.textTheme.bodyMedium?.copyWith(

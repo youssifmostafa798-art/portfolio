@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
@@ -43,7 +44,7 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
     final toggleTheme = ref.read(themeToggleProvider);
 
     return Container(
-      height: isMobile ? 60 : 72,
+      height: isMobile ? 60.h : 72.h,
       decoration: BoxDecoration(
         color: widget.isScrolled
             ? (isDark
@@ -76,15 +77,15 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
                   onTap: () => widget.onNavTap(item.index),
                 );
               }),
-              const SizedBox(width: 16),
+              SizedBox(width: 16.w),
             ],
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             _ThemeToggleButton(
               isDark: isDark,
               onToggle: toggleTheme,
             ),
             if (isMobile) ...[
-              const SizedBox(width: 4),
+              SizedBox(width: 4.w),
               _MenuButton(
                 onTap: () => Scaffold.of(context).openDrawer(),
               ),
@@ -155,9 +156,9 @@ class _NavLinkState extends State<_NavLink> {
           onTap: widget.onTap,
           child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             color: widget.isActive
                 ? (isDark
                     ? Colors.white.withValues(alpha: 0.08)
@@ -177,7 +178,7 @@ class _NavLinkState extends State<_NavLink> {
           ),
         ),
       ),
-    ),
+      ),
     );
   }
 }
@@ -202,8 +203,8 @@ class _ThemeToggleButton extends StatelessWidget {
           onTap: onToggle,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            width: 36,
-            height: 36,
+            width: 36.r,
+            height: 36.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isDark
@@ -212,7 +213,7 @@ class _ThemeToggleButton extends StatelessWidget {
             ),
             child: Icon(
               isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-              size: 18,
+              size: 18.r,
               color: isDark
                   ? AppColors.textPrimaryDark
                   : AppColors.textPrimaryLight,
@@ -237,8 +238,8 @@ class _MenuButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 36,
-          height: 36,
+          width: 36.r,
+          height: 36.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isDark
@@ -247,7 +248,7 @@ class _MenuButton extends StatelessWidget {
           ),
           child: Icon(
             Icons.menu_rounded,
-            size: 20,
+            size: 20.r,
             color: isDark
                 ? AppColors.textPrimaryDark
                 : AppColors.textPrimaryLight,

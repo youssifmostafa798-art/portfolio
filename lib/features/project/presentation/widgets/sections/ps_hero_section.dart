@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -18,14 +18,14 @@ class ProjectHeroSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.huge,
+        vertical: 64.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (onBackTap != null)
             _BackButton(onTap: onBackTap!),
-          SizedBox(height: isMobile ? AppSpacing.xxl : AppSpacing.xxxl),
+          SizedBox(height: isMobile ? 32.h : 48.h),
           _buildHeroContent(context, isMobile),
         ],
       ),
@@ -39,7 +39,7 @@ class ProjectHeroSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _StatusBadge(isDark: isDark),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+        SizedBox(height: isMobile ? 16.h : 24.h),
         Text(
           VitaguardData.title,
           style: (isMobile
@@ -51,7 +51,7 @@ class ProjectHeroSection extends StatelessWidget {
             letterSpacing: -0.02,
           ),
         ),
-        SizedBox(height: isMobile ? AppSpacing.sm : AppSpacing.md),
+        SizedBox(height: isMobile ? 8.h : 12.h),
         Text(
           VitaguardData.tagline,
           style: context.textTheme.titleLarge?.copyWith(
@@ -59,14 +59,14 @@ class ProjectHeroSection extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+        SizedBox(height: isMobile ? 16.h : 24.h),
         if (!isMobile)
           Row(
             children: [
               _MetaItem(label: 'Role', value: VitaguardData.role, isDark: isDark),
-              const SizedBox(width: AppSpacing.xxl),
+              SizedBox(width: 32.w),
               _MetaItem(label: 'Team', value: '${VitaguardData.teamSize} Members', isDark: isDark),
-              const SizedBox(width: AppSpacing.xxl),
+              SizedBox(width: 32.w),
               _MetaItem(label: 'Timeline', value: VitaguardData.timeline, isDark: isDark),
             ],
           )
@@ -75,19 +75,19 @@ class ProjectHeroSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _MetaItem(label: 'Role', value: VitaguardData.role, isDark: isDark),
-              const SizedBox(height: AppSpacing.sm),
+              SizedBox(height: 8.h),
               _MetaItem(label: 'Team', value: '${VitaguardData.teamSize} Members', isDark: isDark),
-              const SizedBox(height: AppSpacing.sm),
+              SizedBox(height: 8.h),
               _MetaItem(label: 'Timeline', value: VitaguardData.timeline, isDark: isDark),
             ],
           ),
-        const SizedBox(height: AppSpacing.xl),
+        SizedBox(height: 24.h),
         Wrap(
-          spacing: 8,
-          runSpacing: 8,
+          spacing: 8.w,
+          runSpacing: 8.h,
           children: VitaguardData.techStack.take(7).map((t) => _TechChip(label: t, isDark: isDark)).toList(),
         ),
-        const SizedBox(height: AppSpacing.xxl),
+        SizedBox(height: 32.h),
         _ActionRow(isDark: isDark),
       ],
     );
@@ -108,9 +108,9 @@ class _BackButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.arrow_back_rounded, size: 18,
+            Icon(Icons.arrow_back_rounded, size: 18.r,
                 color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
-            const SizedBox(width: 6),
+            SizedBox(width: 6.w),
             Text('Back to Portfolio',
                 style: AppTypography.textTheme.bodyMedium?.copyWith(
                     color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
@@ -128,17 +128,17 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(100.r),
         color: AppColors.success.withValues(alpha: 0.1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(width: 6, height: 6,
+          Container(width: 6.r, height: 6.r,
               decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.success)),
-          const SizedBox(width: 6),
+          SizedBox(width: 6.w),
           Text(VitaguardData.status,
               style: AppTypography.textTheme.labelSmall?.copyWith(color: AppColors.success)),
         ],
@@ -159,7 +159,7 @@ class _MetaItem extends StatelessWidget {
       children: [
         Text(label, style: AppTypography.textTheme.bodySmall?.copyWith(
             color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-        const SizedBox(height: 2),
+        SizedBox(height: 2.h),
         Text(value, style: AppTypography.textTheme.bodyMedium?.copyWith(
             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
             fontWeight: FontWeight.w500)),
@@ -176,9 +176,9 @@ class _TechChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(100.r),
         color: AppColors.primary.withValues(alpha: 0.1),
       ),
       child: Text(label, style: AppTypography.textTheme.labelSmall?.copyWith(
@@ -194,8 +194,8 @@ class _ActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.sm,
-      runSpacing: AppSpacing.sm,
+      spacing: 8.w,
+      runSpacing: 8.h,
       children: [
         _PButton(label: 'GitHub', icon: Icons.code_rounded,
             onPressed: () => UrlUtils.openUrl(VitaguardData.githubUrl)),
@@ -226,24 +226,24 @@ class _PButtonState extends State<_PButton> {
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: _isHovered ? Matrix4.translationValues(0, -1, 0) : Matrix4.identity(),
+        transform: _isHovered ? Matrix4.translationValues(0, -1.h, 0) : Matrix4.identity(),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: widget.onPressed,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 11.h),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
                 color: AppColors.primary,
                 boxShadow: _isHovered
-                    ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6))]
+                    ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 16.r, offset: Offset(0, 6.h))]
                     : null,
               ),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(widget.icon, size: 16, color: Colors.white),
-                const SizedBox(width: 6),
+                Icon(widget.icon, size: 16.r, color: Colors.white),
+                SizedBox(width: 6.w),
                 Text(widget.label, style: AppTypography.textTheme.labelMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
               ]),
             ),

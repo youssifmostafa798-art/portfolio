@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
 import 'package:portfolio/core/widgets/skill_card.dart';
 import 'package:portfolio/features/home/models/skill.dart';
@@ -109,7 +109,7 @@ class SkillsSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +118,7 @@ class SkillsSection extends StatelessWidget {
             label: 'Skills',
             subtitle: 'Technologies and tools I work with.',
           ),
-          SizedBox(height: isMobile ? AppSpacing.xxl : AppSpacing.xxxl),
+          SizedBox(height: isMobile ? 32.h : 48.h),
           ...grouped.entries.map((entry) {
             return _SkillCategory(
               category: entry.key,
@@ -150,10 +150,10 @@ class _SkillCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.isDark;
     final crossAxisCount = isMobile ? 1 : (isTablet ? 2 : 3);
-    final spacing = AppSpacing.lg;
+    final spacing = 16.w;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xxxl),
+      padding: EdgeInsets.only(bottom: 48.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,7 +163,7 @@ class _SkillCategory extends StatelessWidget {
               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
+          SizedBox(height: 16.h),
           LayoutBuilder(
             builder: (context, constraints) {
               final availableWidth = constraints.maxWidth;

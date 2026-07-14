@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
@@ -23,7 +24,7 @@ class ProjectImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (imageUrl != null) {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius.r),
         child: Image.network(
           imageUrl!,
           height: height,
@@ -79,7 +80,7 @@ class _AppPlaceholder extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius.r),
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -98,13 +99,12 @@ class _AppPlaceholder extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Glowing orb decoration
           Positioned(
-            top: -40,
-            right: -40,
+            top: -40.h,
+            right: -40.w,
             child: Container(
-              width: 200,
-              height: 200,
+              width: 200.r,
+              height: 200.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -117,11 +117,11 @@ class _AppPlaceholder extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: -60,
-            left: -60,
+            bottom: -60.h,
+            left: -60.w,
             child: Container(
-              width: 250,
-              height: 250,
+              width: 250.r,
+              height: 250.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -137,21 +137,21 @@ class _AppPlaceholder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 64,
-                height: 64,
+                width: 64.r,
+                height: 64.r,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(18.r),
                   gradient: const LinearGradient(
                     colors: [AppColors.primary, AppColors.secondary],
                   ),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.favorite_rounded,
                   color: Colors.white,
-                  size: 32,
+                  size: 32.r,
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Text(
                 title,
                 style: AppTypography.textTheme.headlineSmall?.copyWith(
@@ -159,7 +159,7 @@ class _AppPlaceholder extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4.h),
               Text(
                 'Health Monitoring',
                 style: AppTypography.textTheme.bodyMedium?.copyWith(
@@ -168,24 +168,23 @@ class _AppPlaceholder extends StatelessWidget {
               ),
             ],
           ),
-          // Decorative pulse ring
           Positioned(
-            bottom: 30,
-            right: 30,
+            bottom: 30.h,
+            right: 30.w,
             child: Container(
-              width: 40,
-              height: 40,
+              width: 40.r,
+              height: 40.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: AppColors.success.withValues(alpha: 0.4),
-                  width: 3,
+                  width: 3.w,
                 ),
               ),
               child: Center(
                 child: Container(
-                  width: 12,
-                  height: 12,
+                  width: 12.r,
+                  height: 12.r,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.success,

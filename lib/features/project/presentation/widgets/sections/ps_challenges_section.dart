@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -17,7 +17,7 @@ class ChallengesSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,13 +25,13 @@ class ChallengesSection extends StatelessWidget {
           Text('Challenges',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('Major technical challenges and how they were solved.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           ...vitaguardChallenges.map((c) => Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.xl),
+            padding: EdgeInsets.only(bottom: 24.h),
             child: _ChallengeCard(challenge: c, isDark: isDark),
           )),
         ],
@@ -48,7 +48,7 @@ class _ChallengeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: const EdgeInsets.all(AppSpacing.xl),
+      padding: EdgeInsets.all(24.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -56,16 +56,16 @@ class _ChallengeCard extends StatelessWidget {
               style: AppTypography.textTheme.titleMedium?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
-          const SizedBox(height: AppSpacing.md),
+          SizedBox(height: 12.h),
           _Label(text: 'Problem', isDark: isDark),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: 4.h),
           Text(challenge.problem,
               style: AppTypography.textTheme.bodyMedium?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                   height: 1.7)),
-          const SizedBox(height: AppSpacing.md),
+          SizedBox(height: 12.h),
           _Label(text: 'Solution', isDark: isDark),
-          const SizedBox(height: AppSpacing.xs),
+          SizedBox(height: 4.h),
           Text(challenge.solution,
               style: AppTypography.textTheme.bodyMedium?.copyWith(
                   color: AppColors.primary,
@@ -83,9 +83,9 @@ class _Label extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(4.r),
         color: isDark ? AppColors.darkBackground : AppColors.lightBackground,
       ),
       child: Text(text,

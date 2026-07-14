@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/vitaguard_data.dart';
@@ -18,7 +18,7 @@ class ProjectOverviewSection extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: AppSpacing.sectionVertical,
+        vertical: 120.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,11 +26,11 @@ class ProjectOverviewSection extends StatelessWidget {
           Text('Project Overview',
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text('What VitaGuard is, the problem it solves, and why it matters.',
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          const SizedBox(height: AppSpacing.xxxl),
+          SizedBox(height: 48.h),
           if (isMobile)
             _buildMobileLayout(context, isDark)
           else
@@ -52,7 +52,7 @@ class ProjectOverviewSection extends StatelessWidget {
               content: VitaguardData.overviewWhat,
               isDark: isDark,
             )),
-            const SizedBox(width: AppSpacing.xl),
+            SizedBox(width: 24.w),
             Expanded(child: _OverviewCard(
               icon: Icons.priority_high_rounded,
               title: 'The Problem',
@@ -61,7 +61,7 @@ class ProjectOverviewSection extends StatelessWidget {
             )),
           ],
         ),
-        const SizedBox(height: AppSpacing.xl),
+        SizedBox(height: 24.h),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -71,7 +71,7 @@ class ProjectOverviewSection extends StatelessWidget {
               content: VitaguardData.overviewTargetUsers,
               isDark: isDark,
             )),
-            const SizedBox(width: AppSpacing.xl),
+            SizedBox(width: 24.w),
             Expanded(child: _OverviewCard(
               icon: Icons.heart_broken_rounded,
               title: 'Why It Matters',
@@ -89,13 +89,13 @@ class ProjectOverviewSection extends StatelessWidget {
       children: [
         _OverviewCard(icon: Icons.info_outline_rounded, title: 'What It Is',
             content: VitaguardData.overviewWhat, isDark: isDark),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.priority_high_rounded, title: 'The Problem',
             content: VitaguardData.overviewProblem, isDark: isDark),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.people_outline_rounded, title: 'Target Users',
             content: VitaguardData.overviewTargetUsers, isDark: isDark),
-        const SizedBox(height: AppSpacing.lg),
+        SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.heart_broken_rounded, title: 'Why It Matters',
             content: VitaguardData.overviewWhyMatters, isDark: isDark),
       ],
@@ -115,17 +115,17 @@ class _OverviewCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(width: 40, height: 40,
+          Container(width: 40.r, height: 40.r,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
               color: AppColors.primary.withValues(alpha: 0.1),
             ),
-            child: Icon(icon, color: AppColors.primary, size: 20)),
-          const SizedBox(height: AppSpacing.md),
+            child: Icon(icon, color: AppColors.primary, size: 20.r)),
+          SizedBox(height: 12.h),
           Text(title, style: AppTypography.textTheme.titleMedium?.copyWith(
               color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
               fontWeight: FontWeight.w600)),
-          const SizedBox(height: AppSpacing.sm),
+          SizedBox(height: 8.h),
           Text(content, style: AppTypography.textTheme.bodyMedium?.copyWith(
               color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
               height: 1.7)),

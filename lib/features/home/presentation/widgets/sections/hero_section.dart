@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
-import 'package:portfolio/core/theme/app_spacing.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
@@ -55,9 +55,9 @@ class _HeroSectionState extends State<HeroSection>
                   children: [
                     const Spacer(flex: 2),
                     _ProfileAvatar(
-                      size: isMobile ? 80 : 100,
+                      size: isMobile ? 80.r : 100.r,
                     ),
-                    SizedBox(height: isMobile ? AppSpacing.xl : AppSpacing.xxl),
+                    SizedBox(height: isMobile ? 24.h : 32.h),
                     Text(
                       AppConstants.appName,
                       textAlign: TextAlign.center,
@@ -70,7 +70,7 @@ class _HeroSectionState extends State<HeroSection>
                         letterSpacing: -0.02,
                       ),
                     ),
-                    SizedBox(height: isMobile ? AppSpacing.sm : AppSpacing.md),
+                    SizedBox(height: isMobile ? 8.h : 12.h),
                     Text(
                       AppConstants.title,
                       textAlign: TextAlign.center,
@@ -80,7 +80,7 @@ class _HeroSectionState extends State<HeroSection>
                         letterSpacing: 0.5,
                       ),
                     ),
-                    SizedBox(height: isMobile ? AppSpacing.lg : AppSpacing.xl),
+                    SizedBox(height: isMobile ? 16.h : 24.h),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: isMobile ? 0 : screenWidth * 0.12,
@@ -96,10 +96,9 @@ class _HeroSectionState extends State<HeroSection>
                         ),
                       ),
                     ),
-                    SizedBox(
-                        height: isMobile ? AppSpacing.xxl : AppSpacing.xxxl),
+                    SizedBox(height: isMobile ? 32.h : 48.h),
                     _ActionButtons(isMobile: isMobile),
-                    SizedBox(height: AppSpacing.xl),
+                    SizedBox(height: 24.h),
                     _SocialLinks(),
                     const Spacer(flex: 2),
                   ],
@@ -137,11 +136,11 @@ class _AnimatedHeroBackground extends AnimatedWidget {
           ),
         ),
         Positioned(
-          left: -100 + value * 250,
-          top: -50 + value * 80,
+          left: -100.w + value * 250.w,
+          top: -50.h + value * 80.h,
           child: Container(
-            width: 350,
-            height: 350,
+            width: 350.r,
+            height: 350.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(
@@ -154,11 +153,11 @@ class _AnimatedHeroBackground extends AnimatedWidget {
           ),
         ),
         Positioned(
-          right: -80 - value * 120,
-          bottom: -30 + value * 100,
+          right: -80.w - value * 120.w,
+          bottom: -30.h + value * 100.h,
           child: Container(
-            width: 400,
-            height: 400,
+            width: 400.r,
+            height: 400.r,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: RadialGradient(
@@ -197,8 +196,8 @@ class _ProfileAvatar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: AppColors.primary.withValues(alpha: 0.3),
-            blurRadius: 30,
-            offset: const Offset(0, 8),
+            blurRadius: 30.r,
+            offset: Offset(0, 8.h),
           ),
         ],
       ),
@@ -224,8 +223,8 @@ class _ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: AppSpacing.md,
-      runSpacing: AppSpacing.md,
+      spacing: 12.w,
+      runSpacing: 12.h,
       alignment: WrapAlignment.center,
       children: [
         _PrimaryButton(
@@ -273,17 +272,17 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
+              ? Matrix4.translationValues(0, -2.h, 0)
               : Matrix4.identity(),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(14.r),
                   gradient: LinearGradient(
                     colors: [
                       AppColors.primary,
@@ -294,23 +293,23 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
                     ? [
                         BoxShadow(
                           color: AppColors.primary.withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
+                          blurRadius: 20.r,
+                          offset: Offset(0, 8.h),
                         ),
                       ]
                     : [
                         BoxShadow(
                           color: AppColors.primary.withValues(alpha: 0.2),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+                          blurRadius: 10.r,
+                          offset: Offset(0, 4.h),
                         ),
                       ],
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(widget.icon, size: 18, color: Colors.white),
-                  const SizedBox(width: 8),
+                  Icon(widget.icon, size: 18.r, color: Colors.white),
+                  SizedBox(width: 8.w),
                   Text(
                     widget.label,
                     style: AppTypography.textTheme.labelLarge?.copyWith(
@@ -359,28 +358,28 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           transform: _isHovered
-              ? Matrix4.translationValues(0, -2, 0)
+              ? Matrix4.translationValues(0, -2.h, 0)
               : Matrix4.identity(),
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(14.r),
               child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(14.r),
                 border: Border.all(
                   color: Colors.white.withValues(alpha: 0.2),
-                  width: 1,
+                  width: 1.w,
                 ),
                 color: Colors.white.withValues(alpha: _isHovered ? 0.12 : 0.06),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(widget.icon, size: 18, color: AppColors.textPrimaryDark),
-                  const SizedBox(width: 8),
+                  Icon(widget.icon, size: 18.r, color: AppColors.textPrimaryDark),
+                  SizedBox(width: 8.w),
                   Text(
                     widget.label,
                     style: AppTypography.textTheme.labelLarge?.copyWith(
@@ -410,7 +409,7 @@ class _SocialLinks extends StatelessWidget {
           label: 'GitHub',
           url: AppConstants.github,
         ),
-        const SizedBox(width: AppSpacing.lg),
+        SizedBox(width: 16.w),
         _SocialIcon(
           icon: Icons.work_rounded,
           label: 'LinkedIn',
@@ -453,10 +452,10 @@ class _SocialIconState extends State<_SocialIcon> {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             transform: _isHovered
-                ? Matrix4.translationValues(0, -2, 0)
+                ? Matrix4.translationValues(0, -2.h, 0)
                 : Matrix4.identity(),
             child: GlassCard(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
               borderRadius: 100,
               blurIntensity: 20,
               showBorder: true,
@@ -465,12 +464,12 @@ class _SocialIconState extends State<_SocialIcon> {
                 children: [
                   Icon(
                     widget.icon,
-                    size: 18,
+                    size: 18.r,
                     color: _isHovered
                         ? AppColors.primary
                         : AppColors.textSecondaryDark,
                   ),
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6.w),
                   Text(
                     widget.label,
                     style: AppTypography.textTheme.labelMedium?.copyWith(

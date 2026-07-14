@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_spacing.dart';
 
 class GlassCard extends StatelessWidget {
   final Widget child;
@@ -22,7 +22,7 @@ class GlassCard extends StatelessWidget {
     this.width,
     this.height,
     this.borderRadius = 20,
-    this.padding = const EdgeInsets.all(AppSpacing.xl),
+    this.padding = const EdgeInsets.all(24),
     this.margin = EdgeInsets.zero,
     this.blurIntensity = 30,
     this.showBorder = true,
@@ -45,28 +45,28 @@ class GlassCard extends StatelessWidget {
       height: height,
       margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius.r),
         gradient: gradient,
         boxShadow: [
           BoxShadow(
             color: isDark
                 ? Colors.black.withValues(alpha: 0.3)
                 : Colors.black.withValues(alpha: 0.06),
-            blurRadius: 40,
-            offset: const Offset(0, 10),
+            blurRadius: 40.r,
+            offset: Offset(0, 10.h),
           ),
         ],
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(borderRadius.r),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(borderRadius),
+          borderRadius: BorderRadius.circular(borderRadius.r),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(borderRadius.r),
             child: BackdropFilter(
               filter: ImageFilter.blur(
                 sigmaX: blurIntensity,
@@ -75,9 +75,9 @@ class GlassCard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: bgColor,
-                  borderRadius: BorderRadius.circular(borderRadius),
+                  borderRadius: BorderRadius.circular(borderRadius.r),
                   border: showBorder
-                      ? Border.all(color: borderColor, width: 0.5)
+                      ? Border.all(color: borderColor, width: 0.5.w)
                       : null,
                 ),
                 padding: padding,
