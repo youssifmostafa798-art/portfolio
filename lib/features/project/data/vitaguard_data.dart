@@ -13,12 +13,24 @@ abstract final class VitaguardData {
       'https://drive.google.com/drive/folders/1H8eaAhWB0pJYPRR3H30GP1JRYmBK0s1R?usp=sharing';
   static const String screenshotsUrl =
       'https://drive.google.com/drive/folders/1L3Hf67WcEH76gWpr18T8MGqCamE4ULES?usp=sharing';
-  static const String githubUrl = 'https://github.com/youssifmostafa798-art';
+  static const String githubUrl =
+      'https://github.com/youssifmostafa798-art/vitaguard_app.git';
 
   static const List<String> techStack = [
-    'Flutter', 'Dart', 'Riverpod', 'Supabase', 'REST APIs',
-    'Git', 'GitHub', 'Responsive UI', 'Clean Architecture',
-    'Material 3', 'TFLite', 'Drift', 'ESP32', 'Firebase',
+    'Flutter',
+    'Dart',
+    'Riverpod',
+    'Supabase',
+    'REST APIs',
+    'Git',
+    'GitHub',
+    'Responsive UI',
+    'Clean Architecture',
+    'Material 3',
+    'TFLite',
+    'Drift',
+    'ESP32',
+    'Firebase',
   ];
 
   static const String overviewWhat =
@@ -181,30 +193,49 @@ const List<FeatureItem> vitaguardFeatures = [
 ];
 
 const List<ArchitectureLayer> vitaguardArchitecture = [
-  ArchitectureLayer('Flutter Application',
-      'Role-specific screens, reusable widgets, animated UI components'),
-  ArchitectureLayer('State Management',
-      'Riverpod with code generation — Notifiers, StreamProviders, AsyncValue'),
-  ArchitectureLayer('Repository Layer',
-      'Abstract interfaces with Supabase and Drift implementations, sync queue'),
-  ArchitectureLayer('Supabase Backend',
-      'Auth, Database (15+ tables), Realtime, Storage, 13 Edge Functions, RLS'),
-  ArchitectureLayer('Hardware & AI',
-      'ESP32 + biometric sensors, TFLite DenseNet121 on-device inference'),
+  ArchitectureLayer(
+    'Flutter Application',
+    'Role-specific screens, reusable widgets, animated UI components',
+  ),
+  ArchitectureLayer(
+    'State Management',
+    'Riverpod with code generation — Notifiers, StreamProviders, AsyncValue',
+  ),
+  ArchitectureLayer(
+    'Repository Layer',
+    'Abstract interfaces with Supabase and Drift implementations, sync queue',
+  ),
+  ArchitectureLayer(
+    'Supabase Backend',
+    'Auth, Database (15+ tables), Realtime, Storage, 13 Edge Functions, RLS',
+  ),
+  ArchitectureLayer(
+    'Hardware & AI',
+    'ESP32 + biometric sensors, TFLite DenseNet121 on-device inference',
+  ),
 ];
 
 const List<TechCategory> vitaguardTechCategories = [
   TechCategory('Framework', 'Flutter 3.11+, Material 3'),
   TechCategory('Language', 'Dart 3.x'),
   TechCategory('State Management', 'Riverpod + riverpod_annotation'),
-  TechCategory('Backend', 'Supabase (Auth, DB, Realtime, Storage, Edge Functions)'),
+  TechCategory(
+    'Backend',
+    'Supabase (Auth, DB, Realtime, Storage, Edge Functions)',
+  ),
   TechCategory('Local Database', 'Drift (SQLite) with code generation'),
   TechCategory('AI/ML', 'tflite_flutter, IsolateInterpreter, GpuDelegateV2'),
-  TechCategory('Architecture', 'Clean Architecture (4-layer), Repository Pattern'),
+  TechCategory(
+    'Architecture',
+    'Clean Architecture (4-layer), Repository Pattern',
+  ),
   TechCategory('Responsive', 'flutter_screenutil, custom breakpoints'),
   TechCategory('Images', 'cached_network_image, image_picker'),
   TechCategory('Connectivity', 'connectivity_plus, offline sync queue'),
-  TechCategory('Notifications', 'flutter_local_notifications, custom alert service'),
+  TechCategory(
+    'Notifications',
+    'flutter_local_notifications, custom alert service',
+  ),
   TechCategory('Version Control', 'Git, GitHub'),
 ];
 
@@ -253,24 +284,36 @@ const List<ChallengeItem> vitaguardChallenges = [
 ];
 
 const List<PerformanceItem> vitaguardPerformance = [
-  PerformanceItem('Background Isolate AI',
-      'Image preprocessing runs via Flutter.compute() in a background isolate '
-      'so the UI thread is never blocked during X-ray analysis.'),
-  PerformanceItem('GPU Delegate + CPU Fallback',
-      'TFLite inference first attempts GPU via GpuDelegateV2(), then falls back '
-      'to CPU. Handles device heterogeneity across the Android ecosystem.'),
-  PerformanceItem('RepaintBoundary Wrappers',
-      'Heart rate ring and alert banner wrapped in RepaintBoundary to prevent '
-      'unnecessary repaints of complex animated widgets.'),
-  PerformanceItem('Cached Network Images',
-      'CachedNetworkImage for network-resilient loading with disk caching, '
-      'reducing bandwidth and improving perceived performance.'),
-  PerformanceItem('Optimistic Updates',
-      'Alert acknowledgment updates UI immediately, reverts if API call fails. '
-      'Instant feedback with data consistency.'),
-  PerformanceItem('Provider Lifecycle Management',
-      'ref.keepAlive() for long-running services. ref.invalidateSelf() on logout. '
-      'ref.onDispose() for Realtime channel cleanup.'),
+  PerformanceItem(
+    'Background Isolate AI',
+    'Image preprocessing runs via Flutter.compute() in a background isolate '
+        'so the UI thread is never blocked during X-ray analysis.',
+  ),
+  PerformanceItem(
+    'GPU Delegate + CPU Fallback',
+    'TFLite inference first attempts GPU via GpuDelegateV2(), then falls back '
+        'to CPU. Handles device heterogeneity across the Android ecosystem.',
+  ),
+  PerformanceItem(
+    'RepaintBoundary Wrappers',
+    'Heart rate ring and alert banner wrapped in RepaintBoundary to prevent '
+        'unnecessary repaints of complex animated widgets.',
+  ),
+  PerformanceItem(
+    'Cached Network Images',
+    'CachedNetworkImage for network-resilient loading with disk caching, '
+        'reducing bandwidth and improving perceived performance.',
+  ),
+  PerformanceItem(
+    'Optimistic Updates',
+    'Alert acknowledgment updates UI immediately, reverts if API call fails. '
+        'Instant feedback with data consistency.',
+  ),
+  PerformanceItem(
+    'Provider Lifecycle Management',
+    'ref.keepAlive() for long-running services. ref.invalidateSelf() on logout. '
+        'ref.onDispose() for Realtime channel cleanup.',
+  ),
 ];
 
 const List<String> vitaguardResults = [
@@ -301,28 +344,40 @@ const List<String> vitaguardLessons = [
 ];
 
 const List<FutureItem> vitaguardFuture = [
-  FutureItem('CI/CD Pipeline',
-      'Automated testing and deployment via GitHub Actions and Codemagic for '
-      'iOS/Android builds with Supabase migrations.',
-      Icons.rocket_launch_rounded),
-  FutureItem('Comprehensive Test Suite',
-      'Unit tests for repositories and controllers, widget tests for components, '
-      'and integration tests for critical user flows.',
-      Icons.science_rounded),
-  FutureItem('Push Notification Enhancement',
-      'Firebase Cloud Messaging integration for reliable push delivery when '
-      'the app is in background or terminated.',
-      Icons.notifications_rounded),
-  FutureItem('Apple Watch Companion',
-      'watchOS companion app for quick vital sign glance and alert notifications '
-      'directly on the wrist.',
-      Icons.watch_rounded),
-  FutureItem('Web Dashboard',
-      'Flutter Web dashboard for desktop monitoring sharing the same architecture '
-      'and state management.',
-      Icons.monitor_rounded),
-  FutureItem('Multi-Language Support',
-      'Localization via Flutter l10n for Arabic, English, and additional languages '
-      'to serve diverse clinical environments.',
-      Icons.language_rounded),
+  FutureItem(
+    'CI/CD Pipeline',
+    'Automated testing and deployment via GitHub Actions and Codemagic for '
+        'iOS/Android builds with Supabase migrations.',
+    Icons.rocket_launch_rounded,
+  ),
+  FutureItem(
+    'Comprehensive Test Suite',
+    'Unit tests for repositories and controllers, widget tests for components, '
+        'and integration tests for critical user flows.',
+    Icons.science_rounded,
+  ),
+  FutureItem(
+    'Push Notification Enhancement',
+    'Firebase Cloud Messaging integration for reliable push delivery when '
+        'the app is in background or terminated.',
+    Icons.notifications_rounded,
+  ),
+  FutureItem(
+    'Apple Watch Companion',
+    'watchOS companion app for quick vital sign glance and alert notifications '
+        'directly on the wrist.',
+    Icons.watch_rounded,
+  ),
+  FutureItem(
+    'Web Dashboard',
+    'Flutter Web dashboard for desktop monitoring sharing the same architecture '
+        'and state management.',
+    Icons.monitor_rounded,
+  ),
+  FutureItem(
+    'Multi-Language Support',
+    'Localization via Flutter l10n for Arabic, English, and additional languages '
+        'to serve diverse clinical environments.',
+    Icons.language_rounded,
+  ),
 ];
