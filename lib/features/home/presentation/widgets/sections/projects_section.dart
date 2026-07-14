@@ -8,10 +8,7 @@ import 'package:portfolio/features/home/models/project.dart';
 class ProjectsSection extends StatelessWidget {
   final void Function(String projectId)? onCaseStudyTap;
 
-  const ProjectsSection({
-    super.key,
-    this.onCaseStudyTap,
-  });
+  const ProjectsSection({super.key, this.onCaseStudyTap});
 
   static const List<Project> _projects = [
     Project(
@@ -40,7 +37,7 @@ class ProjectsSection extends StatelessWidget {
         'Multi-role auth system with 4 distinct user flows and secure companion linking',
         'Offline-first architecture with Drift SQLite sync queue for data resilience',
       ],
-      githubUrl: 'https://github.com/youssifmostafa798-art',
+      githubUrl: 'https://github.com/youssifmostafa798-art/vitaguard_app.git',
       demoUrl:
           'https://drive.google.com/drive/folders/1H8eaAhWB0pJYPRR3H30GP1JRYmBK0s1R?usp=sharing',
       googleDriveScreenshotsUrl:
