@@ -1,12 +1,12 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Youssif Mostafa - Flutter Developer Portfolio",
+    "short_name": "YM Portfolio",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#0A0A0A",
+    "theme_color": "#007AFF",
+    "description": "Premium portfolio of Youssif Mostafa, a Flutter Mobile Application Developer.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {

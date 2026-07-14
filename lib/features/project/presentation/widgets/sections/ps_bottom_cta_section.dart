@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+import 'package:portfolio/core/extensions/context_extensions.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
+import 'package:portfolio/core/theme/app_spacing.dart';
+import 'package:portfolio/core/theme/app_typography.dart';
+import 'package:portfolio/core/utils/url_utils.dart';
+import 'package:portfolio/core/constants/app_constants.dart';
+import 'package:portfolio/features/project/data/vitaguard_data.dart';
+
+class BottomCTASection extends StatelessWidget {
+  final VoidCallback? onBackTap;
+  const BottomCTASection({super.key, this.onBackTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: context.responsivePadding,
+        vertical: AppSpacing.massive,
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            constraints: const BoxConstraints(maxWidth: 600),
+            padding: const EdgeInsets.all(AppSpacing.xxl),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              gradient: const LinearGradient(
+                colors: [AppColors.primary, AppColors.secondary],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Column(
+              children: [
+                Text('Interested in this project?',
+                    style: AppTypography.textTheme.headlineSmall?.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.center),
+                const SizedBox(height: AppSpacing.sm),
+                Text('Explore the code, watch the demo, or get in touch.',
+                    style: AppTypography.textTheme.bodyLarge?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.8)),
+                    textAlign: TextAlign.center),
+                const SizedBox(height: AppSpacing.xl),
+                Wrap(
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.sm,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _CTAButton(
+                      label: 'Back to Portfolio',
+                      icon: Icons.arrow_back_rounded,
+                      isPrimary: false,
+                      onPressed: onBackTap ?? () {},
+                    ),
+                    _CTAButton(
+                      label: 'GitHub',
+                      icon: Icons.code_rounded,
+                      isPrimary: false,
+                      onPressed: () => UrlUtils.openUrl(VitaguardData.githubUrl),
+                    ),
+                    _CTAButton(
+                      label: 'Contact Me',
+                      icon: Icons.mail_outline_rounded,
+                      isPrimary: true,
+                      onPressed: () => UrlUtils.openEmail(AppConstants.email),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CTAButton extends StatefulWidget {
+  final String label; final IconData icon;
+  final bool isPrimary; final VoidCallback onPressed;
+  const _CTAButton({
+    required this.label, required this.icon,
+    required this.isPrimary, required this.onPressed,
+  });
+
+  @override
+  State<_CTAButton> createState() => _CTAButtonState();
+}
+
+class _CTAButtonState extends State<_CTAButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      cursor: SystemMouseCursors.click,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        transform: _isHovered ? Matrix4.translationValues(0, -1, 0) : Matrix4.identity(),
+        child: Semantics(
+          button: true,
+          label: widget.label,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: widget.onPressed,
+              borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: widget.isPrimary
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.15),
+                border: widget.isPrimary ? null : Border.all(color: Colors.white.withValues(alpha: 0.3)),
+              ),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                Icon(widget.icon, size: 16,
+                    color: widget.isPrimary ? AppColors.primary : Colors.white),
+                const SizedBox(width: 6),
+                Text(widget.label,
+                    style: AppTypography.textTheme.labelMedium?.copyWith(
+                        color: widget.isPrimary ? AppColors.primary : Colors.white,
+                        fontWeight: FontWeight.w600)),
+      ]),
+      ),
+      ),
+      ),
+      ),
+      ),
+    );
+  }
+}
