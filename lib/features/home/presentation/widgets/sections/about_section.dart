@@ -133,13 +133,12 @@ class _AboutVisual extends StatelessWidget {
                 colors: [AppColors.primary, AppColors.secondary],
               ),
             ),
-            child: Center(
-              child: Text(
-                'YM',
-                style: context.textTheme.displaySmall?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                ),
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/5.jpeg',
+                width: 120.r,
+                height: 120.r,
+                fit: BoxFit.cover,
               ),
             ),
           ),

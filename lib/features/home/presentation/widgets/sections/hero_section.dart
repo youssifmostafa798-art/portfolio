@@ -54,21 +54,20 @@ class _HeroSectionState extends State<HeroSection>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Spacer(flex: 2),
-                    _ProfileAvatar(
-                      size: isMobile ? 80.r : 100.r,
-                    ),
+                    _ProfileAvatar(size: isMobile ? 80.r : 100.r),
                     SizedBox(height: isMobile ? 24.h : 32.h),
                     Text(
                       AppConstants.appName,
                       textAlign: TextAlign.center,
-                      style: (isMobile
-                              ? context.textTheme.displayMedium
-                              : context.textTheme.displayLarge)
-                          ?.copyWith(
-                        color: AppColors.textPrimaryDark,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.02,
-                      ),
+                      style:
+                          (isMobile
+                                  ? context.textTheme.displayMedium
+                                  : context.textTheme.displayLarge)
+                              ?.copyWith(
+                                color: AppColors.textPrimaryDark,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.02,
+                              ),
                     ),
                     SizedBox(height: isMobile ? 8.h : 12.h),
                     Text(
@@ -115,7 +114,7 @@ class _HeroSectionState extends State<HeroSection>
 class _AnimatedHeroBackground extends AnimatedWidget {
   final AnimationController controller;
   const _AnimatedHeroBackground({required this.controller})
-      : super(listenable: controller);
+    : super(listenable: controller);
 
   @override
   Widget build(BuildContext context) {
@@ -188,10 +187,7 @@ class _ProfileAvatar extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            AppColors.primary,
-            AppColors.secondary,
-          ],
+          colors: [AppColors.primary, AppColors.secondary],
         ),
         boxShadow: [
           BoxShadow(
@@ -201,15 +197,12 @@ class _ProfileAvatar extends StatelessWidget {
           ),
         ],
       ),
-      child: Center(
-        child: Text(
-          'YM',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: size * 0.35,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -1,
-          ),
+      child: ClipOval(
+        child: Image.asset(
+          'assets/images/5.jpeg',
+          width: size,
+          height: size,
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -284,46 +277,43 @@ class _PrimaryButtonState extends State<_PrimaryButton> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14.r),
                   gradient: LinearGradient(
-                    colors: [
-                      AppColors.primary,
-                      AppColors.primaryDark,
+                    colors: [AppColors.primary, AppColors.primaryDark],
+                  ),
+                  boxShadow: _isHovered
+                      ? [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.4),
+                            blurRadius: 20.r,
+                            offset: Offset(0, 8.h),
+                          ),
+                        ]
+                      : [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.2),
+                            blurRadius: 10.r,
+                            offset: Offset(0, 4.h),
+                          ),
+                        ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(widget.icon, size: 18.r, color: Colors.white),
+                    SizedBox(width: 8.w),
+                    Text(
+                      widget.label,
+                      style: AppTypography.textTheme.labelLarge?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
-                boxShadow: _isHovered
-                    ? [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.4),
-                          blurRadius: 20.r,
-                          offset: Offset(0, 8.h),
-                        ),
-                      ]
-                    : [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.2),
-                          blurRadius: 10.r,
-                          offset: Offset(0, 4.h),
-                        ),
-                      ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(widget.icon, size: 18.r, color: Colors.white),
-                  SizedBox(width: 8.w),
-                  Text(
-                    widget.label,
-                    style: AppTypography.textTheme.labelLarge?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
               ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }
@@ -366,34 +356,40 @@ class _SecondaryButtonState extends State<_SecondaryButton> {
               onTap: widget.onPressed,
               borderRadius: BorderRadius.circular(14.r),
               child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14.r),
-                border: Border.all(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  width: 1.w,
-                ),
-                color: Colors.white.withValues(alpha: _isHovered ? 0.12 : 0.06),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(widget.icon, size: 18.r, color: AppColors.textPrimaryDark),
-                  SizedBox(width: 8.w),
-                  Text(
-                    widget.label,
-                    style: AppTypography.textTheme.labelLarge?.copyWith(
-                      color: AppColors.textPrimaryDark,
-                      fontWeight: FontWeight.w500,
-                    ),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14.r),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    width: 1.w,
                   ),
-                ],
+                  color: Colors.white.withValues(
+                    alpha: _isHovered ? 0.12 : 0.06,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      size: 18.r,
+                      color: AppColors.textPrimaryDark,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      widget.label,
+                      style: AppTypography.textTheme.labelLarge?.copyWith(
+                        color: AppColors.textPrimaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    ),
     );
   }
 }
