@@ -199,11 +199,7 @@ class _ProjectCardState extends State<ProjectCard> {
           icon: Icons.article_outlined,
           isDark: isDark,
           variant: _ButtonVariant.primary,
-          onPressed: () {
-            if (project.caseStudyRoute != null) {
-              widget.onCaseStudyTap?.call();
-            }
-          },
+          onPressed: () => widget.onCaseStudyTap?.call(),
         ),
         if (project.googleDriveScreenshotsUrl != null)
           _ActionButton(

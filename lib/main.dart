@@ -6,9 +6,11 @@ import 'core/constants/app_constants.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/presentation/providers/theme_provider.dart';
+import 'features/project/data/project_data_registry.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  ProjectDataRegistry.init();
   runApp(const ProviderScope(child: PortfolioApp()));
 }
 

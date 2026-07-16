@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ContributionSection extends StatelessWidget {
-  const ContributionSection({super.key});
+  final ProjectData data;
+  const ContributionSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,11 @@ class ContributionSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('As the Flutter Mobile Application Developer on a 12-person team.',
+          Text(data.contributionSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
-          ...List.generate(VitaguardData.contributions.length, (i) {
+          ...List.generate(data.contributions.length, (i) {
             return Padding(
               padding: EdgeInsets.only(bottom: 16.h),
               child: GlassCard(
@@ -52,7 +53,7 @@ class ContributionSection extends StatelessWidget {
                     ),
                     SizedBox(width: 12.w),
                     Expanded(
-                      child: Text(VitaguardData.contributions[i],
+                      child: Text(data.contributions[i],
                           style: AppTypography.textTheme.bodyMedium?.copyWith(
                               color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                               height: 1.7)),

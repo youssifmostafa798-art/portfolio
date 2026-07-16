@@ -6,6 +6,7 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
 import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
+import 'package:portfolio/features/project/data/project_data_registry.dart';
 import '../widgets/sections/ps_hero_section.dart';
 import '../widgets/sections/ps_overview_section.dart';
 import '../widgets/sections/ps_contribution_section.dart';
@@ -21,7 +22,8 @@ import '../widgets/sections/ps_future_section.dart';
 import '../widgets/sections/ps_bottom_cta_section.dart';
 
 class ProjectDetailPage extends StatefulWidget {
-  const ProjectDetailPage({super.key});
+  final String projectId;
+  const ProjectDetailPage({super.key, required this.projectId});
 
   @override
   State<ProjectDetailPage> createState() => _ProjectDetailPageState();
@@ -56,12 +58,22 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     if (context.canPop()) {
       context.pop();
     } else {
-      context.go('/');
+      context.goNamed('home');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final projectData = ProjectDataRegistry.get(widget.projectId);
+    if (projectData == null) {
+      return Scaffold(
+        body: Center(
+          child: Text('Project "${widget.projectId}" not found.'),
+        ),
+      );
+    }
+
+    final data = projectData;
     final isMobile = context.isMobile;
     final isDark = context.isDark;
 
@@ -80,54 +92,54 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AnimatedSection(
-                      child: ProjectHeroSection(onBackTap: _goBack),
+                      child: ProjectHeroSection(data: data, onBackTap: _goBack),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const ProjectOverviewSection(),
+                      child: ProjectOverviewSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const ContributionSection(),
+                      child: ContributionSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const FeaturesSection(),
+                      child: FeaturesSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const ArchitectureSection(),
+                      child: ArchitectureSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const TechSection(),
+                      child: TechSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const ChallengesSection(),
+                      child: ChallengesSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const PerformanceSection(),
+                      child: PerformanceSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const GallerySection(),
+                      child: GallerySection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const ResultsSection(),
+                      child: ResultsSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const LessonsSection(),
+                      child: LessonsSection(data: data),
                     ),
                     const DividerWidget(),
                     AnimatedSection(
-                      child: const FutureSection(),
+                      child: FutureSection(data: data),
                     ),
                     AnimatedSection(
-                      child: BottomCTASection(onBackTap: _goBack),
+                      child: BottomCTASection(data: data, onBackTap: _goBack),
                     ),
                   ],
                 ),
@@ -139,7 +151,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             child: AppNavBar(
               isScrolled: _isScrolled,
               activeSection: 3,
-              onNavTap: (index) {},
+              onNavTap: (index) => context.goNamed('home'),
             ),
           ),
         ],
@@ -151,7 +163,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     return AppDrawer(
       activeSection: 3,
       onNavTap: (index) {
-        Navigator.pop(context);
+        context.pop();
         if (index == 0) _goBack();
       },
     );

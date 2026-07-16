@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ChallengesSection extends StatelessWidget {
-  const ChallengesSection({super.key});
+  final ProjectData data;
+  const ChallengesSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,11 @@ class ChallengesSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('Major technical challenges and how they were solved.',
+          Text(data.challengesSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
-          ...vitaguardChallenges.map((c) => Padding(
+          ...data.challenges.map((c) => Padding(
             padding: EdgeInsets.only(bottom: 24.h),
             child: _ChallengeCard(challenge: c, isDark: isDark),
           )),

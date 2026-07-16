@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ProjectOverviewSection extends StatelessWidget {
-  const ProjectOverviewSection({super.key});
+  final ProjectData data;
+  const ProjectOverviewSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ProjectOverviewSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('What VitaGuard is, the problem it solves, and why it matters.',
+          Text(data.overviewSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
@@ -49,14 +50,14 @@ class ProjectOverviewSection extends StatelessWidget {
             Expanded(child: _OverviewCard(
               icon: Icons.info_outline_rounded,
               title: 'What It Is',
-              content: VitaguardData.overviewWhat,
+              content: data.overviewWhat,
               isDark: isDark,
             )),
             SizedBox(width: 24.w),
             Expanded(child: _OverviewCard(
               icon: Icons.priority_high_rounded,
               title: 'The Problem',
-              content: VitaguardData.overviewProblem,
+              content: data.overviewProblem,
               isDark: isDark,
             )),
           ],
@@ -68,14 +69,14 @@ class ProjectOverviewSection extends StatelessWidget {
             Expanded(child: _OverviewCard(
               icon: Icons.people_outline_rounded,
               title: 'Target Users',
-              content: VitaguardData.overviewTargetUsers,
+              content: data.overviewTargetUsers,
               isDark: isDark,
             )),
             SizedBox(width: 24.w),
             Expanded(child: _OverviewCard(
               icon: Icons.heart_broken_rounded,
               title: 'Why It Matters',
-              content: VitaguardData.overviewWhyMatters,
+              content: data.overviewWhyMatters,
               isDark: isDark,
             )),
           ],
@@ -88,16 +89,16 @@ class ProjectOverviewSection extends StatelessWidget {
     return Column(
       children: [
         _OverviewCard(icon: Icons.info_outline_rounded, title: 'What It Is',
-            content: VitaguardData.overviewWhat, isDark: isDark),
+            content: data.overviewWhat, isDark: isDark),
         SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.priority_high_rounded, title: 'The Problem',
-            content: VitaguardData.overviewProblem, isDark: isDark),
+            content: data.overviewProblem, isDark: isDark),
         SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.people_outline_rounded, title: 'Target Users',
-            content: VitaguardData.overviewTargetUsers, isDark: isDark),
+            content: data.overviewTargetUsers, isDark: isDark),
         SizedBox(height: 16.h),
         _OverviewCard(icon: Icons.heart_broken_rounded, title: 'Why It Matters',
-            content: VitaguardData.overviewWhyMatters, isDark: isDark),
+            content: data.overviewWhyMatters, isDark: isDark),
       ],
     );
   }

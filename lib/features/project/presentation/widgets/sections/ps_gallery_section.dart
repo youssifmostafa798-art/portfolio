@@ -5,10 +5,11 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class GallerySection extends StatelessWidget {
-  const GallerySection({super.key});
+  final ProjectData data;
+  const GallerySection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class GallerySection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('Screenshots and visuals from the application.',
+          Text(data.gallerySubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
@@ -41,9 +42,9 @@ class GallerySection extends StatelessWidget {
             return Wrap(
               spacing: spacing,
               runSpacing: spacing,
-              children: List.generate(4, (i) => SizedBox(
+              children: List.generate(data.screenshotLabels.length, (i) => SizedBox(
                 width: childWidth,
-                child: _GalleryCard(index: i, isDark: isDark),
+                child: _GalleryCard(index: i, label: data.screenshotLabels[i], color: data.screenshotColors[i], screenshotsUrl: data.screenshotsUrl, isDark: isDark),
               )),
             );
           }),
@@ -55,7 +56,7 @@ class GallerySection extends StatelessWidget {
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () => UrlUtils.openUrl(VitaguardData.screenshotsUrl),
+                  onTap: () => UrlUtils.openUrl(data.screenshotsUrl),
                   child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                   decoration: BoxDecoration(
@@ -85,24 +86,26 @@ class GallerySection extends StatelessWidget {
 
 class _GalleryCard extends StatelessWidget {
   final int index;
+  final String label;
+  final Color color;
+  final String screenshotsUrl;
   final bool isDark;
-  const _GalleryCard({required this.index, required this.isDark});
+  const _GalleryCard({
+    required this.index,
+    required this.label,
+    required this.color,
+    required this.screenshotsUrl,
+    required this.isDark,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final screens = ['Patient Dashboard', 'Health Monitoring', 'AI X-Ray Analysis', 'Alert Center'];
-    final colors = [
-      const Color(0xFF0D1B2A),
-      const Color(0xFF1A1A2E),
-      const Color(0xFF16213E),
-      const Color(0xFF0F3460),
-    ];
 
     return Semantics(
       button: true,
-      label: 'View ${screens[index]} screenshot',
+      label: 'View $label screenshot',
       child: GestureDetector(
-        onTap: () => UrlUtils.openUrl(VitaguardData.screenshotsUrl),
+        onTap: () => UrlUtils.openUrl(screenshotsUrl),
         child: GlassCard(
           padding: EdgeInsets.zero,
           child: Container(
@@ -110,7 +113,7 @@ class _GalleryCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.r),
               gradient: LinearGradient(
-                colors: [colors[index], colors[index].withValues(alpha: 0.7)],
+                colors: [color, color.withValues(alpha: 0.7)],
               ),
             ),
             child: Stack(
@@ -122,7 +125,7 @@ class _GalleryCard extends StatelessWidget {
                       Icon(Icons.phone_android_rounded, size: 48.r,
                           color: Colors.white.withValues(alpha: 0.3)),
                       SizedBox(height: 8.h),
-                      Text(screens[index],
+                      Text(label,
                           style: AppTypography.textTheme.titleSmall?.copyWith(
                               color: Colors.white.withValues(alpha: 0.7))),
                     ],

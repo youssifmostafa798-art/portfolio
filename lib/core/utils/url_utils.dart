@@ -12,8 +12,6 @@ abstract final class UrlUtils {
 
   static Future<void> openEmail(String email) async {
     final uri = Uri.parse('mailto:$email');
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }

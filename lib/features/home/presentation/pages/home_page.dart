@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
           ? AppDrawer(
               activeSection: _activeSection,
               onNavTap: (index) {
-                Navigator.pop(context);
+                context.pop();
                 _scrollToSection(index);
               },
             )
@@ -122,9 +122,7 @@ class _HomePageState extends State<HomePage> {
                         key: _sectionKeys[3],
                         child: ProjectsSection(
                           onCaseStudyTap: (projectId) {
-                            if (projectId == 'vitaguard') {
-                              context.push('/project/vitaguard');
-                            }
+                            context.pushNamed('project', pathParameters: {'projectId': projectId});
                           },
                         ),
                       ),

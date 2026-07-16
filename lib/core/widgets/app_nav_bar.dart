@@ -65,7 +65,10 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
         padding: EdgeInsets.symmetric(horizontal: context.responsivePadding),
         child: Row(
           children: [
-            _BrandName(isScrolled: widget.isScrolled),
+            _BrandName(
+              isScrolled: widget.isScrolled,
+              onTap: () => widget.onNavTap(0),
+            ),
             if (!isMobile) ...[
               const Spacer(),
               ...List.generate(_navItems.length, (i) {
@@ -99,7 +102,8 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
 
 class _BrandName extends StatelessWidget {
   final bool isScrolled;
-  const _BrandName({required this.isScrolled});
+  final VoidCallback? onTap;
+  const _BrandName({required this.isScrolled, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,7 @@ class _BrandName extends StatelessWidget {
         : AppColors.textPrimaryDark;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Text(
         'YM',
         style: AppTypography.textTheme.titleLarge?.copyWith(

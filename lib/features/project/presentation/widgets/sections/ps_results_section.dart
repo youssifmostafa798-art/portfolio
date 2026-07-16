@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ResultsSection extends StatelessWidget {
-  const ResultsSection({super.key});
+  final ProjectData data;
+  const ResultsSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +28,29 @@ class ResultsSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('Outcomes and achievements from the VitaGuard project.',
+          Text(data.resultsSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
           if (isMobile)
             Column(
-              children: vitaguardResults.map((r) => Padding(
+              children: data.results.map((r) => Padding(
                 padding: EdgeInsets.only(bottom: 12.h),
                 child: _ResultCard(text: r, isDark: isDark),
               )).toList(),
             )
           else
-            ...List.generate((vitaguardResults.length / 2).ceil(), (rowIndex) {
+            ...List.generate((data.results.length / 2).ceil(), (rowIndex) {
               final start = rowIndex * 2;
-              final end = (start + 2).clamp(0, vitaguardResults.length);
+              final end = (start + 2).clamp(0, data.results.length);
               return Padding(
                 padding: EdgeInsets.only(bottom: 12.h),
                 child: Row(
-                  children: vitaguardResults.sublist(start, end).map((r) => Expanded(
+                  children: data.results.sublist(start, end).map((r) => Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(
                         left: rowIndex > 0 || start > 0 ? 8.w : 0,
-                        right: rowIndex > 0 || end < vitaguardResults.length ? 8.w : 0,
+                        right: rowIndex > 0 || end < data.results.length ? 8.w : 0,
                       ),
                       child: _ResultCard(text: r, isDark: isDark),
                     ),

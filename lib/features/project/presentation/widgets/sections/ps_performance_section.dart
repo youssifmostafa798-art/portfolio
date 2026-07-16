@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class PerformanceSection extends StatelessWidget {
-  const PerformanceSection({super.key});
+  final ProjectData data;
+  const PerformanceSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class PerformanceSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('Techniques used to ensure smooth, responsive, and efficient operation.',
+          Text(data.performanceSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
@@ -40,7 +41,7 @@ class PerformanceSection extends StatelessWidget {
             return Wrap(
               spacing: spacing,
               runSpacing: spacing,
-              children: vitaguardPerformance.map((p) => SizedBox(
+              children: data.performanceItems.map((p) => SizedBox(
                 width: childWidth,
                 child: _PerfCard(item: p, isDark: isDark),
               )).toList(),
@@ -70,7 +71,7 @@ class _PerfCard extends StatelessWidget {
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
           SizedBox(height: 8.h),
-          Expanded(
+          Flexible(
             child: Text(item.description,
                 style: AppTypography.textTheme.bodyMedium?.copyWith(
                     color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,

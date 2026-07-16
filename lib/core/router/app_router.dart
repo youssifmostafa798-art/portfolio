@@ -14,9 +14,12 @@ abstract final class AppRouter {
         builder: (context, state) => const HomePage(),
       ),
       GoRoute(
-        path: '/project/vitaguard',
-        name: 'vitaguard',
-        builder: (context, state) => const ProjectDetailPage(),
+        path: '/project/:projectId',
+        name: 'project',
+        builder: (context, state) {
+          final projectId = state.pathParameters['projectId'] ?? '';
+          return ProjectDetailPage(projectId: projectId);
+        },
       ),
     ],
   );

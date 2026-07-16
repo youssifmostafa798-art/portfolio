@@ -5,11 +5,12 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class BottomCTASection extends StatelessWidget {
+  final ProjectData data;
   final VoidCallback? onBackTap;
-  const BottomCTASection({super.key, this.onBackTap});
+  const BottomCTASection({super.key, required this.data, this.onBackTap});
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +36,12 @@ class BottomCTASection extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('Interested in this project?',
+                Text(data.bottomCtaTitle,
                     style: AppTypography.textTheme.headlineSmall?.copyWith(
                         color: Colors.white, fontWeight: FontWeight.w700),
                     textAlign: TextAlign.center),
                 SizedBox(height: 8.h),
-                Text('Explore the code, watch the demo, or get in touch.',
+                Text(data.bottomCtaSubtitle,
                     style: AppTypography.textTheme.bodyLarge?.copyWith(
                         color: Colors.white.withValues(alpha: 0.8)),
                     textAlign: TextAlign.center),
@@ -60,7 +61,7 @@ class BottomCTASection extends StatelessWidget {
                       label: 'GitHub',
                       icon: Icons.code_rounded,
                       isPrimary: false,
-                      onPressed: () => UrlUtils.openUrl(VitaguardData.githubUrl),
+                      onPressed: () => UrlUtils.openUrl(data.githubUrl),
                     ),
                     _CTAButton(
                       label: 'Contact Me',

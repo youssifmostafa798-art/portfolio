@@ -3,10 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ArchitectureSection extends StatelessWidget {
-  const ArchitectureSection({super.key});
+  final ProjectData data;
+  const ArchitectureSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,14 @@ class ArchitectureSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('The four-layer architecture powering the system.',
+          Text(data.architectureSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
           Column(
-            children: List.generate(vitaguardArchitecture.length, (i) {
-              final layer = vitaguardArchitecture[i];
-              final isLast = i == vitaguardArchitecture.length - 1;
+            children: List.generate(data.architecture.length, (i) {
+              final layer = data.architecture[i];
+              final isLast = i == data.architecture.length - 1;
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

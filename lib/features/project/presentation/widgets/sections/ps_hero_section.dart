@@ -4,11 +4,12 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class ProjectHeroSection extends StatelessWidget {
+  final ProjectData data;
   final VoidCallback? onBackTap;
-  const ProjectHeroSection({super.key, this.onBackTap});
+  const ProjectHeroSection({super.key, required this.data, this.onBackTap});
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +39,10 @@ class ProjectHeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _StatusBadge(isDark: isDark),
+        _StatusBadge(isDark: isDark, status: data.status),
         SizedBox(height: isMobile ? 16.h : 24.h),
         Text(
-          VitaguardData.title,
+          data.title,
           style: (isMobile
                   ? context.textTheme.displayMedium
                   : context.textTheme.displayLarge)
@@ -53,7 +54,7 @@ class ProjectHeroSection extends StatelessWidget {
         ),
         SizedBox(height: isMobile ? 8.h : 12.h),
         Text(
-          VitaguardData.tagline,
+          data.tagline,
           style: context.textTheme.titleLarge?.copyWith(
             color: AppColors.primary,
             fontWeight: FontWeight.w500,
@@ -63,32 +64,32 @@ class ProjectHeroSection extends StatelessWidget {
         if (!isMobile)
           Row(
             children: [
-              _MetaItem(label: 'Role', value: VitaguardData.role, isDark: isDark),
+              _MetaItem(label: 'Role', value: data.role, isDark: isDark),
               SizedBox(width: 32.w),
-              _MetaItem(label: 'Team', value: '${VitaguardData.teamSize} Members', isDark: isDark),
+              _MetaItem(label: 'Team', value: '${data.teamSize} Members', isDark: isDark),
               SizedBox(width: 32.w),
-              _MetaItem(label: 'Timeline', value: VitaguardData.timeline, isDark: isDark),
+              _MetaItem(label: 'Timeline', value: data.timeline, isDark: isDark),
             ],
           )
         else
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _MetaItem(label: 'Role', value: VitaguardData.role, isDark: isDark),
+              _MetaItem(label: 'Role', value: data.role, isDark: isDark),
               SizedBox(height: 8.h),
-              _MetaItem(label: 'Team', value: '${VitaguardData.teamSize} Members', isDark: isDark),
+              _MetaItem(label: 'Team', value: '${data.teamSize} Members', isDark: isDark),
               SizedBox(height: 8.h),
-              _MetaItem(label: 'Timeline', value: VitaguardData.timeline, isDark: isDark),
+              _MetaItem(label: 'Timeline', value: data.timeline, isDark: isDark),
             ],
           ),
         SizedBox(height: 24.h),
         Wrap(
           spacing: 8.w,
           runSpacing: 8.h,
-          children: VitaguardData.techStack.take(7).map((t) => _TechChip(label: t, isDark: isDark)).toList(),
+          children: data.techStackTop.map((t) => _TechChip(label: t, isDark: isDark)).toList(),
         ),
         SizedBox(height: 32.h),
-        _ActionRow(isDark: isDark),
+        _ActionRow(data: data, isDark: isDark),
       ],
     );
   }
@@ -123,7 +124,8 @@ class _BackButton extends StatelessWidget {
 
 class _StatusBadge extends StatelessWidget {
   final bool isDark;
-  const _StatusBadge({required this.isDark});
+  final String status;
+  const _StatusBadge({required this.isDark, required this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +141,7 @@ class _StatusBadge extends StatelessWidget {
           Container(width: 6.r, height: 6.r,
               decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.success)),
           SizedBox(width: 6.w),
-          Text(VitaguardData.status,
+          Text(status,
               style: AppTypography.textTheme.labelSmall?.copyWith(color: AppColors.success)),
         ],
       ),
@@ -188,8 +190,9 @@ class _TechChip extends StatelessWidget {
 }
 
 class _ActionRow extends StatelessWidget {
+  final ProjectData data;
   final bool isDark;
-  const _ActionRow({required this.isDark});
+  const _ActionRow({required this.data, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -198,11 +201,11 @@ class _ActionRow extends StatelessWidget {
       runSpacing: 8.h,
       children: [
         _PButton(label: 'GitHub', icon: Icons.code_rounded,
-            onPressed: () => UrlUtils.openUrl(VitaguardData.githubUrl)),
+            onPressed: () => UrlUtils.openUrl(data.githubUrl)),
         _PButton(label: 'Demo Video', icon: Icons.play_arrow_rounded,
-            onPressed: () => UrlUtils.openUrl(VitaguardData.demoUrl)),
+            onPressed: () => UrlUtils.openUrl(data.demoUrl)),
         _PButton(label: 'View Screenshots', icon: Icons.photo_library_rounded,
-            onPressed: () => UrlUtils.openUrl(VitaguardData.screenshotsUrl)),
+            onPressed: () => UrlUtils.openUrl(data.screenshotsUrl)),
       ],
     );
   }

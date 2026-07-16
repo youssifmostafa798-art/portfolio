@@ -4,10 +4,11 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/vitaguard_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 class FeaturesSection extends StatelessWidget {
-  const FeaturesSection({super.key});
+  final ProjectData data;
+  const FeaturesSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class FeaturesSection extends StatelessWidget {
               style: context.textTheme.displaySmall?.copyWith(
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
-          Text('Key capabilities that make VitaGuard a production-grade medical system.',
+          Text(data.featuresSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
@@ -40,7 +41,7 @@ class FeaturesSection extends StatelessWidget {
             return Wrap(
               spacing: spacing,
               runSpacing: spacing,
-              children: vitaguardFeatures.map((f) => SizedBox(
+              children: data.features.map((f) => SizedBox(
                 width: childWidth,
                 child: _FeatureCard(feature: f, isDark: isDark),
               )).toList(),
@@ -82,7 +83,7 @@ class _FeatureCard extends StatelessWidget {
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
           SizedBox(height: 8.h),
-          Expanded(
+          Flexible(
             child: Text(feature.description,
                 style: AppTypography.textTheme.bodyMedium?.copyWith(
                     color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
