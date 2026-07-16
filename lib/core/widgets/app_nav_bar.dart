@@ -107,19 +107,14 @@ class _BrandName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDark;
-    final color = isScrolled
-        ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)
-        : AppColors.textPrimaryDark;
-
     return GestureDetector(
       onTap: onTap,
-      child: Text(
-        'YM',
-        style: AppTypography.textTheme.titleLarge?.copyWith(
-          color: color,
-          fontWeight: FontWeight.w700,
-          letterSpacing: -0.5,
+      child: ClipOval(
+        child: Image.asset(
+          'assets/images/5.jpeg',
+          width: 44.r,
+          height: 44.r,
+          fit: BoxFit.cover,
         ),
       ),
     );

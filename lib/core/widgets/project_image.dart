@@ -84,11 +84,7 @@ class _AppPlaceholder extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0D1B2A),
-            Color(0xFF1B2838),
-            Color(0xFF0D1B2A),
-          ],
+          colors: [Color(0xFF0D1B2A), Color(0xFF1B2838), Color(0xFF0D1B2A)],
         ),
         border: Border.all(
           color: isDark
@@ -145,10 +141,14 @@ class _AppPlaceholder extends StatelessWidget {
                     colors: [AppColors.primary, AppColors.secondary],
                   ),
                 ),
-                child: Icon(
-                  Icons.favorite_rounded,
-                  color: Colors.white,
-                  size: 32.r,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: Image.asset(
+                    'assets/images/logo.jpeg',
+                    width: 64.r,
+                    height: 64.r,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(height: 16.h),
