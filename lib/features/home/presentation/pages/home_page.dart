@@ -9,6 +9,7 @@ import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/about_section.dart';
 import '../widgets/sections/skills_section.dart';
 import '../widgets/sections/projects_section.dart';
+import '../widgets/sections/contact_section.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -127,9 +128,11 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      key: _sectionKeys[4],
-                      height: 400.h,
+                    AnimatedSection(
+                      child: SizedBox(
+                        key: _sectionKeys[4],
+                        child: const ContactSection(),
+                      ),
                     ),
                   ],
                 ),
