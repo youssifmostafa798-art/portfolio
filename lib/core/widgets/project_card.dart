@@ -74,7 +74,7 @@ class _ProjectCardState extends State<ProjectCard> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: 390.w,
+            width: 350.w,
             child: ProjectImage(
               imageUrl: project.imageUrl,
               title: project.title,

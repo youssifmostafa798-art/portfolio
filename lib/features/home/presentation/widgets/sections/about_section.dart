@@ -176,7 +176,7 @@ class _StatsRow extends StatelessWidget {
       children: [
         _StatItem(value: '1+', label: 'Years', isDark: isDark),
         SizedBox(width: 32.w),
-        _StatItem(value: '2', label: 'Projects', isDark: isDark),
+        _StatItem(value: '1', label: 'Projects', isDark: isDark),
         SizedBox(width: 32.w),
       ],
     );
