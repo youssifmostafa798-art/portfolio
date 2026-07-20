@@ -38,7 +38,11 @@ class PortfolioApp extends ConsumerWidget {
             const Breakpoint(start: 0, end: 599, name: MOBILE),
             const Breakpoint(start: 600, end: 1023, name: TABLET),
             const Breakpoint(start: 1024, end: 1439, name: DESKTOP),
-            const Breakpoint(start: 1440, end: double.infinity, name: 'ULTRA_WIDE'),
+            const Breakpoint(
+              start: 1440,
+              end: double.infinity,
+              name: 'ULTRA_WIDE',
+            ),
           ],
         ),
       ),

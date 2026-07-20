@@ -46,19 +46,16 @@ class _SkillCardState extends State<SkillCard> {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: Icon(
-                  widget.skill.icon,
-                  color: Colors.white,
-                  size: 24.r,
-                ),
+                child: Icon(widget.skill.icon, color: Colors.white, size: 24.r),
               ),
               SizedBox(height: 12.h),
               Text(
                 widget.skill.name,
                 style: context.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color:
-                      isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimaryLight,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -89,10 +86,7 @@ class _ProficiencyDots extends StatelessWidget {
   final int dotCount;
   final bool isDark;
 
-  const _ProficiencyDots({
-    required this.dotCount,
-    required this.isDark,
-  });
+  const _ProficiencyDots({required this.dotCount, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -108,15 +102,13 @@ class _ProficiencyDots extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: 3.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: filled
-                ? AppColors.primary
-                : Colors.transparent,
+            color: filled ? AppColors.primary : Colors.transparent,
             border: Border.all(
               color: filled
                   ? AppColors.primary
                   : (isDark
-                      ? AppColors.textTertiaryDark
-                      : AppColors.textTertiaryLight),
+                        ? AppColors.textTertiaryDark
+                        : AppColors.textTertiaryLight),
               width: 1.5.w,
             ),
           ),

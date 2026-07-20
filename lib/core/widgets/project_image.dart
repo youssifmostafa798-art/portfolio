@@ -15,7 +15,7 @@ class ProjectImage extends StatelessWidget {
     super.key,
     this.imageUrl,
     required this.title,
-    this.height = 320,
+    this.height = 700,
     this.width,
     this.borderRadius = 20,
   });
@@ -77,7 +77,7 @@ class _AppPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = context.isDark;
     return Container(
-      height: height,
+      height: height.isFinite ? height : null,
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius.r),

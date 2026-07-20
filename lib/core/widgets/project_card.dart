@@ -11,11 +11,7 @@ class ProjectCard extends StatefulWidget {
   final Project project;
   final VoidCallback? onCaseStudyTap;
 
-  const ProjectCard({
-    super.key,
-    required this.project,
-    this.onCaseStudyTap,
-  });
+  const ProjectCard({super.key, required this.project, this.onCaseStudyTap});
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();
@@ -60,20 +56,25 @@ class _ProjectCardState extends State<ProjectCard> {
             ],
           ),
           clipBehavior: Clip.antiAlias,
-          child: isMobile ? _buildMobileLayout(context, project, isDark) : _buildDesktopLayout(context, project, isDark),
+          child: isMobile
+              ? _buildMobileLayout(context, project, isDark)
+              : _buildDesktopLayout(context, project, isDark),
         ),
       ),
     );
   }
 
   Widget _buildDesktopLayout(
-      BuildContext context, Project project, bool isDark) {
+    BuildContext context,
+    Project project,
+    bool isDark,
+  ) {
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            width: 440.w,
+            width: 390.w,
             child: ProjectImage(
               imageUrl: project.imageUrl,
               title: project.title,
@@ -93,7 +94,10 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   Widget _buildMobileLayout(
-      BuildContext context, Project project, bool isDark) {
+    BuildContext context,
+    Project project,
+    bool isDark,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,8 +115,7 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  Widget _buildContent(
-      BuildContext context, Project project, bool isDark) {
+  Widget _buildContent(BuildContext context, Project project, bool isDark) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -120,8 +123,9 @@ class _ProjectCardState extends State<ProjectCard> {
         Text(
           project.title,
           style: context.textTheme.displaySmall?.copyWith(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -157,16 +161,16 @@ class _ProjectCardState extends State<ProjectCard> {
         Text(
           'Key Highlights',
           style: context.textTheme.titleSmall?.copyWith(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
             fontWeight: FontWeight.w600,
           ),
         ),
         SizedBox(height: 8.h),
-        ...project.highlights.map((h) => _HighlightItem(
-              text: h,
-              isDark: isDark,
-            )),
+        ...project.highlights.map(
+          (h) => _HighlightItem(text: h, isDark: isDark),
+        ),
         SizedBox(height: 24.h),
         _buildActions(project, isDark),
       ],
@@ -260,56 +264,57 @@ class _ActionButtonState extends State<_ActionButton> {
             child: InkWell(
               onTap: widget.onPressed,
               borderRadius: BorderRadius.circular(12.r),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.w,
-                vertical: 10.h,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: isPrimary
-                    ? AppColors.primary
-                    : (widget.isDark
-                        ? Colors.white.withValues(alpha: _isHovered ? 0.12 : 0.06)
-                        : Colors.black.withValues(alpha: _isHovered ? 0.08 : 0.04)),
-                border: isPrimary
-                    ? null
-                    : Border.all(
-                        color: widget.isDark
-                            ? AppColors.darkDivider
-                            : AppColors.lightDivider,
-                      ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    widget.icon,
-                    size: 16.r,
-                    color: isPrimary
-                        ? Colors.white
-                        : (widget.isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.textSecondaryLight),
-                  ),
-                  SizedBox(width: 6.w),
-                  Text(
-                    widget.label,
-                    style: AppTypography.textTheme.labelMedium?.copyWith(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: isPrimary
+                      ? AppColors.primary
+                      : (widget.isDark
+                            ? Colors.white.withValues(
+                                alpha: _isHovered ? 0.12 : 0.06,
+                              )
+                            : Colors.black.withValues(
+                                alpha: _isHovered ? 0.08 : 0.04,
+                              )),
+                  border: isPrimary
+                      ? null
+                      : Border.all(
+                          color: widget.isDark
+                              ? AppColors.darkDivider
+                              : AppColors.lightDivider,
+                        ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      size: 16.r,
                       color: isPrimary
                           ? Colors.white
                           : (widget.isDark
-                              ? AppColors.textSecondaryDark
-                              : AppColors.textSecondaryLight),
-                      fontWeight: FontWeight.w500,
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondaryLight),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 6.w),
+                    Text(
+                      widget.label,
+                      style: AppTypography.textTheme.labelMedium?.copyWith(
+                        color: isPrimary
+                            ? Colors.white
+                            : (widget.isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondaryLight),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -366,8 +371,9 @@ class _InfoRow extends StatelessWidget {
         Text(
           value,
           style: context.textTheme.bodySmall?.copyWith(
-            color:
-                isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
             fontWeight: FontWeight.w500,
           ),
         ),
