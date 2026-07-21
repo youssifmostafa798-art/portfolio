@@ -24,13 +24,20 @@ class AnimatedSection extends StatefulWidget {
 
 class _AnimatedSectionState extends State<AnimatedSection> {
   bool _isVisible = false;
+  late final Key _visibilityKey;
   static int _keyCounter = 0;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     _keyCounter++;
+    _visibilityKey = ValueKey('animated_section_$_keyCounter');
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return VisibilityDetector(
-      key: ValueKey('animated_section_$_keyCounter'),
+      key: _visibilityKey,
       onVisibilityChanged: (info) {
         if (info.visibleFraction > 0.05 && !_isVisible) {
           setState(() => _isVisible = true);
