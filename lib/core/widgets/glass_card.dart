@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
@@ -47,6 +46,10 @@ class GlassCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius.r),
         gradient: gradient,
+        color: bgColor,
+        border: showBorder
+            ? Border.all(color: borderColor, width: 0.5.w)
+            : null,
         boxShadow: [
           BoxShadow(
             color: isDark
@@ -65,25 +68,9 @@ class GlassCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius.r),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(borderRadius.r),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: blurIntensity,
-                sigmaY: blurIntensity,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: bgColor,
-                  borderRadius: BorderRadius.circular(borderRadius.r),
-                  border: showBorder
-                      ? Border.all(color: borderColor, width: 0.5.w)
-                      : null,
-                ),
-                padding: padding,
-                child: child,
-              ),
-            ),
+          child: Padding(
+            padding: padding,
+            child: child,
           ),
         ),
       ),

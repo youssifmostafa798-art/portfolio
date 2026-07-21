@@ -13,39 +13,39 @@ class ProjectHeroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
+    final responsive = context.responsive;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: context.responsivePadding,
+        horizontal: responsive.responsivePadding,
         vertical: 64.h,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: isMobile ? 20.h : 32.h),
+          SizedBox(height: responsive.isMobile ? 20.h : 32.h),
 
           if (onBackTap != null) _BackButton(onTap: onBackTap!),
-          SizedBox(height: isMobile ? 32.h : 48.h),
-          _buildHeroContent(context, isMobile),
+          SizedBox(height: responsive.isMobile ? 32.h : 48.h),
+          _buildHeroContent(context, responsive),
         ],
       ),
     );
   }
 
-  Widget _buildHeroContent(BuildContext context, bool isMobile) {
-    final isDark = context.isDark;
+  Widget _buildHeroContent(BuildContext context, ResponsiveData responsive) {
+    final isDark = responsive.isDark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _StatusBadge(isDark: isDark, status: data.status),
-        SizedBox(height: isMobile ? 16.h : 24.h),
+        SizedBox(height: responsive.isMobile ? 16.h : 24.h),
         Text(
           data.title,
           style:
-              (isMobile
+              (responsive.isMobile
                       ? context.textTheme.displayMedium
                       : context.textTheme.displayLarge)
                   ?.copyWith(
@@ -56,7 +56,7 @@ class ProjectHeroSection extends StatelessWidget {
                     letterSpacing: -0.02,
                   ),
         ),
-        SizedBox(height: isMobile ? 8.h : 12.h),
+        SizedBox(height: responsive.isMobile ? 8.h : 12.h),
         Text(
           data.tagline,
           style: context.textTheme.titleLarge?.copyWith(
@@ -64,8 +64,8 @@ class ProjectHeroSection extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: isMobile ? 16.h : 24.h),
-        if (!isMobile)
+        SizedBox(height: responsive.isMobile ? 16.h : 24.h),
+        if (!responsive.isMobile)
           Row(
             children: [
               _MetaItem(label: 'Role', value: data.role, isDark: isDark),

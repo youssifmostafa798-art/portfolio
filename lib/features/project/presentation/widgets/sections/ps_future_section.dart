@@ -12,15 +12,13 @@ class FutureSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
-    final isTablet = context.isTablet;
-    final isDark = context.isDark;
-    final crossAxisCount = isMobile ? 1 : (isTablet ? 2 : 3);
+    final responsive = context.responsive;
+    final crossAxisCount = responsive.crossAxisCount;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: context.responsivePadding,
+        horizontal: responsive.responsivePadding,
         vertical: 120.h,
       ),
       child: Column(
@@ -28,27 +26,46 @@ class FutureSection extends StatelessWidget {
         children: [
           Text('Future Improvements',
               style: context.textTheme.displaySmall?.copyWith(
-                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
+                  color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
           SizedBox(height: 8.h),
           Text(data.futureSubtitle,
               style: context.textTheme.bodyLarge?.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
+                  color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
-          LayoutBuilder(builder: (context, constraints) {
-            final spacing = 16.w;
-            final childWidth =
-                (constraints.maxWidth - (spacing * (crossAxisCount - 1))) / crossAxisCount;
-            return Wrap(
-              spacing: spacing,
-              runSpacing: spacing,
-              children: data.futureItems.map((f) => SizedBox(
-                width: childWidth,
-                child: _FutureCard(item: f, isDark: isDark),
-              )).toList(),
-            );
-          }),
+          _ResponsiveGrid(
+            crossAxisCount: crossAxisCount,
+            isDark: responsive.isDark,
+            children: data.futureItems.map((f) => _FutureCard(item: f, isDark: responsive.isDark)).toList(),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _ResponsiveGrid extends StatelessWidget {
+  final int crossAxisCount;
+  final bool isDark;
+  final List<Widget> children;
+
+  const _ResponsiveGrid({
+    required this.crossAxisCount,
+    required this.isDark,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final spacing = 16.w;
+    return Wrap(
+      spacing: spacing,
+      runSpacing: spacing,
+      children: children.map((child) => SizedBox(
+        width: (MediaQuery.of(context).size.width -
+            context.responsive.responsivePadding * 2 -
+            spacing * (crossAxisCount - 1)) / crossAxisCount,
+        child: child,
+      )).toList(),
     );
   }
 }

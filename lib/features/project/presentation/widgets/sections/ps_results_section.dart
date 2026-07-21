@@ -12,13 +12,13 @@ class ResultsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMobile = context.isMobile;
-    final isDark = context.isDark;
+    final responsive = context.responsive;
+    final isDark = responsive.isDark;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: context.responsivePadding,
+        horizontal: responsive.responsivePadding,
         vertical: 120.h,
       ),
       child: Column(
@@ -32,7 +32,7 @@ class ResultsSection extends StatelessWidget {
               style: context.textTheme.bodyLarge?.copyWith(
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
           SizedBox(height: 48.h),
-          if (isMobile)
+          if (responsive.isMobile)
             Column(
               children: data.results.map((r) => Padding(
                 padding: EdgeInsets.only(bottom: 12.h),

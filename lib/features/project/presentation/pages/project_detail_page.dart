@@ -6,6 +6,7 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
 import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 import 'package:portfolio/features/project/data/project_data_registry.dart';
 import '../widgets/sections/ps_hero_section.dart';
 import '../widgets/sections/ps_overview_section.dart';
@@ -31,7 +32,7 @@ class ProjectDetailPage extends StatefulWidget {
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
   final ScrollController _scrollController = ScrollController();
-  bool _isScrolled = false;
+  final ValueNotifier<bool> _isScrolledNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -43,14 +44,14 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   void dispose() {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _isScrolledNotifier.dispose();
     super.dispose();
   }
 
   void _onScroll() {
-    final offset = _scrollController.offset;
-    final scrolled = offset > 60;
-    if (scrolled != _isScrolled) {
-      setState(() => _isScrolled = scrolled);
+    final scrolled = _scrollController.offset > 60;
+    if (scrolled != _isScrolledNotifier.value) {
+      _isScrolledNotifier.value = scrolled;
     }
   }
 
@@ -82,76 +83,22 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       drawer: isMobile ? _buildDrawer(isDark) : null,
       body: Stack(
         children: [
-          SingleChildScrollView(
-            controller: _scrollController,
-            physics: const ClampingScrollPhysics(),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 1440.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AnimatedSection(
-                      child: ProjectHeroSection(data: data, onBackTap: _goBack),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: ProjectOverviewSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: ContributionSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: FeaturesSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: ArchitectureSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: TechSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: ChallengesSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: PerformanceSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: GallerySection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: ResultsSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: LessonsSection(data: data),
-                    ),
-                    const DividerWidget(),
-                    AnimatedSection(
-                      child: FutureSection(data: data),
-                    ),
-                    AnimatedSection(
-                      child: BottomCTASection(data: data, onBackTap: _goBack),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          _ProjectContentBody(
+            scrollController: _scrollController,
+            data: data,
+            goBack: _goBack,
           ),
           Positioned(
             top: 0, left: 0, right: 0,
-            child: AppNavBar(
-              isScrolled: _isScrolled,
-              activeSection: 3,
-              onNavTap: (index) => context.goNamed('home'),
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _isScrolledNotifier,
+              builder: (context, isScrolled, _) {
+                return AppNavBar(
+                  isScrolled: isScrolled,
+                  activeSection: 3,
+                  onNavTap: (index) => context.goNamed('home'),
+                );
+              },
             ),
           ),
         ],
@@ -166,6 +113,68 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         context.pop();
         if (index == 0) _goBack();
       },
+    );
+  }
+}
+
+class _ProjectContentBody extends StatelessWidget {
+  final ScrollController scrollController;
+  final ProjectData data;
+  final VoidCallback goBack;
+
+  const _ProjectContentBody({
+    required this.scrollController,
+    required this.data,
+    required this.goBack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: scrollController,
+      physics: const ClampingScrollPhysics(),
+      itemCount: _sections.length,
+      itemBuilder: (context, index) {
+        return RepaintBoundary(
+          child: _sections[index](context),
+        );
+      },
+    );
+  }
+
+  List<Widget Function(BuildContext)> get _sections => [
+    (ctx) => _buildSection(ProjectHeroSection(data: data, onBackTap: goBack)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(ProjectOverviewSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(ContributionSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(FeaturesSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(ArchitectureSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(TechSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(ChallengesSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(PerformanceSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(GallerySection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(ResultsSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(LessonsSection(data: data)),
+    (ctx) => const DividerWidget(),
+    (ctx) => _buildSection(FutureSection(data: data)),
+    (ctx) => _buildSection(BottomCTASection(data: data, onBackTap: goBack)),
+  ];
+
+  Widget _buildSection(Widget child) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 1440.w),
+        child: AnimatedSection(child: child),
+      ),
     );
   }
 }

@@ -26,3 +26,34 @@ extension BuildContextX on BuildContext {
     return 1200;
   }
 }
+
+extension ResponsiveValues on BuildContext {
+  ResponsiveData get responsive => ResponsiveData(
+    isMobile: isMobile,
+    isTablet: isTablet,
+    isDesktop: isDesktop,
+    isDark: isDark,
+    responsivePadding: responsivePadding,
+    screenWidth: screenWidth,
+  );
+}
+
+class ResponsiveData {
+  final bool isMobile;
+  final bool isTablet;
+  final bool isDesktop;
+  final bool isDark;
+  final double responsivePadding;
+  final double screenWidth;
+
+  const ResponsiveData({
+    required this.isMobile,
+    required this.isTablet,
+    required this.isDesktop,
+    required this.isDark,
+    required this.responsivePadding,
+    required this.screenWidth,
+  });
+
+  int get crossAxisCount => isMobile ? 1 : (isTablet ? 2 : 3);
+}

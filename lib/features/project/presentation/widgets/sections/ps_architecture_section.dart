@@ -11,12 +11,13 @@ class ArchitectureSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.isDark;
+    final responsive = context.responsive;
+    final isDark = responsive.isDark;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: context.responsivePadding,
+        horizontal: responsive.responsivePadding,
         vertical: 120.h,
       ),
       child: Column(

@@ -14,10 +14,11 @@ class BottomCTASection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = context.responsive;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-        horizontal: context.responsivePadding,
+        horizontal: responsive.responsivePadding,
         vertical: 80.h,
       ),
       child: Column(
