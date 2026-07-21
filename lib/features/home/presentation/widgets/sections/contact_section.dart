@@ -220,11 +220,11 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please Enter Your Email';
                     }
                     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+$');
                     if (!emailRegex.hasMatch(value)) {
-                      return 'Please enter a valid email';
+                      return 'Please Enter a Valid Email';
                     }
                     return null;
                   },
@@ -386,7 +386,9 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
                         ),
                         child: Icon(
                           widget.icon,
-                          color: isHoveredOrFocused ? Colors.white : AppColors.primary,
+                          color: isHoveredOrFocused
+                              ? Colors.white
+                              : AppColors.primary,
                           size: 24.sp,
                         ),
                       ),
@@ -397,16 +399,18 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
                           children: [
                             Text(
                               widget.label,
-                              style: AppTypography.textTheme.bodyMedium?.copyWith(
-                                color: isDark ? Colors.white70 : Colors.black54,
-                              ),
+                              style: AppTypography.textTheme.bodyMedium
+                                  ?.copyWith(
+                                    color: isDark
+                                        ? Colors.white70
+                                        : Colors.black54,
+                                  ),
                             ),
                             SizedBox(height: 4.h),
                             Text(
                               widget.value,
-                              style: AppTypography.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: AppTypography.textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],

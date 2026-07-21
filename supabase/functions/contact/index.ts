@@ -60,7 +60,7 @@ function buildEmailHtml(payload: SanitizedContactPayload, ctx: RequestLogContext
   `;
 }
 
-async function sendEmail(payload: SanitizedContactPayload, ctx: RequestLogContext): Promise<any> {
+async function sendEmail(payload: SanitizedContactPayload, ctx: RequestLogContext): Promise<unknown> {
   const apiKey = Deno.env.get('RESEND_API_KEY');
   const contactEmail = Deno.env.get('CONTACT_EMAIL');
   
@@ -71,13 +71,13 @@ async function sendEmail(payload: SanitizedContactPayload, ctx: RequestLogContex
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      'Authorization': \`Bearer \${apiKey}\`,
+      'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: [contactEmail],
-      subject: \`Portfolio Contact: \${payload.name}\`,
+      subject: `Portfolio Contact: ${payload.name}`,
       html: buildEmailHtml(payload, ctx),
       reply_to: payload.email,
     }),
@@ -85,7 +85,7 @@ async function sendEmail(payload: SanitizedContactPayload, ctx: RequestLogContex
   
   if (!res.ok) {
     const errorData = await res.text();
-    throw new Error(\`Email send failed: \${errorData}\`);
+    throw new Error(`Email send failed: ${errorData}`);
   }
   
   return res.json();
@@ -126,28 +126,32 @@ Deno.serve(async (req: Request) => {
       return errorResponse('Payload Too Large', status);
     }
     
-    let rawPayload: any;
+    let rawPayload: unknown;
     try {
       rawPayload = await req.json();
-    } catch (e) {
+    } catch {
       status = 400;
       return errorResponse('Invalid JSON payload', status);
     }
     
-    const validationError = validatePayload(rawPayload);
+    const validationError = validatePayload(rawPayload as ContactPayload);
     if (validationError) {
       status = 400;
       return errorResponse(validationError, status);
     }
     
     const captchaConfig = getCaptchaConfig();
-    const captchaResult = await verifyCaptcha(rawPayload.captchaToken, captchaConfig);
+    const rawRecord = rawPayload as Record<string, unknown>;
+    const captchaResult = await verifyCaptcha(
+      typeof rawRecord.captchaToken === 'string' ? rawRecord.captchaToken : undefined,
+      captchaConfig,
+    );
     if (!captchaResult.valid) {
       status = 403;
       return errorResponse(captchaResult.error || 'Captcha verification failed', status);
     }
     
-    const sanitizedPayload = sanitizeContactPayload(rawPayload);
+    const sanitizedPayload = sanitizeContactPayload(rawPayload as ContactPayload);
     
     await sendEmail(sanitizedPayload, ctx);
     
@@ -164,3 +168,4 @@ Deno.serve(async (req: Request) => {
     logResponse(ctx, status, durationMs);
   }
 });
+    
