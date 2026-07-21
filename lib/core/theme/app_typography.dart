@@ -5,12 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 abstract final class AppTypography {
   AppTypography._();
 
-  static TextTheme? _cachedTextTheme;
-
   static TextTheme get textTheme {
-    if (_cachedTextTheme != null) return _cachedTextTheme!;
     final base = GoogleFonts.interTextTheme();
-    _cachedTextTheme = base.copyWith(
+    return base.copyWith(
       displayLarge: base.displayLarge?.copyWith(
         fontSize: 64.sp,
         fontWeight: FontWeight.w700,
@@ -93,6 +90,5 @@ abstract final class AppTypography {
         letterSpacing: 0.02,
       ),
     );
-    return _cachedTextTheme!;
   }
 }

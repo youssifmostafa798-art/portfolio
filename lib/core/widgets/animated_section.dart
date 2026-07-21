@@ -55,11 +55,8 @@ class _AnimatedSectionState extends State<AnimatedSection> {
                 delay: widget.delay,
                 curve: widget.curve,
               )
-          : Visibility(
-              maintainSize: true,
-              maintainAnimation: false,
-              maintainState: false,
-              visible: false,
+          : Opacity(
+              opacity: 0,
               child: widget.child,
             ),
     );
