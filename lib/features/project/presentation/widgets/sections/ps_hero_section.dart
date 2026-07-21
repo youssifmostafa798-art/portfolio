@@ -24,8 +24,7 @@ class ProjectHeroSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (onBackTap != null)
-            _BackButton(onTap: onBackTap!),
+          if (onBackTap != null) _BackButton(onTap: onBackTap!),
           SizedBox(height: isMobile ? 32.h : 48.h),
           _buildHeroContent(context, isMobile),
         ],
@@ -43,14 +42,17 @@ class ProjectHeroSection extends StatelessWidget {
         SizedBox(height: isMobile ? 16.h : 24.h),
         Text(
           data.title,
-          style: (isMobile
-                  ? context.textTheme.displayMedium
-                  : context.textTheme.displayLarge)
-              ?.copyWith(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -0.02,
-          ),
+          style:
+              (isMobile
+                      ? context.textTheme.displayMedium
+                      : context.textTheme.displayLarge)
+                  ?.copyWith(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimaryLight,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.02,
+                  ),
         ),
         SizedBox(height: isMobile ? 8.h : 12.h),
         Text(
@@ -66,9 +68,17 @@ class ProjectHeroSection extends StatelessWidget {
             children: [
               _MetaItem(label: 'Role', value: data.role, isDark: isDark),
               SizedBox(width: 32.w),
-              _MetaItem(label: 'Team', value: '${data.teamSize} Members', isDark: isDark),
+              _MetaItem(
+                label: 'Team',
+                value: '${data.teamSize} Members',
+                isDark: isDark,
+              ),
               SizedBox(width: 32.w),
-              _MetaItem(label: 'Timeline', value: data.timeline, isDark: isDark),
+              _MetaItem(
+                label: 'Timeline',
+                value: data.timeline,
+                isDark: isDark,
+              ),
             ],
           )
         else
@@ -77,16 +87,26 @@ class ProjectHeroSection extends StatelessWidget {
             children: [
               _MetaItem(label: 'Role', value: data.role, isDark: isDark),
               SizedBox(height: 8.h),
-              _MetaItem(label: 'Team', value: '${data.teamSize} Members', isDark: isDark),
+              _MetaItem(
+                label: 'Team',
+                value: '${data.teamSize} Members',
+                isDark: isDark,
+              ),
               SizedBox(height: 8.h),
-              _MetaItem(label: 'Timeline', value: data.timeline, isDark: isDark),
+              _MetaItem(
+                label: 'Timeline',
+                value: data.timeline,
+                isDark: isDark,
+              ),
             ],
           ),
         SizedBox(height: 24.h),
         Wrap(
           spacing: 8.w,
           runSpacing: 8.h,
-          children: data.techStackTop.map((t) => _TechChip(label: t, isDark: isDark)).toList(),
+          children: data.techStackTop
+              .map((t) => _TechChip(label: t, isDark: isDark))
+              .toList(),
         ),
         SizedBox(height: 32.h),
         _ActionRow(data: data, isDark: isDark),
@@ -109,12 +129,22 @@ class _BackButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.arrow_back_rounded, size: 18.r,
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
-            SizedBox(width: 6.w),
-            Text('Back to Portfolio',
-                style: AppTypography.textTheme.bodyMedium?.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
+            Icon(
+              Icons.arrow_back_rounded,
+              size: 18.r,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondaryLight,
+            ),
+            SizedBox(width: 10.w),
+            Text(
+              'Back to Portfolio',
+              style: AppTypography.textTheme.bodyMedium?.copyWith(
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondaryLight,
+              ),
+            ),
           ],
         ),
       ),
@@ -138,11 +168,21 @@ class _StatusBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(width: 6.r, height: 6.r,
-              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.success)),
+          Container(
+            width: 6.r,
+            height: 6.r,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.success,
+            ),
+          ),
           SizedBox(width: 6.w),
-          Text(status,
-              style: AppTypography.textTheme.labelSmall?.copyWith(color: AppColors.success)),
+          Text(
+            status,
+            style: AppTypography.textTheme.labelSmall?.copyWith(
+              color: AppColors.success,
+            ),
+          ),
         ],
       ),
     );
@@ -152,19 +192,35 @@ class _StatusBadge extends StatelessWidget {
 class _MetaItem extends StatelessWidget {
   final String label, value;
   final bool isDark;
-  const _MetaItem({required this.label, required this.value, required this.isDark});
+  const _MetaItem({
+    required this.label,
+    required this.value,
+    required this.isDark,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTypography.textTheme.bodySmall?.copyWith(
-            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
+        Text(
+          label,
+          style: AppTypography.textTheme.bodySmall?.copyWith(
+            color: isDark
+                ? AppColors.textSecondaryDark
+                : AppColors.textSecondaryLight,
+          ),
+        ),
         SizedBox(height: 2.h),
-        Text(value, style: AppTypography.textTheme.bodyMedium?.copyWith(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-            fontWeight: FontWeight.w500)),
+        Text(
+          value,
+          style: AppTypography.textTheme.bodyMedium?.copyWith(
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ],
     );
   }
@@ -183,8 +239,13 @@ class _TechChip extends StatelessWidget {
         borderRadius: BorderRadius.circular(100.r),
         color: AppColors.primary.withValues(alpha: 0.1),
       ),
-      child: Text(label, style: AppTypography.textTheme.labelSmall?.copyWith(
-          color: AppColors.primary, fontWeight: FontWeight.w500)),
+      child: Text(
+        label,
+        style: AppTypography.textTheme.labelSmall?.copyWith(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 }
@@ -200,20 +261,35 @@ class _ActionRow extends StatelessWidget {
       spacing: 8.w,
       runSpacing: 8.h,
       children: [
-        _PButton(label: 'GitHub', icon: Icons.code_rounded,
-            onPressed: () => UrlUtils.openUrl(data.githubUrl)),
-        _PButton(label: 'Demo Video', icon: Icons.play_arrow_rounded,
-            onPressed: () => UrlUtils.openUrl(data.demoUrl)),
-        _PButton(label: 'View Screenshots', icon: Icons.photo_library_rounded,
-            onPressed: () => UrlUtils.openUrl(data.screenshotsUrl)),
+        _PButton(
+          label: 'GitHub',
+          icon: Icons.code_rounded,
+          onPressed: () => UrlUtils.openUrl(data.githubUrl),
+        ),
+        _PButton(
+          label: 'Demo Video',
+          icon: Icons.play_arrow_rounded,
+          onPressed: () => UrlUtils.openUrl(data.demoUrl),
+        ),
+        _PButton(
+          label: 'View Screenshots',
+          icon: Icons.photo_library_rounded,
+          onPressed: () => UrlUtils.openUrl(data.screenshotsUrl),
+        ),
       ],
     );
   }
 }
 
 class _PButton extends StatefulWidget {
-  final String label; final IconData icon; final VoidCallback onPressed;
-  const _PButton({required this.label, required this.icon, required this.onPressed});
+  final String label;
+  final IconData icon;
+  final VoidCallback onPressed;
+  const _PButton({
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+  });
 
   @override
   State<_PButton> createState() => _PButtonState();
@@ -229,7 +305,9 @@ class _PButtonState extends State<_PButton> {
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: _isHovered ? Matrix4.translationValues(0, -1.h, 0) : Matrix4.identity(),
+        transform: _isHovered
+            ? Matrix4.translationValues(0, -1.h, 0)
+            : Matrix4.identity(),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -241,14 +319,29 @@ class _PButtonState extends State<_PButton> {
                 borderRadius: BorderRadius.circular(12.r),
                 color: AppColors.primary,
                 boxShadow: _isHovered
-                    ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 16.r, offset: Offset(0, 6.h))]
+                    ? [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          blurRadius: 16.r,
+                          offset: Offset(0, 6.h),
+                        ),
+                      ]
                     : null,
               ),
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(widget.icon, size: 16.r, color: Colors.white),
-                SizedBox(width: 6.w),
-                Text(widget.label, style: AppTypography.textTheme.labelMedium?.copyWith(color: Colors.white, fontWeight: FontWeight.w600)),
-              ]),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(widget.icon, size: 16.r, color: Colors.white),
+                  SizedBox(width: 6.w),
+                  Text(
+                    widget.label,
+                    style: AppTypography.textTheme.labelMedium?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

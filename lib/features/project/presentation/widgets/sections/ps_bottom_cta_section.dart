@@ -36,15 +36,22 @@ class BottomCTASection extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text(data.bottomCtaTitle,
-                    style: AppTypography.textTheme.headlineSmall?.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center),
+                Text(
+                  data.bottomCtaTitle,
+                  style: AppTypography.textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
                 SizedBox(height: 8.h),
-                Text(data.bottomCtaSubtitle,
-                    style: AppTypography.textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.8)),
-                    textAlign: TextAlign.center),
+                Text(
+                  data.bottomCtaSubtitle,
+                  style: AppTypography.textTheme.bodyLarge?.copyWith(
+                    color: Colors.white.withValues(alpha: 0.8),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
                 SizedBox(height: 24.h),
                 Wrap(
                   spacing: 8.w,
@@ -81,11 +88,15 @@ class BottomCTASection extends StatelessWidget {
 }
 
 class _CTAButton extends StatefulWidget {
-  final String label; final IconData icon;
-  final bool isPrimary; final VoidCallback onPressed;
+  final String label;
+  final IconData icon;
+  final bool isPrimary;
+  final VoidCallback onPressed;
   const _CTAButton({
-    required this.label, required this.icon,
-    required this.isPrimary, required this.onPressed,
+    required this.label,
+    required this.icon,
+    required this.isPrimary,
+    required this.onPressed,
   });
 
   @override
@@ -103,7 +114,9 @@ class _CTAButtonState extends State<_CTAButton> {
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        transform: _isHovered ? Matrix4.translationValues(0, -1.h, 0) : Matrix4.identity(),
+        transform: _isHovered
+            ? Matrix4.translationValues(0, -1.h, 0)
+            : Matrix4.identity(),
         child: Semantics(
           button: true,
           label: widget.label,
@@ -112,28 +125,43 @@ class _CTAButtonState extends State<_CTAButton> {
             child: InkWell(
               onTap: widget.onPressed,
               borderRadius: BorderRadius.circular(12.r),
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: widget.isPrimary
-                    ? Colors.white
-                    : Colors.white.withValues(alpha: 0.15),
-                border: widget.isPrimary ? null : Border.all(color: Colors.white.withValues(alpha: 0.3)),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: widget.isPrimary
+                      ? Colors.white
+                      : Colors.white.withValues(alpha: 0.15),
+                  border: widget.isPrimary
+                      ? null
+                      : Border.all(color: Colors.white.withValues(alpha: 0.3)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      size: 16.r,
+                      color: widget.isPrimary
+                          ? AppColors.primary
+                          : Colors.white,
+                    ),
+                    SizedBox(width: 6.w),
+                    Text(
+                      widget.label,
+                      style: AppTypography.textTheme.labelMedium?.copyWith(
+                        color: widget.isPrimary
+                            ? AppColors.primary
+                            : Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Icon(widget.icon, size: 16.r,
-                    color: widget.isPrimary ? AppColors.primary : Colors.white),
-                SizedBox(width: 6.w),
-                Text(widget.label,
-                    style: AppTypography.textTheme.labelMedium?.copyWith(
-                        color: widget.isPrimary ? AppColors.primary : Colors.white,
-                        fontWeight: FontWeight.w600)),
-      ]),
-      ),
-      ),
-      ),
-      ),
+            ),
+          ),
+        ),
       ),
     );
   }
