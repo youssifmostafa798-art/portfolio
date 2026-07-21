@@ -24,6 +24,8 @@ class ProjectHeroSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: isMobile ? 20.h : 32.h),
+
           if (onBackTap != null) _BackButton(onTap: onBackTap!),
           SizedBox(height: isMobile ? 32.h : 48.h),
           _buildHeroContent(context, isMobile),
