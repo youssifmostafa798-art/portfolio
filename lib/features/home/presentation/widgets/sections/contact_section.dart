@@ -7,6 +7,7 @@ import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
+import 'package:portfolio/core/widgets/app_feedback_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../providers/contact_provider.dart';
 
@@ -50,24 +51,23 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
   Widget build(BuildContext context) {
     ref.listen<ContactFormState>(contactFormProvider, (previous, next) {
       if (next.isSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(next.message ?? 'Message sent successfully!'),
-            backgroundColor:
-                Colors.green, // Fallback if AppColors.success is missing
-          ),
-        );
         _nameController.clear();
         _emailController.clear();
         _phoneController.clear();
         _messageController.clear();
         ref.read(contactFormProvider.notifier).reset();
+        AppFeedbackDialog.show(
+          context: context,
+          isSuccess: true,
+          title: 'Message Sent!',
+          message: next.message ?? 'Message sent successfully!',
+        );
       } else if (next.isError) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(next.message ?? 'Failed to send message.'),
-            backgroundColor: AppColors.error,
-          ),
+        AppFeedbackDialog.show(
+          context: context,
+          isSuccess: false,
+          title: 'Oops!',
+          message: next.message ?? 'Failed to send message.',
         );
       }
     });
