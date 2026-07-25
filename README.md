@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Flutter Web, showcasing projects, skills, and a detailed case study of the VitaGuard health monitoring system.
 
-**Live:** [youssifmostafa.dev](https://youssifmostafa.dev)
+**Live:** [youssifmostafa.dev](https://youssifmostafa798-art.github.io/portfolio/)
 
 ## Highlights
 
