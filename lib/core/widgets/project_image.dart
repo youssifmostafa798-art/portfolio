@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
 
 class ProjectImage extends StatelessWidget {
   final String? imageUrl;
@@ -24,7 +22,7 @@ class ProjectImage extends StatelessWidget {
   Widget build(BuildContext context) {
     if (imageUrl != null) {
       return ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius.r),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: Image.network(
           imageUrl!,
           height: height,
@@ -76,11 +74,13 @@ class _AppPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final logoSize = context.isMobile ? 52.0 : 64.0;
+
     return Container(
       height: height.isFinite ? height : null,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius.r),
+        borderRadius: BorderRadius.circular(borderRadius),
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -96,11 +96,11 @@ class _AppPlaceholder extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: -40.h,
-            right: -40.w,
+            top: -40,
+            right: -40,
             child: Container(
-              width: 200.r,
-              height: 200.r,
+              width: 200,
+              height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -113,11 +113,11 @@ class _AppPlaceholder extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: -60.h,
-            left: -60.w,
+            bottom: -60,
+            left: -60,
             child: Container(
-              width: 250.r,
-              height: 250.r,
+              width: 250,
+              height: 250,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
@@ -133,58 +133,60 @@ class _AppPlaceholder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 64.r,
-                height: 64.r,
+                width: logoSize,
+                height: logoSize,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.r),
+                  borderRadius: BorderRadius.circular(18),
                   gradient: const LinearGradient(
                     colors: [AppColors.primary, AppColors.secondary],
                   ),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.r),
+                  borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
                     'assets/images/logo.jpeg',
-                    width: 64.r,
-                    height: 64.r,
+                    width: logoSize,
+                    height: logoSize,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              SizedBox(height: 16.h),
+              const SizedBox(height: 16),
               Text(
                 title,
-                style: AppTypography.textTheme.headlineSmall?.copyWith(
-                  color: Colors.white,
+                style: TextStyle(
+                  fontSize: context.isMobile ? 18 : 22,
                   fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
-              SizedBox(height: 4.h),
+              const SizedBox(height: 4),
               Text(
                 'Health Monitoring',
-                style: AppTypography.textTheme.bodyMedium?.copyWith(
+                style: TextStyle(
+                  fontSize: context.isMobile ? 13 : 14,
                   color: Colors.white.withValues(alpha: 0.6),
                 ),
               ),
             ],
           ),
           Positioned(
-            bottom: 30.h,
-            right: 30.w,
+            bottom: 30,
+            right: 30,
             child: Container(
-              width: 40.r,
-              height: 40.r,
+              width: context.isMobile ? 32 : 40,
+              height: context.isMobile ? 32 : 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
                   color: AppColors.success.withValues(alpha: 0.4),
-                  width: 3.w,
+                  width: 3,
                 ),
               ),
               child: Center(
                 child: Container(
-                  width: 12.r,
-                  height: 12.r,
+                  width: context.isMobile ? 10 : 12,
+                  height: context.isMobile ? 10 : 12,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.success,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../extensions/context_extensions.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
+import 'package:portfolio/core/extensions/context_extensions.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import '../../features/home/presentation/providers/theme_provider.dart';
 import '../constants/app_constants.dart';
 
@@ -48,24 +46,27 @@ class AppDrawer extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 40.h),
+              SizedBox(height: 40),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       AppConstants.appName,
-                      style: AppTypography.textTheme.headlineMedium?.copyWith(
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
                         color: isDark
                             ? AppColors.textPrimaryDark
                             : AppColors.textPrimaryLight,
                       ),
                     ),
-                    SizedBox(height: 4.h),
+                    SizedBox(height: 4),
                     Text(
                       AppConstants.title,
-                      style: AppTypography.textTheme.bodyMedium?.copyWith(
+                      style: TextStyle(
+                        fontSize: 14,
                         color: isDark
                             ? AppColors.textSecondaryDark
                             : AppColors.textSecondaryLight,
@@ -74,12 +75,12 @@ class AppDrawer extends ConsumerWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 40.h),
+              SizedBox(height: 40),
               Divider(
                 color: isDark ? AppColors.darkDivider : AppColors.lightDivider,
                 height: 1,
               ),
-              SizedBox(height: 8.h),
+              SizedBox(height: 8),
               ...List.generate(_items.length, (i) {
                 final item = _items[i];
                 final isActive = activeSection == item.index;
@@ -95,23 +96,21 @@ class AppDrawer extends ConsumerWidget {
                 height: 1,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.w,
-                  vertical: 16.h,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   children: [
                     Icon(
                       isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-                      size: 20.r,
+                      size: 20,
                       color: isDark
                           ? AppColors.textSecondaryDark
                           : AppColors.textSecondaryLight,
                     ),
-                    SizedBox(width: 12.w),
+                    SizedBox(width: 12),
                     Text(
                       '${isDark ? 'Dark' : 'Light'} Mode',
-                      style: AppTypography.textTheme.bodyMedium?.copyWith(
+                      style: TextStyle(
+                        fontSize: 14,
                         color: isDark
                             ? AppColors.textSecondaryDark
                             : AppColors.textSecondaryLight,
@@ -121,23 +120,23 @@ class AppDrawer extends ConsumerWidget {
                     GestureDetector(
                       onTap: toggleTheme,
                       child: Container(
-                        width: 48.w,
-                        height: 28.h,
+                        width: 48,
+                        height: 28,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14.r),
+                          borderRadius: BorderRadius.circular(14),
                           color: isDark
                               ? AppColors.primary
                               : AppColors.textTertiaryLight,
                         ),
-                        padding: EdgeInsets.all(2.r),
+                        padding: const EdgeInsets.all(2),
                         child: AnimatedAlign(
                           duration: const Duration(milliseconds: 200),
                           alignment: isDark
                               ? Alignment.centerRight
                               : Alignment.centerLeft,
                           child: Container(
-                            width: 24.r,
-                            height: 24.r,
+                            width: 24,
+                            height: 24,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.white,
@@ -188,10 +187,10 @@ class _DrawerNavItemState extends State<_DrawerNavItem> {
           onTap: widget.onTap,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 2.h),
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12),
               color: widget.isActive
                   ? (isDark
                       ? Colors.white.withValues(alpha: 0.08)
@@ -206,17 +205,19 @@ class _DrawerNavItemState extends State<_DrawerNavItem> {
               children: [
                 Icon(
                   widget.item.icon,
-                  size: 20.r,
+                  size: 22,
                   color: widget.isActive
                       ? AppColors.primary
                       : (isDark
                           ? AppColors.textSecondaryDark
                           : AppColors.textSecondaryLight),
                 ),
-                SizedBox(width: 12.w),
+                SizedBox(width: 12),
                 Text(
                   widget.item.label,
-                  style: AppTypography.textTheme.titleMedium?.copyWith(
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
                     color: widget.isActive
                         ? (isDark
                             ? AppColors.textPrimaryDark
@@ -224,7 +225,6 @@ class _DrawerNavItemState extends State<_DrawerNavItem> {
                         : (isDark
                             ? AppColors.textSecondaryDark
                             : AppColors.textSecondaryLight),
-                    fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
                   ),
                 ),
               ],

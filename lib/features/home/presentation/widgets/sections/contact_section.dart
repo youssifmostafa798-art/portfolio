@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
@@ -75,11 +73,13 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
     final formState = ref.watch(contactFormProvider);
     final isSending = formState.isSending;
     final isDark = context.isDark;
+    final isMobile = context.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
 
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,22 +89,22 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
             subtitle:
                 'Have a project in mind or want to discuss opportunities? I\'d love to hear from you.',
           ),
-          SizedBox(height: 60.h),
+          SizedBox(height: isMobile ? 32 : 60),
           if (context.isDesktop)
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(flex: 2, child: _buildContactInfo(isDark)),
-                SizedBox(width: 80.w),
-                Expanded(flex: 3, child: _buildForm(isSending, isDark)),
+                Expanded(flex: 2, child: _buildContactInfo(isDark, isMobile)),
+                SizedBox(width: 80),
+                Expanded(flex: 3, child: _buildForm(isSending, isDark, isMobile)),
               ],
             )
           else
             Column(
               children: [
-                _buildContactInfo(isDark),
-                SizedBox(height: 40.h),
-                _buildForm(isSending, isDark),
+                _buildContactInfo(isDark, isMobile),
+                SizedBox(height: isMobile ? 24 : 40),
+                _buildForm(isSending, isDark, isMobile),
               ],
             ),
         ],
@@ -112,7 +112,7 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
     );
   }
 
-  Widget _buildContactInfo(bool isDark) {
+  Widget _buildContactInfo(bool isDark, bool isMobile) {
     return Column(
       children: [
         ContactInfoCard(
@@ -120,67 +120,76 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
           label: 'Email',
           value: 'youssifmostafa798@gmail.com',
           destination: 'mailto:youssifmostafa798@gmail.com',
+          isMobile: isMobile,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: isMobile ? 12 : 16),
         ContactInfoCard(
-          icon: Icons.code, // GitHub icon fallback
+          icon: Icons.code,
           label: 'GitHub',
           value: AppConstants.github,
           destination: AppConstants.github,
+          isMobile: isMobile,
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: isMobile ? 12 : 16),
         ContactInfoCard(
-          icon: Icons.work_outline, // LinkedIn icon fallback
+          icon: Icons.work_outline,
           label: 'LinkedIn',
           value: AppConstants.linkedin,
           destination: AppConstants.linkedin,
+          isMobile: isMobile,
         ),
       ],
     );
   }
 
-  Widget _buildForm(bool isSending, bool isDark) {
-    final inputStyle = AppTypography.textTheme.bodyLarge?.copyWith(
-      color: isDark ? Colors.white : Colors.black87,
-    );
-
+  Widget _buildForm(bool isSending, bool isDark, bool isMobile) {
     final inputDecoration = InputDecoration(
       filled: true,
       fillColor: isDark
           ? Colors.white.withValues(alpha: 0.05)
           : Colors.black.withValues(alpha: 0.03),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
           color: isDark ? AppColors.darkDivider : AppColors.lightDivider,
           width: 1,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12.r),
+        borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.error, width: 1),
       ),
-      labelStyle: AppTypography.textTheme.bodyMedium?.copyWith(
+      labelStyle: TextStyle(
+        fontSize: isMobile ? 14 : 15,
         color: isDark ? Colors.white70 : Colors.black87,
         fontWeight: FontWeight.w500,
       ),
-      hintStyle: AppTypography.textTheme.bodyMedium?.copyWith(
+      hintStyle: TextStyle(
+        fontSize: isMobile ? 14 : 15,
         color: isDark ? Colors.white38 : Colors.black38,
       ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 14 : 16,
+        vertical: isMobile ? 16 : 14,
+      ),
+    );
+
+    final inputStyle = TextStyle(
+      fontSize: isMobile ? 15 : 16,
+      color: isDark ? Colors.white : Colors.black87,
     );
 
     return GlassCard(
       child: Padding(
-        padding: EdgeInsets.all(40.r),
+        padding: EdgeInsets.all(isMobile ? 24 : 40),
         child: Theme(
           data: Theme.of(context).copyWith(
             textSelectionTheme: TextSelectionThemeData(
@@ -207,7 +216,7 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                       ? 'Please enter your name'
                       : null,
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: isMobile ? 16 : 24),
                 TextFormField(
                   controller: _emailController,
                   enabled: !isSending,
@@ -229,7 +238,7 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                     return null;
                   },
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: isMobile ? 16 : 24),
                 TextFormField(
                   controller: _phoneController,
                   enabled: !isSending,
@@ -241,14 +250,14 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                     hintText: '+20 234 567 890',
                   ),
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: isMobile ? 16 : 24),
                 TextFormField(
                   controller: _messageController,
                   enabled: !isSending,
                   style: inputStyle,
                   cursorColor: AppColors.primary,
                   keyboardType: TextInputType.multiline,
-                  maxLines: 5,
+                  maxLines: isMobile ? 4 : 5,
                   decoration: inputDecoration.copyWith(
                     labelText: 'Message',
                     hintText: 'Tell me about your project...',
@@ -257,24 +266,24 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                       ? 'Please enter a message'
                       : null,
                 ),
-                SizedBox(height: 32.h),
+                SizedBox(height: isMobile ? 20 : 32),
                 SizedBox(
                   width: double.infinity,
-                  height: 56.h,
+                  height: context.responsiveButtonMinHeight,
                   child: ElevatedButton(
                     onPressed: isSending ? null : _submitForm,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 0,
                     ),
                     child: isSending
                         ? SizedBox(
-                            height: 24.r,
-                            width: 24.r,
+                            height: 24,
+                            width: 24,
                             child: const CircularProgressIndicator(
                               strokeWidth: 2,
                               valueColor: AlwaysStoppedAnimation<Color>(
@@ -284,7 +293,8 @@ class _ContactSectionState extends ConsumerState<ContactSection> {
                           )
                         : Text(
                             'Send Message',
-                            style: AppTypography.textTheme.labelLarge?.copyWith(
+                            style: TextStyle(
+                              fontSize: 15,
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
@@ -305,6 +315,7 @@ class ContactInfoCard extends StatefulWidget {
   final String label;
   final String value;
   final String destination;
+  final bool isMobile;
 
   const ContactInfoCard({
     super.key,
@@ -312,6 +323,7 @@ class ContactInfoCard extends StatefulWidget {
     required this.label,
     required this.value,
     required this.destination,
+    required this.isMobile,
   });
 
   @override
@@ -333,6 +345,9 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
   Widget build(BuildContext context) {
     final isDark = context.isDark;
     final isHoveredOrFocused = _isHovered || _isFocused;
+    final iconContainerSize = widget.isMobile ? 44.0 : 48.0;
+    final iconSize = widget.isMobile ? 20.0 : 24.0;
+    final cardPadding = widget.isMobile ? 16.0 : 24.0;
 
     return Semantics(
       button: true,
@@ -353,7 +368,7 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeOutCubic,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
+                  borderRadius: BorderRadius.circular(context.responsiveBorderRadius),
                   border: Border.all(
                     color: isHoveredOrFocused
                         ? AppColors.primary.withValues(alpha: 0.5)
@@ -370,14 +385,16 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
                   ],
                 ),
                 child: GlassCard(
-                  padding: EdgeInsets.all(24.r),
+                  padding: EdgeInsets.all(cardPadding),
                   onTap: _launchUrl,
                   child: Row(
                     children: [
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         curve: Curves.easeOutCubic,
-                        padding: EdgeInsets.all(16.r),
+                        width: iconContainerSize,
+                        height: iconContainerSize,
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: isHoveredOrFocused
                               ? AppColors.primary
@@ -389,28 +406,28 @@ class _ContactInfoCardState extends State<ContactInfoCard> {
                           color: isHoveredOrFocused
                               ? Colors.white
                               : AppColors.primary,
-                          size: 24.sp,
+                          size: iconSize,
                         ),
                       ),
-                      SizedBox(width: 24.w),
+                      SizedBox(width: widget.isMobile ? 16 : 24),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               widget.label,
-                              style: AppTypography.textTheme.bodyMedium
-                                  ?.copyWith(
-                                    color: isDark
-                                        ? Colors.white70
-                                        : Colors.black54,
-                                  ),
+                              style: TextStyle(
+                                fontSize: widget.isMobile ? 12 : 14,
+                                color: isDark ? Colors.white70 : Colors.black54,
+                              ),
                             ),
-                            SizedBox(height: 4.h),
+                            SizedBox(height: widget.isMobile ? 2 : 4),
                             Text(
                               widget.value,
-                              style: AppTypography.textTheme.titleMedium
-                                  ?.copyWith(fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                fontSize: widget.isMobile ? 13 : 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],

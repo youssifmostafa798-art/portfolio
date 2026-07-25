@@ -8,6 +8,7 @@ extension BuildContextX on BuildContext {
   Size get screenSize => mediaQuery.size;
   double get screenWidth => screenSize.width;
   double get screenHeight => screenSize.height;
+  double get shortestSide => screenSize.shortestSide;
 
   bool get isDark => theme.brightness == Brightness.dark;
 
@@ -24,6 +25,65 @@ extension BuildContextX on BuildContext {
   double get responsiveMaxContentWidth {
     if (isMobile) return screenWidth;
     return 1200;
+  }
+
+  double get responsiveSectionVertical {
+    if (isMobile) return 64;
+    if (isTablet) return 80;
+    return 120;
+  }
+
+  double get responsiveSectionGap {
+    if (isMobile) return 16;
+    if (isTablet) return 24;
+    return 48;
+  }
+
+  double get responsiveCardPadding {
+    if (isMobile) return 16;
+    if (isTablet) return 20;
+    return 32;
+  }
+
+  double get responsiveIconSize {
+    if (isMobile) return 32;
+    if (isTablet) return 40;
+    return 48;
+  }
+
+  double get responsiveIconContainerSize {
+    if (isMobile) return 48;
+    if (isTablet) return 56;
+    return 64;
+  }
+
+  double get responsiveTitleSize {
+    if (isMobile) return 24;
+    if (isTablet) return 30;
+    return 36;
+  }
+
+  double get responsiveSubtitleSize {
+    if (isMobile) return 14;
+    if (isTablet) return 16;
+    return 18;
+  }
+
+  double get responsiveBodySize {
+    if (isMobile) return 14;
+    if (isTablet) return 15;
+    return 16;
+  }
+
+  double get responsiveButtonMinHeight {
+    if (isMobile) return 48;
+    return 44;
+  }
+
+  double get responsiveBorderRadius {
+    if (isMobile) return 14;
+    if (isTablet) return 18;
+    return 20;
   }
 }
 

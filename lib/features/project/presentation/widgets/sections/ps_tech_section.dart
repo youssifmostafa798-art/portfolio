@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/project_data.dart';
 
@@ -13,29 +11,38 @@ class TechSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = context.responsive;
-    final crossAxisCount = responsive.crossAxisCount;
+    final isMobile = responsive.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: responsive.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Tech Stack',
-              style: context.textTheme.displaySmall?.copyWith(
-                  color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          SizedBox(height: 8.h),
+              style: TextStyle(
+                fontSize: context.responsiveTitleSize,
+                fontWeight: FontWeight.w700,
+                height: 1.1,
+                letterSpacing: -0.01,
+                color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              )),
+          SizedBox(height: isMobile ? 6 : 8),
           Text(data.techStackSubtitle,
-              style: context.textTheme.bodyLarge?.copyWith(
-                  color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          SizedBox(height: 48.h),
+              style: TextStyle(
+                fontSize: context.responsiveSubtitleSize,
+                color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              )),
+          SizedBox(height: sectionGap),
           _ResponsiveGrid(
-            crossAxisCount: crossAxisCount,
+            isMobile: isMobile,
             isDark: responsive.isDark,
-            children: data.techCategories.map((t) => _TechCategoryCard(cat: t, isDark: responsive.isDark)).toList(),
+            children: data.techCategories.map((t) => _TechCategoryCard(cat: t, isDark: responsive.isDark, isMobile: isMobile)).toList(),
           ),
         ],
       ),
@@ -44,28 +51,35 @@ class TechSection extends StatelessWidget {
 }
 
 class _ResponsiveGrid extends StatelessWidget {
-  final int crossAxisCount;
+  final bool isMobile;
   final bool isDark;
   final List<Widget> children;
 
   const _ResponsiveGrid({
-    required this.crossAxisCount,
+    required this.isMobile,
     required this.isDark,
     required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
-    final spacing = 16.w;
-    return Wrap(
-      spacing: spacing,
-      runSpacing: spacing,
-      children: children.map((child) => SizedBox(
-        width: (MediaQuery.of(context).size.width -
-            context.responsive.responsivePadding * 2 -
-            spacing * (crossAxisCount - 1)) / crossAxisCount,
-        child: child,
-      )).toList(),
+    final spacing = isMobile ? 10.0 : 16.0;
+    final crossAxisCount = isMobile ? 1 : 2;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final childWidth =
+            (constraints.maxWidth - spacing * (crossAxisCount - 1)) / crossAxisCount;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: children.map((child) => SizedBox(
+            width: childWidth,
+            child: child,
+          )).toList(),
+        );
+      },
     );
   }
 }
@@ -73,23 +87,26 @@ class _ResponsiveGrid extends StatelessWidget {
 class _TechCategoryCard extends StatelessWidget {
   final TechCategory cat;
   final bool isDark;
-  const _TechCategoryCard({required this.cat, required this.isDark});
+  final bool isMobile;
+  const _TechCategoryCard({required this.cat, required this.isDark, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return GlassCard(
-      padding: EdgeInsets.all(16.r),
+      padding: EdgeInsets.all(isMobile ? 14 : 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(cat.category,
-              style: AppTypography.textTheme.labelMedium?.copyWith(
+              style: TextStyle(
+                  fontSize: isMobile ? 12 : 13,
                   color: AppColors.primary,
                   fontWeight: FontWeight.w600)),
-          SizedBox(height: 8.h),
+          SizedBox(height: isMobile ? 6 : 8),
           Text(cat.items,
-              style: AppTypography.textTheme.bodyMedium?.copyWith(
+              style: TextStyle(
+                  fontSize: isMobile ? 13 : 14,
                   color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
         ],
       ),

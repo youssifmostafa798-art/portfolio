@@ -1,9 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 
 class AppFeedbackDialog extends StatelessWidget {
   final bool isSuccess;
@@ -61,15 +59,16 @@ class AppFeedbackDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final isMobile = context.isMobile;
 
     return Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      insetPadding: EdgeInsets.symmetric(horizontal: 24.w),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24),
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 420.w),
+        constraints: BoxConstraints(maxWidth: isMobile ? 320 : 420),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(22.r),
+          borderRadius: BorderRadius.circular(context.responsiveBorderRadius + 2),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
             child: Container(
@@ -77,46 +76,52 @@ class AppFeedbackDialog extends StatelessWidget {
                 color: isDark
                     ? AppColors.darkSurface.withValues(alpha: 0.92)
                     : AppColors.lightSurface.withValues(alpha: 0.92),
-                borderRadius: BorderRadius.circular(22.r),
+                borderRadius: BorderRadius.circular(context.responsiveBorderRadius + 2),
                 border: Border.all(
                   color: isDark
                       ? Colors.white.withValues(alpha: 0.08)
                       : Colors.black.withValues(alpha: 0.06),
-                  width: 0.5.w,
+                  width: 0.5,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.1),
-                    blurRadius: 40.r,
-                    offset: Offset(0, 16.h),
+                    blurRadius: 40,
+                    offset: const Offset(0, 16),
                   ),
                 ],
               ),
-              padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 36.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: isMobile ? 24 : 32,
+                vertical: isMobile ? 28 : 36,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildIcon(isDark),
-                  SizedBox(height: 24.h),
+                  _buildIcon(isDark, isMobile),
+                  SizedBox(height: isMobile ? 18 : 24),
                   Text(
                     title,
-                    style: AppTypography.textTheme.headlineSmall?.copyWith(
+                    style: TextStyle(
+                      fontSize: isMobile ? 18 : 22,
+                      fontWeight: FontWeight.w600,
                       color: isDark ? Colors.white : AppColors.textPrimaryLight,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: isMobile ? 10 : 12),
                   Text(
                     message,
-                    style: AppTypography.textTheme.bodyMedium?.copyWith(
+                    style: TextStyle(
+                      fontSize: isMobile ? 13 : 15,
                       color: isDark
                           ? AppColors.textSecondaryDark
                           : AppColors.textSecondaryLight,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 32.h),
-                  _buildOkButton(context, isDark),
+                  SizedBox(height: isMobile ? 24 : 32),
+                  _buildOkButton(context, isDark, isMobile),
                 ],
               ),
             ),
@@ -126,41 +131,46 @@ class AppFeedbackDialog extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(bool isDark) {
+  Widget _buildIcon(bool isDark, bool isMobile) {
     final color = isSuccess ? AppColors.success : AppColors.error;
     final icon = isSuccess ? Icons.check_circle_rounded : Icons.error_rounded;
+    final iconContainerSize = isMobile ? 56.0 : 64.0;
+    final iconSize = isMobile ? 36.0 : 48.0;
 
     return Container(
-      padding: EdgeInsets.all(16.r),
+      padding: const EdgeInsets.all(14),
+      width: iconContainerSize,
+      height: iconContainerSize,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
-        size: 48.sp,
+        size: iconSize,
         color: color,
       ),
     );
   }
 
-  Widget _buildOkButton(BuildContext context, bool isDark) {
+  Widget _buildOkButton(BuildContext context, bool isDark, bool isMobile) {
     return SizedBox(
       width: double.infinity,
-      height: 52.h,
+      height: context.responsiveButtonMinHeight,
       child: ElevatedButton(
         onPressed: () => Navigator.of(context).pop(),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14.r),
+            borderRadius: BorderRadius.circular(12),
           ),
           elevation: 0,
         ),
         child: Text(
           'OK',
-          style: AppTypography.textTheme.titleMedium?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
             color: Colors.white,
             fontWeight: FontWeight.w600,
           ),

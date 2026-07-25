@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
@@ -102,14 +101,15 @@ class SkillsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = context.isMobile;
-    final isTablet = context.isTablet;
     final grouped = _groupedSkills;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,13 +118,12 @@ class SkillsSection extends StatelessWidget {
             label: 'Skills',
             subtitle: 'Technologies and tools I work with.',
           ),
-          SizedBox(height: isMobile ? 32.h : 48.h),
+          SizedBox(height: sectionGap),
           ...grouped.entries.map((entry) {
             return _SkillCategory(
               category: entry.key,
               skills: entry.value,
               isMobile: isMobile,
-              isTablet: isTablet,
             );
           }),
         ],
@@ -137,36 +136,39 @@ class _SkillCategory extends StatelessWidget {
   final String category;
   final List<Skill> skills;
   final bool isMobile;
-  final bool isTablet;
 
   const _SkillCategory({
     required this.category,
     required this.skills,
     required this.isMobile,
-    required this.isTablet,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
-    final crossAxisCount = isMobile ? 1 : (isTablet ? 2 : 3);
-    final spacing = 16.w;
+    final spacing = isMobile ? 10.0 : 16.0;
+    final categoryGap = context.responsiveSectionGap;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 48.h),
+      padding: EdgeInsets.only(bottom: categoryGap),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             category,
-            style: context.textTheme.titleLarge?.copyWith(
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+            style: TextStyle(
+              fontSize: isMobile ? 16 : 20,
+              fontWeight: FontWeight.w600,
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
             ),
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: isMobile ? 12 : 16),
           LayoutBuilder(
             builder: (context, constraints) {
               final availableWidth = constraints.maxWidth;
+              final crossAxisCount = isMobile ? 2 : 3;
               final childWidth =
                   (availableWidth - (spacing * (crossAxisCount - 1))) /
                       crossAxisCount;

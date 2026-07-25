@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/project_data.dart';
 
@@ -13,29 +11,38 @@ class FeaturesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = context.responsive;
-    final crossAxisCount = responsive.crossAxisCount;
+    final isMobile = responsive.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: responsive.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Features',
-              style: context.textTheme.displaySmall?.copyWith(
-                  color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          SizedBox(height: 8.h),
+              style: TextStyle(
+                fontSize: context.responsiveTitleSize,
+                fontWeight: FontWeight.w700,
+                height: 1.1,
+                letterSpacing: -0.01,
+                color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              )),
+          SizedBox(height: isMobile ? 6 : 8),
           Text(data.featuresSubtitle,
-              style: context.textTheme.bodyLarge?.copyWith(
-                  color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          SizedBox(height: 48.h),
+              style: TextStyle(
+                fontSize: context.responsiveSubtitleSize,
+                color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              )),
+          SizedBox(height: sectionGap),
           _ResponsiveGrid(
-            crossAxisCount: crossAxisCount,
+            isMobile: isMobile,
             isDark: responsive.isDark,
-            children: data.features.map((f) => _FeatureCard(feature: f, isDark: responsive.isDark)).toList(),
+            children: data.features.map((f) => _FeatureCard(feature: f, isDark: responsive.isDark, isMobile: isMobile)).toList(),
           ),
         ],
       ),
@@ -44,28 +51,35 @@ class FeaturesSection extends StatelessWidget {
 }
 
 class _ResponsiveGrid extends StatelessWidget {
-  final int crossAxisCount;
+  final bool isMobile;
   final bool isDark;
   final List<Widget> children;
 
   const _ResponsiveGrid({
-    required this.crossAxisCount,
+    required this.isMobile,
     required this.isDark,
     required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
-    final spacing = 16.w;
-    return Wrap(
-      spacing: spacing,
-      runSpacing: spacing,
-      children: children.map((child) => SizedBox(
-        width: (MediaQuery.of(context).size.width -
-            context.responsive.responsivePadding * 2 -
-            spacing * (crossAxisCount - 1)) / crossAxisCount,
-        child: child,
-      )).toList(),
+    final spacing = isMobile ? 10.0 : 16.0;
+    final crossAxisCount = isMobile ? 1 : 2;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final childWidth =
+            (constraints.maxWidth - spacing * (crossAxisCount - 1)) / crossAxisCount;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: children.map((child) => SizedBox(
+            width: childWidth,
+            child: child,
+          )).toList(),
+        );
+      },
     );
   }
 }
@@ -73,36 +87,43 @@ class _ResponsiveGrid extends StatelessWidget {
 class _FeatureCard extends StatelessWidget {
   final FeatureItem feature;
   final bool isDark;
-  const _FeatureCard({required this.feature, required this.isDark});
+  final bool isMobile;
+  const _FeatureCard({required this.feature, required this.isDark, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
+    final iconContainerSize = isMobile ? 40.0 : 44.0;
+    final iconSize = isMobile ? 20.0 : 22.0;
+
     return GlassCard(
-      padding: EdgeInsets.all(24.r),
+      padding: EdgeInsets.all(isMobile ? 18 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 44.r, height: 44.r,
+            width: iconContainerSize,
+            height: iconContainerSize,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(isMobile ? 10 : 12),
               gradient: const LinearGradient(
                 colors: [AppColors.primary, AppColors.secondary],
                 begin: Alignment.topLeft, end: Alignment.bottomRight,
               ),
             ),
-            child: Icon(feature.icon, color: Colors.white, size: 22.r),
+            child: Icon(feature.icon, color: Colors.white, size: iconSize),
           ),
-          SizedBox(height: 12.h),
+          SizedBox(height: isMobile ? 10 : 12),
           Text(feature.title,
-              style: AppTypography.textTheme.titleSmall?.copyWith(
+              style: TextStyle(
+                  fontSize: isMobile ? 14 : 15,
                   color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                   fontWeight: FontWeight.w600)),
-          SizedBox(height: 8.h),
+          SizedBox(height: isMobile ? 6 : 8),
           Flexible(
             child: Text(feature.description,
-                style: AppTypography.textTheme.bodyMedium?.copyWith(
+                style: TextStyle(
+                    fontSize: isMobile ? 13 : 14,
                     color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                     height: 1.6)),
           ),

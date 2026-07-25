@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
 import '../widgets/glass_card.dart';
@@ -19,6 +18,10 @@ class _SkillCardState extends State<SkillCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final isMobile = context.isMobile;
+    final iconSize = context.responsiveIconSize;
+    final iconContainerSize = context.responsiveIconContainerSize;
+    final cardPadding = context.responsiveCardPadding;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -28,30 +31,35 @@ class _SkillCardState extends State<SkillCard> {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutCubic,
         transform: _isHovered
-            ? Matrix4.translationValues(0, -4.h, 0)
+            ? Matrix4.translationValues(0, isMobile ? -2 : -4, 0)
             : Matrix4.identity(),
         child: GlassCard(
-          padding: EdgeInsets.all(16.r),
+          padding: EdgeInsets.all(cardPadding),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 48.r,
-                height: 48.r,
+                width: iconContainerSize,
+                height: iconContainerSize,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.r),
+                  borderRadius: BorderRadius.circular(isMobile ? 12 : 14),
                   gradient: const LinearGradient(
                     colors: [AppColors.primary, AppColors.secondary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: Icon(widget.skill.icon, color: Colors.white, size: 24.r),
+                child: Icon(
+                  widget.skill.icon,
+                  color: Colors.white,
+                  size: iconSize,
+                ),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: isMobile ? 10 : 12),
               Text(
                 widget.skill.name,
-                style: context.textTheme.titleSmall?.copyWith(
+                style: TextStyle(
+                  fontSize: isMobile ? 13 : 14,
                   fontWeight: FontWeight.w600,
                   color: isDark
                       ? AppColors.textPrimaryDark
@@ -59,15 +67,17 @@ class _SkillCardState extends State<SkillCard> {
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: isMobile ? 10 : 12),
               _ProficiencyDots(
                 dotCount: widget.skill.proficiency.dotCount,
                 isDark: isDark,
+                isMobile: isMobile,
               ),
-              SizedBox(height: 8.h),
+              SizedBox(height: isMobile ? 6 : 8),
               Text(
                 widget.skill.category,
-                style: context.textTheme.bodySmall?.copyWith(
+                style: TextStyle(
+                  fontSize: isMobile ? 11 : 12,
                   color: isDark
                       ? AppColors.textSecondaryDark
                       : AppColors.textSecondaryLight,
@@ -85,11 +95,19 @@ class _SkillCardState extends State<SkillCard> {
 class _ProficiencyDots extends StatelessWidget {
   final int dotCount;
   final bool isDark;
+  final bool isMobile;
 
-  const _ProficiencyDots({required this.dotCount, required this.isDark});
+  const _ProficiencyDots({
+    required this.dotCount,
+    required this.isDark,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final dotSize = isMobile ? 7.0 : 8.0;
+    final dotSpacing = isMobile ? 2.5 : 3.0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
@@ -97,9 +115,9 @@ class _ProficiencyDots extends StatelessWidget {
         final filled = i < dotCount;
         return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: 8.r,
-          height: 8.r,
-          margin: EdgeInsets.symmetric(horizontal: 3.w),
+          width: dotSize,
+          height: dotSize,
+          margin: EdgeInsets.symmetric(horizontal: dotSpacing),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: filled ? AppColors.primary : Colors.transparent,
@@ -109,7 +127,7 @@ class _ProficiencyDots extends StatelessWidget {
                   : (isDark
                         ? AppColors.textTertiaryDark
                         : AppColors.textTertiaryLight),
-              width: 1.5.w,
+              width: 1.5,
             ),
           ),
         );

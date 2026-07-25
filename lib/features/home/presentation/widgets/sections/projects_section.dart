@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/widgets/project_card.dart';
 import 'package:portfolio/core/widgets/section_label.dart';
@@ -49,12 +48,14 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobile = context.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: context.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,10 +64,10 @@ class ProjectsSection extends StatelessWidget {
             label: 'Projects',
             subtitle: 'Featured work and case studies.',
           ),
-          SizedBox(height: isMobile ? 32.h : 48.h),
+          SizedBox(height: sectionGap),
           ..._projects.map((project) {
             return Padding(
-              padding: EdgeInsets.only(bottom: 32.h),
+              padding: EdgeInsets.only(bottom: isMobile ? 24 : 32),
               child: ProjectCard(
                 project: project,
                 onCaseStudyTap: () {

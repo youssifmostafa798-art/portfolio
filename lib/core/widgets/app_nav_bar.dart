@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../extensions/context_extensions.dart';
-import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
+import 'package:portfolio/core/extensions/context_extensions.dart';
+import 'package:portfolio/core/theme/app_colors.dart';
 import '../../features/home/presentation/providers/theme_provider.dart';
 
 final class NavItem {
@@ -42,9 +40,10 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
     final isDark = context.isDark;
     final isMobile = context.isMobile;
     final toggleTheme = ref.read(themeToggleProvider);
+    final navHeight = isMobile ? 56.0 : 72.0;
 
     return Container(
-      height: isMobile ? 60.h : 72.h,
+      height: navHeight,
       decoration: BoxDecoration(
         color: widget.isScrolled
             ? (isDark
@@ -68,6 +67,7 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
             _BrandName(
               isScrolled: widget.isScrolled,
               onTap: () => widget.onNavTap(0),
+              isMobile: isMobile,
             ),
             if (!isMobile) ...[
               const Spacer(),
@@ -80,15 +80,16 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
                   onTap: () => widget.onNavTap(item.index),
                 );
               }),
-              SizedBox(width: 16.w),
+              SizedBox(width: 16),
             ],
-            SizedBox(width: 8.w),
+            SizedBox(width: 8),
             _ThemeToggleButton(
               isDark: isDark,
               onToggle: toggleTheme,
+              isMobile: isMobile,
             ),
             if (isMobile) ...[
-              SizedBox(width: 4.w),
+              SizedBox(width: 4),
               _MenuButton(
                 onTap: () => Scaffold.of(context).openDrawer(),
               ),
@@ -103,17 +104,19 @@ class _AppNavBarState extends ConsumerState<AppNavBar> {
 class _BrandName extends StatelessWidget {
   final bool isScrolled;
   final VoidCallback? onTap;
-  const _BrandName({required this.isScrolled, this.onTap});
+  final bool isMobile;
+  const _BrandName({required this.isScrolled, this.onTap, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
+    final size = isMobile ? 36.0 : 44.0;
     return GestureDetector(
       onTap: onTap,
       child: ClipOval(
         child: Image.asset(
           'assets/images/5.jpeg',
-          width: 44.r,
-          height: 44.r,
+          width: size,
+          height: size,
           fit: BoxFit.cover,
         ),
       ),
@@ -155,9 +158,9 @@ class _NavLinkState extends State<_NavLink> {
           onTap: widget.onTap,
           child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.r),
+            borderRadius: BorderRadius.circular(8),
             color: widget.isActive
                 ? (isDark
                     ? Colors.white.withValues(alpha: 0.08)
@@ -170,9 +173,10 @@ class _NavLinkState extends State<_NavLink> {
           ),
           child: Text(
             widget.label,
-            style: AppTypography.textTheme.labelLarge?.copyWith(
-              color: widget.isActive ? activeColor : baseColor,
+            style: TextStyle(
+              fontSize: 14,
               fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
+              color: widget.isActive ? activeColor : baseColor,
             ),
           ),
         ),
@@ -185,14 +189,17 @@ class _NavLinkState extends State<_NavLink> {
 class _ThemeToggleButton extends StatelessWidget {
   final bool isDark;
   final VoidCallback onToggle;
+  final bool isMobile;
 
   const _ThemeToggleButton({
     required this.isDark,
     required this.onToggle,
+    required this.isMobile,
   });
 
   @override
   Widget build(BuildContext context) {
+    final size = isMobile ? 36.0 : 36.0;
     return Semantics(
       button: true,
       label: isDark ? 'Switch to light mode' : 'Switch to dark mode',
@@ -202,8 +209,8 @@ class _ThemeToggleButton extends StatelessWidget {
           onTap: onToggle,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            width: 36.r,
-            height: 36.r,
+            width: size,
+            height: size,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isDark
@@ -212,7 +219,7 @@ class _ThemeToggleButton extends StatelessWidget {
             ),
             child: Icon(
               isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-              size: 18.r,
+              size: isMobile ? 17 : 18,
               color: isDark
                   ? AppColors.textPrimaryDark
                   : AppColors.textPrimaryLight,
@@ -237,8 +244,8 @@ class _MenuButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 36.r,
-          height: 36.r,
+          width: 36,
+          height: 36,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isDark
@@ -247,7 +254,7 @@ class _MenuButton extends StatelessWidget {
           ),
           child: Icon(
             Icons.menu_rounded,
-            size: 20.r,
+            size: 20,
             color: isDark
                 ? AppColors.textPrimaryDark
                 : AppColors.textPrimaryLight,

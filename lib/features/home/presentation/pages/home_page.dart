@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
@@ -99,7 +98,7 @@ class _HomePageState extends State<HomePage> {
             physics: const ClampingScrollPhysics(),
             child: Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 1440.w),
+                constraints: BoxConstraints(maxWidth: 1440),
                 child: Column(
                   children: [
                     SizedBox(

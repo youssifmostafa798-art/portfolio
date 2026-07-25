@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
-import '../theme/app_typography.dart';
 import '../utils/url_utils.dart';
 import '../widgets/project_image.dart';
 import '../../features/home/models/project.dart';
@@ -25,6 +23,7 @@ class _ProjectCardState extends State<ProjectCard> {
     final isMobile = context.isMobile;
     final isDark = context.isDark;
     final project = widget.project;
+    final cardRadius = context.responsiveBorderRadius;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -34,11 +33,11 @@ class _ProjectCardState extends State<ProjectCard> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
         transform: _isHovered
-            ? Matrix4.translationValues(0, -2.h, 0)
+            ? Matrix4.translationValues(0, isMobile ? -1 : -2, 0)
             : Matrix4.identity(),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24.r),
+            borderRadius: BorderRadius.circular(cardRadius),
             color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
             border: Border.all(
               color: isDark
@@ -50,8 +49,8 @@ class _ProjectCardState extends State<ProjectCard> {
                 color: isDark
                     ? Colors.black.withValues(alpha: 0.3)
                     : Colors.black.withValues(alpha: 0.06),
-                blurRadius: _isHovered ? 40.r : 20.r,
-                offset: Offset(0, 10.h),
+                blurRadius: _isHovered ? 40 : 20,
+                offset: Offset(0, isMobile ? 4 : 10),
               ),
             ],
           ),
@@ -69,12 +68,13 @@ class _ProjectCardState extends State<ProjectCard> {
     Project project,
     bool isDark,
   ) {
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            width: 350.w,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 350,
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
             child: ProjectImage(
               imageUrl: project.imageUrl,
               title: project.title,
@@ -82,14 +82,14 @@ class _ProjectCardState extends State<ProjectCard> {
               borderRadius: 0,
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(32.w),
-              child: _buildContent(context, project, isDark),
-            ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: _buildContent(context, project, isDark),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -104,11 +104,11 @@ class _ProjectCardState extends State<ProjectCard> {
         ProjectImage(
           imageUrl: project.imageUrl,
           title: project.title,
-          height: 240.h,
+          height: 200,
           borderRadius: 0,
         ),
         Padding(
-          padding: EdgeInsets.all(24.w),
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
           child: _buildContent(context, project, isDark),
         ),
       ],
@@ -116,77 +116,86 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   Widget _buildContent(BuildContext context, Project project, bool isDark) {
+    final isMobile = context.isMobile;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           project.title,
-          style: context.textTheme.displaySmall?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 22 : 28,
+            fontWeight: FontWeight.w700,
+            height: 1.15,
+            letterSpacing: -0.01,
             color: isDark
                 ? AppColors.textPrimaryDark
                 : AppColors.textPrimaryLight,
-            fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 4.h),
+        SizedBox(height: isMobile ? 4 : 4),
         Text(
           project.subtitle,
-          style: context.textTheme.titleMedium?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 13 : 16,
             color: AppColors.primary,
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: 12.h),
+        SizedBox(height: isMobile ? 12 : 12),
         Text(
           project.description,
-          style: context.textTheme.bodyMedium?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 13 : 15,
             color: isDark
                 ? AppColors.textSecondaryDark
                 : AppColors.textSecondaryLight,
             height: 1.7,
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: isMobile ? 14 : 16),
         Wrap(
-          spacing: 8.w,
-          runSpacing: 8.h,
+          spacing: isMobile ? 6 : 8,
+          runSpacing: isMobile ? 6 : 8,
           children: project.technologies.map((tech) {
-            return _TechChip(label: tech, isDark: isDark);
+            return _TechChip(label: tech, isDark: isDark, isMobile: isMobile);
           }).toList(),
         ),
-        SizedBox(height: 16.h),
-        _InfoRow(label: 'Role', value: project.role, isDark: isDark),
-        SizedBox(height: 16.h),
+        SizedBox(height: isMobile ? 14 : 16),
+        _InfoRow(label: 'Role', value: project.role, isDark: isDark, isMobile: isMobile),
+        SizedBox(height: isMobile ? 14 : 16),
         Text(
           'Key Highlights',
-          style: context.textTheme.titleSmall?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 13 : 14,
             color: isDark
                 ? AppColors.textPrimaryDark
                 : AppColors.textPrimaryLight,
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8.h),
+        SizedBox(height: isMobile ? 6 : 8),
         ...project.highlights.map(
-          (h) => _HighlightItem(text: h, isDark: isDark),
+          (h) => _HighlightItem(text: h, isDark: isDark, isMobile: isMobile),
         ),
-        SizedBox(height: 24.h),
-        _buildActions(project, isDark),
+        SizedBox(height: isMobile ? 20 : 24),
+        _buildActions(project, isDark, isMobile),
       ],
     );
   }
 
-  Widget _buildActions(Project project, bool isDark) {
+  Widget _buildActions(Project project, bool isDark, bool isMobile) {
     return Wrap(
-      spacing: 8.w,
-      runSpacing: 8.h,
+      spacing: isMobile ? 8 : 8,
+      runSpacing: isMobile ? 8 : 8,
       children: [
         if (project.githubUrl != null)
           _ActionButton(
             label: 'GitHub',
             icon: Icons.code_rounded,
             isDark: isDark,
+            isMobile: isMobile,
             variant: _ButtonVariant.outlined,
             onPressed: () => UrlUtils.openUrl(project.githubUrl!),
           ),
@@ -195,6 +204,7 @@ class _ProjectCardState extends State<ProjectCard> {
             label: 'Demo Video',
             icon: Icons.play_arrow_rounded,
             isDark: isDark,
+            isMobile: isMobile,
             variant: _ButtonVariant.outlined,
             onPressed: () => UrlUtils.openUrl(project.demoUrl!),
           ),
@@ -202,6 +212,7 @@ class _ProjectCardState extends State<ProjectCard> {
           label: 'Case Study',
           icon: Icons.article_outlined,
           isDark: isDark,
+          isMobile: isMobile,
           variant: _ButtonVariant.primary,
           onPressed: () => widget.onCaseStudyTap?.call(),
         ),
@@ -210,6 +221,7 @@ class _ProjectCardState extends State<ProjectCard> {
             label: 'Gallery',
             icon: Icons.photo_library_outlined,
             isDark: isDark,
+            isMobile: isMobile,
             variant: _ButtonVariant.outlined,
             onPressed: () =>
                 UrlUtils.openUrl(project.googleDriveScreenshotsUrl!),
@@ -225,6 +237,7 @@ class _ActionButton extends StatefulWidget {
   final String label;
   final IconData icon;
   final bool isDark;
+  final bool isMobile;
   final _ButtonVariant variant;
   final VoidCallback onPressed;
 
@@ -232,6 +245,7 @@ class _ActionButton extends StatefulWidget {
     required this.label,
     required this.icon,
     required this.isDark,
+    required this.isMobile,
     required this.variant,
     required this.onPressed,
   });
@@ -246,6 +260,7 @@ class _ActionButtonState extends State<_ActionButton> {
   @override
   Widget build(BuildContext context) {
     final isPrimary = widget.variant == _ButtonVariant.primary;
+    final btnHeight = context.responsiveButtonMinHeight;
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -254,7 +269,7 @@ class _ActionButtonState extends State<_ActionButton> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: _isHovered
-            ? Matrix4.translationValues(0, -1.h, 0)
+            ? Matrix4.translationValues(0, -1, 0)
             : Matrix4.identity(),
         child: Semantics(
           button: true,
@@ -263,11 +278,15 @@ class _ActionButtonState extends State<_ActionButton> {
             color: Colors.transparent,
             child: InkWell(
               onTap: widget.onPressed,
-              borderRadius: BorderRadius.circular(12.r),
+              borderRadius: BorderRadius.circular(12),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+                constraints: BoxConstraints(minHeight: btnHeight),
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.isMobile ? 14 : 16,
+                  vertical: widget.isMobile ? 12 : 10,
+                ),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
+                  borderRadius: BorderRadius.circular(12),
                   color: isPrimary
                       ? AppColors.primary
                       : (widget.isDark
@@ -290,23 +309,24 @@ class _ActionButtonState extends State<_ActionButton> {
                   children: [
                     Icon(
                       widget.icon,
-                      size: 16.r,
+                      size: widget.isMobile ? 15 : 16,
                       color: isPrimary
                           ? Colors.white
                           : (widget.isDark
                                 ? AppColors.textSecondaryDark
                                 : AppColors.textSecondaryLight),
                     ),
-                    SizedBox(width: 6.w),
+                    SizedBox(width: widget.isMobile ? 5 : 6),
                     Text(
                       widget.label,
-                      style: AppTypography.textTheme.labelMedium?.copyWith(
+                      style: TextStyle(
+                        fontSize: widget.isMobile ? 12 : 13,
+                        fontWeight: FontWeight.w500,
                         color: isPrimary
                             ? Colors.white
                             : (widget.isDark
                                   ? AppColors.textSecondaryDark
                                   : AppColors.textSecondaryLight),
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -323,20 +343,29 @@ class _ActionButtonState extends State<_ActionButton> {
 class _TechChip extends StatelessWidget {
   final String label;
   final bool isDark;
+  final bool isMobile;
 
-  const _TechChip({required this.label, required this.isDark});
+  const _TechChip({
+    required this.label,
+    required this.isDark,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 10 : 12,
+        vertical: isMobile ? 5 : 6,
+      ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.r),
+        borderRadius: BorderRadius.circular(100),
         color: AppColors.primary.withValues(alpha: 0.1),
       ),
       child: Text(
         label,
-        style: AppTypography.textTheme.labelSmall?.copyWith(
+        style: TextStyle(
+          fontSize: isMobile ? 11 : 12,
           color: AppColors.primary,
           fontWeight: FontWeight.w500,
         ),
@@ -349,11 +378,13 @@ class _InfoRow extends StatelessWidget {
   final String label;
   final String value;
   final bool isDark;
+  final bool isMobile;
 
   const _InfoRow({
     required this.label,
     required this.value,
     required this.isDark,
+    required this.isMobile,
   });
 
   @override
@@ -362,19 +393,24 @@ class _InfoRow extends StatelessWidget {
       children: [
         Text(
           '$label: ',
-          style: context.textTheme.bodySmall?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 12 : 13,
             color: isDark
                 ? AppColors.textSecondaryDark
                 : AppColors.textSecondaryLight,
           ),
         ),
-        Text(
-          value,
-          style: context.textTheme.bodySmall?.copyWith(
-            color: isDark
-                ? AppColors.textPrimaryDark
-                : AppColors.textPrimaryLight,
-            fontWeight: FontWeight.w500,
+        Flexible(
+          child: Text(
+            value,
+            style: TextStyle(
+              fontSize: isMobile ? 12 : 13,
+              color: isDark
+                  ? AppColors.textPrimaryDark
+                  : AppColors.textPrimaryLight,
+              fontWeight: FontWeight.w500,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
@@ -385,32 +421,38 @@ class _InfoRow extends StatelessWidget {
 class _HighlightItem extends StatelessWidget {
   final String text;
   final bool isDark;
+  final bool isMobile;
 
-  const _HighlightItem({required this.text, required this.isDark});
+  const _HighlightItem({
+    required this.text,
+    required this.isDark,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 6.h),
+      padding: EdgeInsets.only(bottom: isMobile ? 5 : 6),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 6.h),
+            padding: EdgeInsets.only(top: 6),
             child: Container(
-              width: 5.r,
-              height: 5.r,
+              width: 5,
+              height: 5,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.primary,
               ),
             ),
           ),
-          SizedBox(width: 10.w),
+          SizedBox(width: isMobile ? 8 : 10),
           Expanded(
             child: Text(
               text,
-              style: context.textTheme.bodyMedium?.copyWith(
+              style: TextStyle(
+                fontSize: isMobile ? 12 : 14,
                 color: isDark
                     ? AppColors.textSecondaryDark
                     : AppColors.textSecondaryLight,

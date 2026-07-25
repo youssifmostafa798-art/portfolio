@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/features/project/data/project_data.dart';
 
@@ -14,20 +12,21 @@ class ProjectHeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = context.responsive;
+    final isMobile = responsive.isMobile;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: responsive.responsivePadding,
-        vertical: 64.h,
+        vertical: isMobile ? 40 : 64,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: responsive.isMobile ? 20.h : 32.h),
+          SizedBox(height: isMobile ? 20 : 32),
 
           if (onBackTap != null) _BackButton(onTap: onBackTap!),
-          SizedBox(height: responsive.isMobile ? 32.h : 48.h),
+          SizedBox(height: isMobile ? 28 : 48),
           _buildHeroContent(context, responsive),
         ],
       ),
@@ -36,46 +35,46 @@ class ProjectHeroSection extends StatelessWidget {
 
   Widget _buildHeroContent(BuildContext context, ResponsiveData responsive) {
     final isDark = responsive.isDark;
+    final isMobile = responsive.isMobile;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _StatusBadge(isDark: isDark, status: data.status),
-        SizedBox(height: responsive.isMobile ? 16.h : 24.h),
+        SizedBox(height: isMobile ? 14 : 24),
         Text(
           data.title,
-          style:
-              (responsive.isMobile
-                      ? context.textTheme.displayMedium
-                      : context.textTheme.displayLarge)
-                  ?.copyWith(
-                    color: isDark
-                        ? AppColors.textPrimaryDark
-                        : AppColors.textPrimaryLight,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.02,
-                  ),
+          style: TextStyle(
+            fontSize: isMobile ? 30 : 48,
+            fontWeight: FontWeight.w700,
+            height: 1.08,
+            letterSpacing: -0.02,
+            color: isDark
+                ? AppColors.textPrimaryDark
+                : AppColors.textPrimaryLight,
+          ),
         ),
-        SizedBox(height: responsive.isMobile ? 8.h : 12.h),
+        SizedBox(height: isMobile ? 6 : 12),
         Text(
           data.tagline,
-          style: context.textTheme.titleLarge?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 16 : 20,
             color: AppColors.primary,
             fontWeight: FontWeight.w500,
           ),
         ),
-        SizedBox(height: responsive.isMobile ? 16.h : 24.h),
-        if (!responsive.isMobile)
+        SizedBox(height: isMobile ? 16 : 24),
+        if (!isMobile)
           Row(
             children: [
               _MetaItem(label: 'Role', value: data.role, isDark: isDark),
-              SizedBox(width: 32.w),
+              SizedBox(width: 32),
               _MetaItem(
                 label: 'Team',
                 value: '${data.teamSize} Members',
                 isDark: isDark,
               ),
-              SizedBox(width: 32.w),
+              SizedBox(width: 32),
               _MetaItem(
                 label: 'Timeline',
                 value: data.timeline,
@@ -88,13 +87,13 @@ class ProjectHeroSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _MetaItem(label: 'Role', value: data.role, isDark: isDark),
-              SizedBox(height: 8.h),
+              SizedBox(height: 8),
               _MetaItem(
                 label: 'Team',
                 value: '${data.teamSize} Members',
                 isDark: isDark,
               ),
-              SizedBox(height: 8.h),
+              SizedBox(height: 8),
               _MetaItem(
                 label: 'Timeline',
                 value: data.timeline,
@@ -102,16 +101,16 @@ class ProjectHeroSection extends StatelessWidget {
               ),
             ],
           ),
-        SizedBox(height: 24.h),
+        SizedBox(height: isMobile ? 20 : 24),
         Wrap(
-          spacing: 8.w,
-          runSpacing: 8.h,
+          spacing: isMobile ? 6 : 8,
+          runSpacing: isMobile ? 6 : 8,
           children: data.techStackTop
-              .map((t) => _TechChip(label: t, isDark: isDark))
+              .map((t) => _TechChip(label: t, isDark: isDark, isMobile: isMobile))
               .toList(),
         ),
-        SizedBox(height: 32.h),
-        _ActionRow(data: data, isDark: isDark),
+        SizedBox(height: isMobile ? 24 : 32),
+        _ActionRow(data: data, isDark: isDark, isMobile: isMobile),
       ],
     );
   }
@@ -124,6 +123,7 @@ class _BackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.isDark;
+    final isMobile = context.isMobile;
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -133,15 +133,16 @@ class _BackButton extends StatelessWidget {
           children: [
             Icon(
               Icons.arrow_back_rounded,
-              size: 18.r,
+              size: isMobile ? 17 : 18,
               color: isDark
                   ? AppColors.textSecondaryDark
                   : AppColors.textSecondaryLight,
             ),
-            SizedBox(width: 10.w),
+            SizedBox(width: isMobile ? 8 : 10),
             Text(
               'Back to Portfolio',
-              style: AppTypography.textTheme.bodyMedium?.copyWith(
+              style: TextStyle(
+                fontSize: isMobile ? 13 : 15,
                 color: isDark
                     ? AppColors.textSecondaryDark
                     : AppColors.textSecondaryLight,
@@ -161,28 +162,31 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = context.isMobile;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 12, vertical: isMobile ? 5 : 6),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.r),
+        borderRadius: BorderRadius.circular(100),
         color: AppColors.success.withValues(alpha: 0.1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 6.r,
-            height: 6.r,
+            width: isMobile ? 5 : 6,
+            height: isMobile ? 5 : 6,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.success,
             ),
           ),
-          SizedBox(width: 6.w),
+          SizedBox(width: isMobile ? 5 : 6),
           Text(
             status,
-            style: AppTypography.textTheme.labelSmall?.copyWith(
+            style: TextStyle(
+              fontSize: isMobile ? 11 : 12,
               color: AppColors.success,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -202,21 +206,24 @@ class _MetaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = context.isMobile;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: AppTypography.textTheme.bodySmall?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 12 : 13,
             color: isDark
                 ? AppColors.textSecondaryDark
                 : AppColors.textSecondaryLight,
           ),
         ),
-        SizedBox(height: 2.h),
+        SizedBox(height: 2),
         Text(
           value,
-          style: AppTypography.textTheme.bodyMedium?.copyWith(
+          style: TextStyle(
+            fontSize: isMobile ? 13 : 15,
             color: isDark
                 ? AppColors.textPrimaryDark
                 : AppColors.textPrimaryLight,
@@ -231,19 +238,21 @@ class _MetaItem extends StatelessWidget {
 class _TechChip extends StatelessWidget {
   final String label;
   final bool isDark;
-  const _TechChip({required this.label, required this.isDark});
+  final bool isMobile;
+  const _TechChip({required this.label, required this.isDark, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 12, vertical: isMobile ? 5 : 6),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100.r),
+        borderRadius: BorderRadius.circular(100),
         color: AppColors.primary.withValues(alpha: 0.1),
       ),
       child: Text(
         label,
-        style: AppTypography.textTheme.labelSmall?.copyWith(
+        style: TextStyle(
+          fontSize: isMobile ? 11 : 12,
           color: AppColors.primary,
           fontWeight: FontWeight.w500,
         ),
@@ -255,28 +264,32 @@ class _TechChip extends StatelessWidget {
 class _ActionRow extends StatelessWidget {
   final ProjectData data;
   final bool isDark;
-  const _ActionRow({required this.data, required this.isDark});
+  final bool isMobile;
+  const _ActionRow({required this.data, required this.isDark, required this.isMobile});
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 8.w,
-      runSpacing: 8.h,
+      spacing: isMobile ? 6 : 8,
+      runSpacing: isMobile ? 6 : 8,
       children: [
         _PButton(
           label: 'GitHub',
           icon: Icons.code_rounded,
           onPressed: () => UrlUtils.openUrl(data.githubUrl),
+          isMobile: isMobile,
         ),
         _PButton(
           label: 'Demo Video',
           icon: Icons.play_arrow_rounded,
           onPressed: () => UrlUtils.openUrl(data.demoUrl),
+          isMobile: isMobile,
         ),
         _PButton(
           label: 'View Screenshots',
           icon: Icons.photo_library_rounded,
           onPressed: () => UrlUtils.openUrl(data.screenshotsUrl),
+          isMobile: isMobile,
         ),
       ],
     );
@@ -287,10 +300,12 @@ class _PButton extends StatefulWidget {
   final String label;
   final IconData icon;
   final VoidCallback onPressed;
+  final bool isMobile;
   const _PButton({
     required this.label,
     required this.icon,
     required this.onPressed,
+    required this.isMobile,
   });
 
   @override
@@ -308,24 +323,27 @@ class _PButtonState extends State<_PButton> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         transform: _isHovered
-            ? Matrix4.translationValues(0, -1.h, 0)
+            ? Matrix4.translationValues(0, -1, 0)
             : Matrix4.identity(),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: widget.onPressed,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(12),
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 11.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: widget.isMobile ? 14 : 18,
+                vertical: widget.isMobile ? 12 : 11,
+              ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
+                borderRadius: BorderRadius.circular(12),
                 color: AppColors.primary,
                 boxShadow: _isHovered
                     ? [
                         BoxShadow(
                           color: AppColors.primary.withValues(alpha: 0.3),
-                          blurRadius: 16.r,
-                          offset: Offset(0, 6.h),
+                          blurRadius: 16,
+                          offset: const Offset(0, 6),
                         ),
                       ]
                     : null,
@@ -333,11 +351,12 @@ class _PButtonState extends State<_PButton> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(widget.icon, size: 16.r, color: Colors.white),
-                  SizedBox(width: 6.w),
+                  Icon(widget.icon, size: widget.isMobile ? 15 : 16, color: Colors.white),
+                  SizedBox(width: widget.isMobile ? 5 : 6),
                   Text(
                     widget.label,
-                    style: AppTypography.textTheme.labelMedium?.copyWith(
+                    style: TextStyle(
+                      fontSize: widget.isMobile ? 12 : 13,
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
                     ),

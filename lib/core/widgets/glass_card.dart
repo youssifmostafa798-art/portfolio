@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/context_extensions.dart';
 import '../theme/app_colors.dart';
 
@@ -44,28 +43,28 @@ class GlassCard extends StatelessWidget {
       height: height,
       margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius.r),
+        borderRadius: BorderRadius.circular(borderRadius),
         gradient: gradient,
         color: bgColor,
         border: showBorder
-            ? Border.all(color: borderColor, width: 0.5.w)
+            ? Border.all(color: borderColor, width: 0.5)
             : null,
         boxShadow: [
           BoxShadow(
             color: isDark
                 ? Colors.black.withValues(alpha: 0.3)
                 : Colors.black.withValues(alpha: 0.06),
-            blurRadius: 40.r,
-            offset: Offset(0, 10.h),
+            blurRadius: 40,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius.r),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(borderRadius.r),
+          borderRadius: BorderRadius.circular(borderRadius),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
           child: Padding(

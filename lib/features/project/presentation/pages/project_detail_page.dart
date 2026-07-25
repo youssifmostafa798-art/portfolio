@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
@@ -172,7 +171,7 @@ class _ProjectContentBody extends StatelessWidget {
   Widget _buildSection(Widget child) {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 1440.w),
+        constraints: BoxConstraints(maxWidth: 1440),
         child: AnimatedSection(child: child),
       ),
     );

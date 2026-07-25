@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
-import 'package:portfolio/core/theme/app_typography.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/data/project_data.dart';
@@ -14,27 +12,36 @@ class GallerySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = context.responsive;
-    final crossAxisCount = responsive.crossAxisCount;
+    final isMobile = responsive.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
         horizontal: responsive.responsivePadding,
-        vertical: 120.h,
+        vertical: sectionVertical,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Gallery',
-              style: context.textTheme.displaySmall?.copyWith(
-                  color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
-          SizedBox(height: 8.h),
+              style: TextStyle(
+                fontSize: context.responsiveTitleSize,
+                fontWeight: FontWeight.w700,
+                height: 1.1,
+                letterSpacing: -0.01,
+                color: responsive.isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              )),
+          SizedBox(height: isMobile ? 6 : 8),
           Text(data.gallerySubtitle,
-              style: context.textTheme.bodyLarge?.copyWith(
-                  color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight)),
-          SizedBox(height: 48.h),
+              style: TextStyle(
+                fontSize: context.responsiveSubtitleSize,
+                color: responsive.isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              )),
+          SizedBox(height: sectionGap),
           _ResponsiveGrid(
-            crossAxisCount: crossAxisCount,
+            isMobile: isMobile,
             isDark: responsive.isDark,
             children: List.generate(data.screenshotLabels.length, (i) =>
                 _GalleryCard(
@@ -43,9 +50,10 @@ class GallerySection extends StatelessWidget {
                   color: data.screenshotColors[i],
                   screenshotsUrl: data.screenshotsUrl,
                   isDark: responsive.isDark,
+                  isMobile: isMobile,
                 )),
           ),
-          SizedBox(height: 24.h),
+          SizedBox(height: isMobile ? 16 : 24),
           Center(
             child: Semantics(
               button: true,
@@ -55,19 +63,21 @@ class GallerySection extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => UrlUtils.openUrl(data.screenshotsUrl),
                   child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                  padding: EdgeInsets.symmetric(horizontal: isMobile ? 18 : 24, vertical: isMobile ? 10 : 12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: BorderRadius.circular(context.responsiveBorderRadius),
                     color: AppColors.primary,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.photo_library_rounded, size: 18.r, color: Colors.white),
-                      SizedBox(width: 8.w),
+                      Icon(Icons.photo_library_rounded, size: isMobile ? 16 : 18, color: Colors.white),
+                      SizedBox(width: isMobile ? 6 : 8),
                       Text('View All Screenshots on Google Drive',
-                          style: AppTypography.textTheme.labelLarge?.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.w600)),
+                          style: TextStyle(
+                              fontSize: isMobile ? 12 : 13,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ),
@@ -82,28 +92,35 @@ class GallerySection extends StatelessWidget {
 }
 
 class _ResponsiveGrid extends StatelessWidget {
-  final int crossAxisCount;
+  final bool isMobile;
   final bool isDark;
   final List<Widget> children;
 
   const _ResponsiveGrid({
-    required this.crossAxisCount,
+    required this.isMobile,
     required this.isDark,
     required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
-    final spacing = 16.w;
-    return Wrap(
-      spacing: spacing,
-      runSpacing: spacing,
-      children: children.map((child) => SizedBox(
-        width: (MediaQuery.of(context).size.width -
-            context.responsive.responsivePadding * 2 -
-            spacing * (crossAxisCount - 1)) / crossAxisCount,
-        child: child,
-      )).toList(),
+    final spacing = isMobile ? 10.0 : 16.0;
+    final crossAxisCount = isMobile ? 1 : 2;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final childWidth =
+            (constraints.maxWidth - spacing * (crossAxisCount - 1)) / crossAxisCount;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: spacing,
+          children: children.map((child) => SizedBox(
+            width: childWidth,
+            child: child,
+          )).toList(),
+        );
+      },
     );
   }
 }
@@ -114,16 +131,19 @@ class _GalleryCard extends StatelessWidget {
   final Color color;
   final String screenshotsUrl;
   final bool isDark;
+  final bool isMobile;
   const _GalleryCard({
     required this.index,
     required this.label,
     required this.color,
     required this.screenshotsUrl,
     required this.isDark,
+    required this.isMobile,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cardHeight = isMobile ? 180.0 : 200.0;
 
     return Semantics(
       button: true,
@@ -133,9 +153,9 @@ class _GalleryCard extends StatelessWidget {
         child: GlassCard(
           padding: EdgeInsets.zero,
           child: Container(
-            height: 200.h,
+            height: cardHeight,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: BorderRadius.circular(context.responsiveBorderRadius),
               gradient: LinearGradient(
                 colors: [color, color.withValues(alpha: 0.7)],
               ),
@@ -146,25 +166,28 @@ class _GalleryCard extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.phone_android_rounded, size: 48.r,
+                      Icon(Icons.phone_android_rounded, size: isMobile ? 40 : 48,
                           color: Colors.white.withValues(alpha: 0.3)),
-                      SizedBox(height: 8.h),
+                      SizedBox(height: isMobile ? 6 : 8),
                       Text(label,
-                          style: AppTypography.textTheme.titleSmall?.copyWith(
+                          style: TextStyle(
+                              fontSize: isMobile ? 13 : 14,
                               color: Colors.white.withValues(alpha: 0.7))),
                     ],
                   ),
                 ),
                 Positioned(
-                  top: 12.h, right: 12.w,
+                  top: isMobile ? 10 : 12,
+                  right: isMobile ? 10 : 12,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 6 : 8, vertical: isMobile ? 3 : 4),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.r),
+                      borderRadius: BorderRadius.circular(6),
                       color: Colors.black.withValues(alpha: 0.3),
                     ),
                     child: Text('Screenshot ${index + 1}',
-                        style: AppTypography.textTheme.labelSmall?.copyWith(
+                        style: TextStyle(
+                            fontSize: isMobile ? 10 : 11,
                             color: Colors.white.withValues(alpha: 0.6))),
                   ),
                 ),
