@@ -98,14 +98,21 @@ class _ProjectCardState extends State<ProjectCard> {
     Project project,
     bool isDark,
   ) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final imageHeight = screenHeight * 0.55;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ProjectImage(
-          imageUrl: project.imageUrl,
-          title: project.title,
-          height: 200,
-          borderRadius: 0,
+        SizedBox(
+          height: imageHeight,
+          //change
+          child: ProjectImage(
+            imageUrl: project.imageUrl,
+            title: project.title,
+            height: double.infinity,
+            borderRadius: 0,
+          ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
@@ -163,7 +170,12 @@ class _ProjectCardState extends State<ProjectCard> {
           }).toList(),
         ),
         SizedBox(height: isMobile ? 14 : 16),
-        _InfoRow(label: 'Role', value: project.role, isDark: isDark, isMobile: isMobile),
+        _InfoRow(
+          label: 'Role',
+          value: project.role,
+          isDark: isDark,
+          isMobile: isMobile,
+        ),
         SizedBox(height: isMobile ? 14 : 16),
         Text(
           'Key Highlights',

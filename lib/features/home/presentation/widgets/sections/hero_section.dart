@@ -223,7 +223,7 @@ class _ActionButtons extends StatelessWidget {
         _PrimaryButton(
           label: 'Download CV',
           icon: Icons.download_rounded,
-          onPressed: () {},
+          onPressed: () => UrlUtils.openUrl(AppConstants.cvUrl),
           isMobile: isMobile,
         ),
         _SecondaryButton(
