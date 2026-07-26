@@ -106,7 +106,7 @@ class _ProjectCardState extends State<ProjectCard> {
       children: [
         SizedBox(
           height: imageHeight,
-          //change
+
           child: ProjectImage(
             imageUrl: project.imageUrl,
             title: project.title,

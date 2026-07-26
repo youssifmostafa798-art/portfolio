@@ -5,7 +5,7 @@ import '../theme/app_colors.dart';
 class ProjectImage extends StatelessWidget {
   final String? imageUrl;
   final String title;
-  final double? height;
+  final double height;
   final double? width;
   final double borderRadius;
   //edit
@@ -13,7 +13,7 @@ class ProjectImage extends StatelessWidget {
     super.key,
     this.imageUrl,
     required this.title,
-    this.height,
+    this.height = 700,
     this.width,
     this.borderRadius = 20,
   });
@@ -60,13 +60,13 @@ class ProjectImage extends StatelessWidget {
 
 class _AppPlaceholder extends StatelessWidget {
   final String title;
-  final double? height;
+  final double height;
   final double? width;
   final double borderRadius;
 
   const _AppPlaceholder({
     required this.title,
-    this.height,
+    required this.height,
     this.width,
     required this.borderRadius,
   });
