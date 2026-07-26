@@ -5,15 +5,15 @@ import '../theme/app_colors.dart';
 class ProjectImage extends StatelessWidget {
   final String? imageUrl;
   final String title;
-  final double height;
+  final double? height;
   final double? width;
   final double borderRadius;
-
+  //edit
   const ProjectImage({
     super.key,
     this.imageUrl,
     required this.title,
-    this.height = 700,
+    this.height,
     this.width,
     this.borderRadius = 20,
   });
@@ -60,13 +60,13 @@ class ProjectImage extends StatelessWidget {
 
 class _AppPlaceholder extends StatelessWidget {
   final String title;
-  final double height;
+  final double? height;
   final double? width;
   final double borderRadius;
 
   const _AppPlaceholder({
     required this.title,
-    required this.height,
+    this.height,
     this.width,
     required this.borderRadius,
   });
@@ -77,7 +77,7 @@ class _AppPlaceholder extends StatelessWidget {
     final logoSize = context.isMobile ? 52.0 : 64.0;
 
     return Container(
-      height: height.isFinite ? height : null,
+      height: height,
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
