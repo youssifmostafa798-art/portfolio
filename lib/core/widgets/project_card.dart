@@ -74,11 +74,11 @@ class _ProjectCardState extends State<ProjectCard> {
         SizedBox(
           width: 350,
           child: AspectRatio(
-            aspectRatio: 9 / 16,
+            aspectRatio: 16 / 30,
             child: ProjectImage(
               imageUrl: project.imageUrl,
               title: project.title,
-              height: double.infinity,
+              height: 100,
               borderRadius: 0,
             ),
           ),
