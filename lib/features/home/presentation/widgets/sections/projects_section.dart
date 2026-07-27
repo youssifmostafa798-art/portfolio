@@ -43,6 +43,43 @@ class ProjectsSection extends StatelessWidget {
           'https://drive.google.com/drive/folders/1L3Hf67WcEH76gWpr18T8MGqCamE4ULES?usp=sharing',
       caseStudyRoute: '/project/vitaguard',
     ),
+    Project(
+      id: 'hungryy',
+      title: 'Hungryy',
+      subtitle: 'Food Ordering Application',
+      description:
+          'A production-grade food ordering application built entirely in Flutter. '
+          'Features real-time product browsing with category filtering, dynamic cart '
+          'management with tax and delivery fee calculations, multi-step checkout '
+          'with animated confirmation, user authentication with persistent JWT sessions, '
+          'and a glassmorphism-driven UI system.',
+      role: 'Flutter Mobile Application Developer',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Provider',
+        'Dio',
+        'REST API',
+        'SharedPreferences',
+      ],
+      highlights: [
+        'Complete end-to-end food ordering flow from browsing to checkout',
+        'Glassmorphism navigation with animated pill indicator and backdrop blur',
+        'Provider-based cart with real-time price calculations including tax and delivery',
+        'Feature-based architecture with repository pattern and reusable component library',
+      ],
+      githubUrl: 'https://github.com/youssifmostafa798-art/hungryy',
+      caseStudyRoute: '/case-study/hungryy',
+      logoAsset: 'assets/images/logo hungry.png',
+      cardSubtitle: 'Food Ordering Application',
+      cardGradientColors: [
+        Color(0xFF0F3D2E),
+        Color(0xFF145A32),
+        Color(0xFF0F3D2E),
+      ],
+      cardGlowColor: Color(0xFF27AE60),
+      cardLogoGradientColors: [Color(0xFF0F3D2E), Color(0xFF145A32)],
+    ),
   ];
 
   @override

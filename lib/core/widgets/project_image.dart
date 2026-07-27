@@ -8,6 +8,11 @@ class ProjectImage extends StatelessWidget {
   final double height;
   final double? width;
   final double borderRadius;
+  final String? logoAsset;
+  final String? cardSubtitle;
+  final List<Color>? cardGradientColors;
+  final Color? cardGlowColor;
+  final List<Color>? cardLogoGradientColors;
   //edit
   const ProjectImage({
     super.key,
@@ -16,6 +21,11 @@ class ProjectImage extends StatelessWidget {
     this.height = 700,
     this.width,
     this.borderRadius = 20,
+    this.logoAsset,
+    this.cardSubtitle,
+    this.cardGradientColors,
+    this.cardGlowColor,
+    this.cardLogoGradientColors,
   });
 
   @override
@@ -35,6 +45,11 @@ class ProjectImage extends StatelessWidget {
               height: height,
               width: width,
               borderRadius: borderRadius,
+              logoAsset: logoAsset,
+              cardSubtitle: cardSubtitle,
+              cardGradientColors: cardGradientColors,
+              cardGlowColor: cardGlowColor,
+              cardLogoGradientColors: cardLogoGradientColors,
             );
           },
           errorBuilder: (context, error, stackTrace) {
@@ -43,6 +58,11 @@ class ProjectImage extends StatelessWidget {
               height: height,
               width: width,
               borderRadius: borderRadius,
+              logoAsset: logoAsset,
+              cardSubtitle: cardSubtitle,
+              cardGradientColors: cardGradientColors,
+              cardGlowColor: cardGlowColor,
+              cardLogoGradientColors: cardLogoGradientColors,
             );
           },
         ),
@@ -54,6 +74,11 @@ class ProjectImage extends StatelessWidget {
       height: height,
       width: width,
       borderRadius: borderRadius,
+      logoAsset: logoAsset,
+      cardSubtitle: cardSubtitle,
+      cardGradientColors: cardGradientColors,
+      cardGlowColor: cardGlowColor,
+      cardLogoGradientColors: cardLogoGradientColors,
     );
   }
 }
@@ -63,12 +88,22 @@ class _AppPlaceholder extends StatelessWidget {
   final double height;
   final double? width;
   final double borderRadius;
+  final String? logoAsset;
+  final String? cardSubtitle;
+  final List<Color>? cardGradientColors;
+  final Color? cardGlowColor;
+  final List<Color>? cardLogoGradientColors;
 
   const _AppPlaceholder({
     required this.title,
     required this.height,
     this.width,
     required this.borderRadius,
+    this.logoAsset,
+    this.cardSubtitle,
+    this.cardGradientColors,
+    this.cardGlowColor,
+    this.cardLogoGradientColors,
   });
 
   @override
@@ -76,15 +111,22 @@ class _AppPlaceholder extends StatelessWidget {
     final isDark = context.isDark;
     final logoSize = context.isMobile ? 52.0 : 64.0;
 
+    final gradientColors =
+        cardGradientColors ??
+        const [Color(0xFF0D1B2A), Color(0xFF1B2838), Color(0xFF0D1B2A)];
+    final glowColor = cardGlowColor ?? AppColors.primary;
+    final logoGradientColors =
+        cardLogoGradientColors ?? [AppColors.primary, AppColors.secondary];
+
     return Container(
       height: height,
       width: width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF0D1B2A), Color(0xFF1B2838), Color(0xFF0D1B2A)],
+          colors: gradientColors,
         ),
         border: Border.all(
           color: isDark
@@ -105,7 +147,7 @@ class _AppPlaceholder extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppColors.primary.withValues(alpha: 0.15),
+                    glowColor.withValues(alpha: 0.15),
                     Colors.transparent,
                   ],
                 ),
@@ -122,7 +164,7 @@ class _AppPlaceholder extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    AppColors.secondary.withValues(alpha: 0.1),
+                    glowColor.withValues(alpha: 0.1),
                     Colors.transparent,
                   ],
                 ),
@@ -137,14 +179,12 @@ class _AppPlaceholder extends StatelessWidget {
                 height: logoSize,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18),
-                  gradient: const LinearGradient(
-                    colors: [AppColors.primary, AppColors.secondary],
-                  ),
+                  gradient: LinearGradient(colors: logoGradientColors),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.asset(
-                    'assets/images/logo.jpeg',
+                    logoAsset ?? 'assets/images/logo vita.jpeg',
                     width: logoSize,
                     height: logoSize,
                     fit: BoxFit.cover,
@@ -162,7 +202,7 @@ class _AppPlaceholder extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Health Monitoring',
+                cardSubtitle ?? 'Health Monitoring',
                 style: TextStyle(
                   fontSize: context.isMobile ? 13 : 14,
                   color: Colors.white.withValues(alpha: 0.6),
