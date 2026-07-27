@@ -45,7 +45,7 @@ class ProjectsSection extends StatelessWidget {
     ),
     Project(
       id: 'hungryy',
-      title: 'Hungryy',
+      title: 'Hungry',
       subtitle: 'Food Ordering Application',
       description:
           'A production-grade food ordering application built entirely in Flutter. '
@@ -70,7 +70,7 @@ class ProjectsSection extends StatelessWidget {
       ],
       githubUrl: 'https://github.com/youssifmostafa798-art/hungryy',
       caseStudyRoute: '/case-study/hungryy',
-      logoAsset: 'assets/images/logo hungry.png',
+      logoAsset: 'assets/images/logo  hungry.png',
       cardSubtitle: 'Food Ordering Application',
       cardGradientColors: [
         Color(0xFF0F3D2E),
