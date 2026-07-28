@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/project/presentation/pages/hungryy_case_study_page.dart';
+import '../../features/project/presentation/pages/hungryy_detail_page.dart';
 import '../../features/project/presentation/pages/vitaguard_detail_page.dart';
 
 abstract final class AppRouter {
@@ -25,7 +25,7 @@ abstract final class AppRouter {
       GoRoute(
         path: '/case-study/hungryy',
         name: 'hungryy',
-        builder: (context, state) => const HungryyCaseStudyPage(),
+        builder: (context, state) => const HungryyDetailPage(),
       ),
     ],
   );

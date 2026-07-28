@@ -7,19 +7,19 @@ import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
 import 'package:portfolio/features/project/data/project_data.dart';
 import 'package:portfolio/features/project/data/project_data_registry.dart';
-import '../widgets/sections/ps_hero_section.dart';
-import '../widgets/sections/ps_overview_section.dart';
-import '../widgets/sections/ps_contribution_section.dart';
-import '../widgets/sections/ps_features_section.dart';
-import '../widgets/sections/ps_architecture_section.dart';
-import '../widgets/sections/ps_tech_section.dart';
-import '../widgets/sections/ps_challenges_section.dart';
-import '../widgets/sections/ps_performance_section.dart';
-import '../widgets/sections/ps_gallery_section.dart';
-import '../widgets/sections/ps_results_section.dart';
-import '../widgets/sections/ps_lessons_section.dart';
-import '../widgets/sections/ps_future_section.dart';
-import '../widgets/sections/ps_bottom_cta_section.dart';
+import '../widgets/sections/vitagaurd/ps_hero_section.dart';
+import '../widgets/sections/vitagaurd/ps_overview_section.dart';
+import '../widgets/sections/vitagaurd/ps_contribution_section.dart';
+import '../widgets/sections/vitagaurd/ps_features_section.dart';
+import '../widgets/sections/vitagaurd/ps_architecture_section.dart';
+import '../widgets/sections/vitagaurd/ps_tech_section.dart';
+import '../widgets/sections/vitagaurd/ps_challenges_section.dart';
+import '../widgets/sections/vitagaurd/ps_performance_section.dart';
+import '../widgets/sections/vitagaurd/ps_gallery_section.dart';
+import '../widgets/sections/vitagaurd/ps_results_section.dart';
+import '../widgets/sections/vitagaurd/ps_lessons_section.dart';
+import '../widgets/sections/vitagaurd/ps_future_section.dart';
+import '../widgets/sections/vitagaurd/ps_bottom_cta_section.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   final String projectId;
@@ -67,9 +67,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     final projectData = ProjectDataRegistry.get(widget.projectId);
     if (projectData == null) {
       return Scaffold(
-        body: Center(
-          child: Text('Project "${widget.projectId}" not found.'),
-        ),
+        body: Center(child: Text('Project "${widget.projectId}" not found.')),
       );
     }
 
@@ -88,7 +86,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             goBack: _goBack,
           ),
           Positioned(
-            top: 0, left: 0, right: 0,
+            top: 0,
+            left: 0,
+            right: 0,
             child: ValueListenableBuilder<bool>(
               valueListenable: _isScrolledNotifier,
               builder: (context, isScrolled, _) {
@@ -134,9 +134,7 @@ class _ProjectContentBody extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       itemCount: _sections.length,
       itemBuilder: (context, index) {
-        return RepaintBoundary(
-          child: _sections[index](context),
-        );
+        return RepaintBoundary(child: _sections[index](context));
       },
     );
   }
@@ -187,7 +185,9 @@ class DividerWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 1,
-      color: isDark ? AppColors.darkDivider.withValues(alpha: 0.3) : AppColors.lightDivider.withValues(alpha: 0.3),
+      color: isDark
+          ? AppColors.darkDivider.withValues(alpha: 0.3)
+          : AppColors.lightDivider.withValues(alpha: 0.3),
     );
   }
 }

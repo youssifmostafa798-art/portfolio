@@ -7,7 +7,7 @@ import 'package:portfolio/core/widgets/app_nav_bar.dart';
 import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/about_section.dart';
 import '../widgets/sections/skills_section.dart';
-import '../widgets/sections/projects_section.dart';
+import '../../../project/presentation/widgets/sections/vitagaurd/projects_section.dart';
 import '../widgets/sections/contact_section.dart';
 
 class HomePage extends StatefulWidget {
@@ -101,10 +101,7 @@ class _HomePageState extends State<HomePage> {
                 constraints: BoxConstraints(maxWidth: 1440),
                 child: Column(
                   children: [
-                    SizedBox(
-                      key: _sectionKeys[0],
-                      child: const HeroSection(),
-                    ),
+                    SizedBox(key: _sectionKeys[0], child: const HeroSection()),
                     AnimatedSection(
                       child: SizedBox(
                         key: _sectionKeys[1],
@@ -125,7 +122,10 @@ class _HomePageState extends State<HomePage> {
                             if (projectId == 'hungryy') {
                               context.pushNamed('hungryy');
                             } else {
-                              context.pushNamed('project', pathParameters: {'projectId': projectId});
+                              context.pushNamed(
+                                'project',
+                                pathParameters: {'projectId': projectId},
+                              );
                             }
                           },
                         ),
