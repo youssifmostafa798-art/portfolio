@@ -189,9 +189,19 @@ class _StatsRow extends StatelessWidget {
 
     return Row(
       children: [
-        _StatItem(value: '1+', label: 'Years', isDark: isDark, isMobile: isMobile),
+        _StatItem(
+          value: '1+',
+          label: 'Years',
+          isDark: isDark,
+          isMobile: isMobile,
+        ),
         SizedBox(width: isMobile ? 24 : 32),
-        _StatItem(value: '1', label: 'Projects', isDark: isDark, isMobile: isMobile),
+        _StatItem(
+          value: '2',
+          label: 'Projects',
+          isDark: isDark,
+          isMobile: isMobile,
+        ),
         SizedBox(width: isMobile ? 24 : 32),
       ],
     );

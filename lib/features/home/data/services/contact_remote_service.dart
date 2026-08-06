@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/services/supabase_service.dart';
-import '../models/contact_request.dart';
-import '../models/contact_response.dart';
+import '../../data/models/contact_request.dart';
+import '../../data/models/contact_response.dart';
 
 class ContactRemoteService {
   const ContactRemoteService();
@@ -11,10 +11,7 @@ class ContactRemoteService {
   Future<ContactResponse> sendMessage(ContactRequest request) async {
     try {
       final response = await SupabaseService.client.functions
-          .invoke(
-            'contact',
-            body: request.toJson(),
-          )
+          .invoke('contact', body: request.toJson())
           .timeout(const Duration(seconds: 15));
 
       final data = response.data as Map<String, dynamic>?;
