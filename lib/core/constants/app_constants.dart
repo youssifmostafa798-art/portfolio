@@ -17,5 +17,5 @@ abstract final class AppConstants {
   static const String resumeFileName = 'Youssif_Mostafa_Resume.pdf';
 
   static const String cvUrl =
-      'https://drive.google.com/file/d/1LsvPzOQ_nvplQizWUZyYuE25KNyXRrcn/view?usp=drive_link';
+      'https://drive.google.com/file/d/12NeskvGSBSCMpvURC_oq4hOBUANJeQYG/view?usp=drive_link';
 }
