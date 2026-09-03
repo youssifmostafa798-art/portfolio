@@ -1,5 +1,5 @@
 import 'project_data.dart';
-import 'vitaguard_data.dart';
+import '../vitaguard/data/vitaguard_data.dart';
 
 abstract final class ProjectDataRegistry {
   static final Map<String, ProjectData> _projects = {};

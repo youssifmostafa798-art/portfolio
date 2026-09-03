@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
-import 'package:portfolio/features/project/data/hungryy_data.dart';
-import 'hungryy_colors.dart';
+import 'package:portfolio/features/project/maxfashion/data/maxfashion_data.dart';
+import 'maxfashion_colors.dart';
 
-class HungryyTextSection extends StatelessWidget {
+class MaxfashionTextSection extends StatelessWidget {
   final String title;
   final String? subtitle;
   final String body;
-  final List<String>? bulletPoints;
-  const HungryyTextSection({
+  const MaxfashionTextSection({
     super.key,
     required this.title,
     this.subtitle,
     required this.body,
-    this.bulletPoints,
   });
 
   @override
@@ -67,57 +65,21 @@ class HungryyTextSection extends StatelessWidget {
                   height: 1.7,
                 )),
           ),
-          if (bulletPoints != null && bulletPoints!.isNotEmpty) ...[
-            SizedBox(height: isMobile ? 12 : 16),
-            ...bulletPoints!.map((point) => Padding(
-                  padding: EdgeInsets.only(bottom: isMobile ? 8 : 10),
-                  child: GlassCard(
-                    padding: EdgeInsets.all(isMobile ? 14 : 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: isMobile ? 5 : 6),
-                          width: isMobile ? 6 : 7,
-                          height: isMobile ? 6 : 7,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: HungryyColors.primary,
-                          ),
-                        ),
-                        SizedBox(width: isMobile ? 10 : 12),
-                        Expanded(
-                          child: Text(point,
-                              style: TextStyle(
-                                fontSize: isMobile ? 13 : 14,
-                                color: isDark
-                                    ? AppColors.textSecondaryDark
-                                    : AppColors.textSecondaryLight,
-                                height: 1.6,
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
-          ],
         ],
       ),
     );
   }
 }
 
-class HungryyCardGridSection extends StatelessWidget {
+class MaxfashionCardGridSection extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final List<HungryyCardItem> cards;
-  final int crossAxisCount;
-  const HungryyCardGridSection({
+  final List<MaxfashionFeature> items;
+  const MaxfashionCardGridSection({
     super.key,
     required this.title,
     this.subtitle,
-    required this.cards,
-    this.crossAxisCount = 2,
+    required this.items,
   });
 
   @override
@@ -161,8 +123,7 @@ class HungryyCardGridSection extends StatelessWidget {
           _ResponsiveCardGrid(
             isMobile: isMobile,
             isDark: isDark,
-            crossAxisCount: isMobile ? 1 : crossAxisCount,
-            cards: cards,
+            items: items,
           ),
         ],
       ),
@@ -173,19 +134,17 @@ class HungryyCardGridSection extends StatelessWidget {
 class _ResponsiveCardGrid extends StatelessWidget {
   final bool isMobile;
   final bool isDark;
-  final int crossAxisCount;
-  final List<HungryyCardItem> cards;
-
+  final List<MaxfashionFeature> items;
   const _ResponsiveCardGrid({
     required this.isMobile,
     required this.isDark,
-    required this.crossAxisCount,
-    required this.cards,
+    required this.items,
   });
 
   @override
   Widget build(BuildContext context) {
     final spacing = isMobile ? 10.0 : 16.0;
+    final crossAxisCount = isMobile ? 1 : 2;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -196,11 +155,11 @@ class _ResponsiveCardGrid extends StatelessWidget {
         return Wrap(
           spacing: spacing,
           runSpacing: spacing,
-          children: cards
-              .map((card) => SizedBox(
+          children: items
+              .map((item) => SizedBox(
                     width: childWidth,
-                    child: _ContentCard(
-                        card: card, isDark: isDark, isMobile: isMobile),
+                    child: _FeatureCard(
+                        item: item, isDark: isDark, isMobile: isMobile),
                   ))
               .toList(),
         );
@@ -209,12 +168,15 @@ class _ResponsiveCardGrid extends StatelessWidget {
   }
 }
 
-class _ContentCard extends StatelessWidget {
-  final HungryyCardItem card;
+class _FeatureCard extends StatelessWidget {
+  final MaxfashionFeature item;
   final bool isDark;
   final bool isMobile;
-  const _ContentCard(
-      {required this.card, required this.isDark, required this.isMobile});
+  const _FeatureCard({
+    required this.item,
+    required this.isDark,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -224,23 +186,24 @@ class _ContentCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (card.icon != null) ...[
+          if (item.icon != null) ...[
             Container(
               width: isMobile ? 36 : 40,
               height: isMobile ? 36 : 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(isMobile ? 8 : 10),
                 gradient: const LinearGradient(
-                  colors: [HungryyColors.primary, HungryyColors.secondary],
+                  colors: [MaxfashionColors.primaryBlack, MaxfashionColors.darkBorder],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: Icon(card.icon, color: Colors.white, size: isMobile ? 18 : 20),
+              child:
+                  Icon(item.icon, color: Colors.white, size: isMobile ? 18 : 20),
             ),
             SizedBox(height: isMobile ? 10 : 12),
           ],
-          Text(card.title,
+          Text(item.title,
               style: TextStyle(
                   fontSize: isMobile ? 14 : 15,
                   color: isDark
@@ -249,7 +212,7 @@ class _ContentCard extends StatelessWidget {
                   fontWeight: FontWeight.w600)),
           SizedBox(height: isMobile ? 6 : 8),
           Flexible(
-            child: Text(card.description,
+            child: Text(item.description,
                 style: TextStyle(
                     fontSize: isMobile ? 13 : 14,
                     color: isDark
@@ -263,11 +226,85 @@ class _ContentCard extends StatelessWidget {
   }
 }
 
-class HungryyProblemSolutionSection extends StatelessWidget {
+class MaxfashionMetricsSection extends StatelessWidget {
+  final String title;
+  final List<MaxfashionMetric> items;
+  const MaxfashionMetricsSection({required this.title, required this.items, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final responsive = context.responsive;
+    final isDark = responsive.isDark;
+    final isMobile = responsive.isMobile;
+    final sectionVertical = context.responsiveSectionVertical;
+    final sectionGap = context.responsiveSectionGap;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(
+        horizontal: responsive.responsivePadding,
+        vertical: sectionVertical,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              style: TextStyle(
+                fontSize: context.responsiveTitleSize,
+                fontWeight: FontWeight.w700,
+                height: 1.1,
+                letterSpacing: -0.01,
+                color: isDark
+                    ? AppColors.textPrimaryDark
+                    : AppColors.textPrimaryLight,
+              )),
+          SizedBox(height: sectionGap),
+          Wrap(
+            spacing: isMobile ? 10 : 16,
+            runSpacing: isMobile ? 10 : 16,
+            children: items.map((metric) {
+              return SizedBox(
+                width: isMobile
+                    ? (MediaQuery.of(context).size.width - 64) / 2
+                    : 180,
+                child: GlassCard(
+                  padding: EdgeInsets.all(isMobile ? 14 : 18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(metric.value,
+                          style: TextStyle(
+                            fontSize: isMobile ? 22 : 28,
+                            fontWeight: FontWeight.w700,
+                            color: isDark
+                                ? MaxfashionColors.primaryWhite
+                                : MaxfashionColors.primaryBlack,
+                          )),
+                      SizedBox(height: isMobile ? 4 : 6),
+                      Text(metric.label,
+                          style: TextStyle(
+                            fontSize: isMobile ? 12 : 13,
+                            color: isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondaryLight,
+                          )),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MaxfashionProblemSolutionSection extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final List<HungryyProblemSolution> items;
-  const HungryyProblemSolutionSection({
+  final List<MaxfashionChallenge> items;
+  const MaxfashionProblemSolutionSection({
     super.key,
     required this.title,
     this.subtitle,
@@ -328,7 +365,10 @@ class HungryyProblemSolutionSection extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           )),
                       SizedBox(height: isMobile ? 12 : 16),
-                      _ProblemLabel(text: 'Problem', isDark: isDark, isMobile: isMobile),
+                      _ChallengeLabel(
+                          text: 'Challenge',
+                          isDark: isDark,
+                          isMobile: isMobile),
                       SizedBox(height: 6),
                       Text(item.problem,
                           style: TextStyle(
@@ -339,12 +379,17 @@ class HungryyProblemSolutionSection extends StatelessWidget {
                             height: 1.7,
                           )),
                       SizedBox(height: isMobile ? 12 : 16),
-                      _ProblemLabel(text: 'Solution', isDark: isDark, isMobile: isMobile),
+                      _ChallengeLabel(
+                          text: 'Solution',
+                          isDark: isDark,
+                          isMobile: isMobile),
                       SizedBox(height: 6),
                       Text(item.solution,
                           style: TextStyle(
                             fontSize: isMobile ? 13 : 14,
-                            color: HungryyColors.primary,
+                            color: isDark
+                                ? MaxfashionColors.primaryWhite
+                                : MaxfashionColors.primaryBlack,
                             height: 1.7,
                           )),
                     ],
@@ -357,12 +402,15 @@ class HungryyProblemSolutionSection extends StatelessWidget {
   }
 }
 
-class _ProblemLabel extends StatelessWidget {
+class _ChallengeLabel extends StatelessWidget {
   final String text;
   final bool isDark;
   final bool isMobile;
-  const _ProblemLabel(
-      {required this.text, required this.isDark, required this.isMobile});
+  const _ChallengeLabel({
+    required this.text,
+    required this.isDark,
+    required this.isMobile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -385,14 +433,12 @@ class _ProblemLabel extends StatelessWidget {
   }
 }
 
-class HungryyBulletListSection extends StatelessWidget {
+class MaxfashionBulletListSection extends StatelessWidget {
   final String title;
-  final String? subtitle;
   final List<String> items;
-  const HungryyBulletListSection({
+  const MaxfashionBulletListSection({
     super.key,
     required this.title,
-    this.subtitle,
     required this.items,
   });
 
@@ -423,16 +469,6 @@ class HungryyBulletListSection extends StatelessWidget {
                     ? AppColors.textPrimaryDark
                     : AppColors.textPrimaryLight,
               )),
-          if (subtitle != null) ...[
-            SizedBox(height: isMobile ? 6 : 8),
-            Text(subtitle!,
-                style: TextStyle(
-                  fontSize: context.responsiveSubtitleSize,
-                  color: isDark
-                      ? AppColors.textSecondaryDark
-                      : AppColors.textSecondaryLight,
-                )),
-          ],
           SizedBox(height: sectionGap),
           ...items.map((item) => Padding(
                 padding: EdgeInsets.only(bottom: isMobile ? 8 : 10),
@@ -445,9 +481,11 @@ class HungryyBulletListSection extends StatelessWidget {
                         margin: EdgeInsets.only(top: isMobile ? 5 : 6),
                         width: isMobile ? 7 : 8,
                         height: isMobile ? 7 : 8,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: HungryyColors.primary,
+                          color: isDark
+                              ? MaxfashionColors.primaryWhite
+                              : MaxfashionColors.primaryBlack,
                         ),
                       ),
                       SizedBox(width: isMobile ? 10 : 12),
@@ -466,172 +504,6 @@ class HungryyBulletListSection extends StatelessWidget {
                 ),
               )),
         ],
-      ),
-    );
-  }
-}
-
-class HungryyImagePlaceholdersSection extends StatelessWidget {
-  final String title;
-  final String? subtitle;
-  final List<HungryyPlaceholderItem> items;
-  const HungryyImagePlaceholdersSection({
-    super.key,
-    required this.title,
-    this.subtitle,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final responsive = context.responsive;
-    final isDark = responsive.isDark;
-    final isMobile = responsive.isMobile;
-    final sectionVertical = context.responsiveSectionVertical;
-    final sectionGap = context.responsiveSectionGap;
-
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        horizontal: responsive.responsivePadding,
-        vertical: sectionVertical,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title,
-              style: TextStyle(
-                fontSize: context.responsiveTitleSize,
-                fontWeight: FontWeight.w700,
-                height: 1.1,
-                letterSpacing: -0.01,
-                color: isDark
-                    ? AppColors.textPrimaryDark
-                    : AppColors.textPrimaryLight,
-              )),
-          if (subtitle != null) ...[
-            SizedBox(height: isMobile ? 6 : 8),
-            Text(subtitle!,
-                style: TextStyle(
-                  fontSize: context.responsiveSubtitleSize,
-                  color: isDark
-                      ? AppColors.textSecondaryDark
-                      : AppColors.textSecondaryLight,
-                )),
-          ],
-          SizedBox(height: sectionGap),
-          _PlaceholderGrid(
-            isMobile: isMobile,
-            isDark: isDark,
-            items: items,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _PlaceholderGrid extends StatelessWidget {
-  final bool isMobile;
-  final bool isDark;
-  final List<HungryyPlaceholderItem> items;
-  const _PlaceholderGrid(
-      {required this.isMobile, required this.isDark, required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    final spacing = isMobile ? 10.0 : 16.0;
-    final crossAxisCount = isMobile ? 2 : 3;
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final childWidth =
-            (constraints.maxWidth - spacing * (crossAxisCount - 1)) /
-                crossAxisCount;
-
-        return Wrap(
-          spacing: spacing,
-          runSpacing: spacing,
-          children: items
-              .map((item) => SizedBox(
-                    width: childWidth,
-                    child: _PlaceholderCard(
-                        item: item, isDark: isDark, isMobile: isMobile),
-                  ))
-              .toList(),
-        );
-      },
-    );
-  }
-}
-
-class _PlaceholderCard extends StatelessWidget {
-  final HungryyPlaceholderItem item;
-  final bool isDark;
-  final bool isMobile;
-  const _PlaceholderCard(
-      {required this.item, required this.isDark, required this.isMobile});
-
-  @override
-  Widget build(BuildContext context) {
-    final cardHeight = isMobile ? 140.0 : 160.0;
-
-    return GlassCard(
-      padding: EdgeInsets.zero,
-      child: Container(
-        height: cardHeight,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(context.responsiveBorderRadius),
-          gradient: LinearGradient(
-            colors: [item.color, item.color.withValues(alpha: 0.6)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Stack(
-          children: [
-            Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(Icons.phone_android_rounded,
-                      size: isMobile ? 32 : 40,
-                      color: Colors.white.withValues(alpha: 0.3)),
-                  SizedBox(height: isMobile ? 6 : 8),
-                  Text(item.label,
-                      style: TextStyle(
-                        fontSize: isMobile ? 12 : 13,
-                        color: Colors.white.withValues(alpha: 0.8),
-                        fontWeight: FontWeight.w500,
-                      )),
-                  SizedBox(height: 4),
-                  Text('Placeholder',
-                      style: TextStyle(
-                        fontSize: isMobile ? 10 : 11,
-                        color: Colors.white.withValues(alpha: 0.5),
-                      )),
-                ],
-              ),
-            ),
-            Positioned(
-              top: isMobile ? 8 : 10,
-              right: isMobile ? 8 : 10,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 6 : 8, vertical: isMobile ? 2 : 3),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Colors.black.withValues(alpha: 0.3),
-                ),
-                child: Text('Replace with screenshot',
-                    style: TextStyle(
-                      fontSize: isMobile ? 9 : 10,
-                      color: Colors.white.withValues(alpha: 0.6),
-                    )),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

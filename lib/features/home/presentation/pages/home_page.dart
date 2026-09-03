@@ -7,7 +7,7 @@ import 'package:portfolio/core/widgets/app_nav_bar.dart';
 import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/about_section.dart';
 import '../widgets/sections/skills_section.dart';
-import '../../../project/presentation/widgets/sections/vitagaurd/projects_section.dart';
+import '../../../../core/widgets/projects_section.dart';
 import '../widgets/sections/contact_section.dart';
 
 class HomePage extends StatefulWidget {
@@ -121,6 +121,8 @@ class _HomePageState extends State<HomePage> {
                           onCaseStudyTap: (projectId) {
                             if (projectId == 'hungryy') {
                               context.pushNamed('hungryy');
+                            } else if (projectId == 'maxfashion') {
+                              context.pushNamed('maxfashion');
                             } else {
                               context.pushNamed(
                                 'project',

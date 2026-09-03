@@ -80,6 +80,52 @@ class ProjectsSection extends StatelessWidget {
       cardGlowColor: Color(0xFF27AE60),
       cardLogoGradientColors: [Color(0xFF0F3D2E), Color(0xFF145A32)],
     ),
+    Project(
+      id: 'maxfashion',
+      title: 'MaxFashion',
+      subtitle: 'Bilingual Fashion E-Commerce Application',
+      description:
+          'A production-grade fashion e-commerce mobile application with full '
+          'English/Arabic bilingual support, RTL layout, and Supabase-powered '
+          'backend. Features complete shopping flow from browsing through '
+          'checkout to order tracking, secure authentication with OTP password '
+          'reset, optimistic UI updates, and a custom shimmer loading system.',
+      role: 'Flutter Mobile Application Developer',
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Riverpod',
+        'Supabase',
+        'PostgreSQL',
+        'Clean Architecture',
+      ],
+      highlights: [
+        'Full English/Arabic bilingual support with RTL layout and ~150+ translation keys',
+        'Secure 3-step password reset with SHA-256 hashed OTPs, rate limiting, and session invalidation',
+        'Custom shimmer loading system with 13 skeleton variants (no third-party dependency)',
+        'Optimistic UI updates for cart and wishlist with automatic rollback on failure',
+      ],
+      imageUrl: null,
+      galleryUrls: [],
+      githubUrl: 'https://github.com/youssifmostafa798-art/MaxFashion.git',
+      demoUrl:
+          'https://drive.google.com/drive/folders/13iM-_QDUJ-I-9vh-h6JlycZFD2yP964R?usp=drive_link',
+      caseStudyRoute: '/case-study/maxfashion',
+      googleDriveScreenshotsUrl:
+          'https://drive.google.com/drive/folders/1uqJ3wPhAzhErr3ErPGpSh0KwSqsQmO6x?usp=drive_link',
+      logoAsset: 'assets/images/logo_maxfashion.png',
+      cardSubtitle: 'Bilingual Fashion E-Commerce Application',
+      cardGradientColors: [
+        Color(0xFF000000),
+        Color(0xFF2D2D2D),
+        Color(0xFF424242),
+      ],
+      cardGlowColor: Color(0xFFBDBDBD),
+      cardLogoGradientColors: [
+        Color(0xFF000000),
+        Color(0xFF2D2D2D),
+      ],
+    ),
   ];
 
   @override

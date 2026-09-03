@@ -5,12 +5,12 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
 import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
-import 'package:portfolio/features/project/data/hungryy_data.dart';
-import '../widgets/sections/hungryy/hs_hero_section.dart';
-import '../widgets/sections/hungryy/hs_architecture_section.dart';
-import '../widgets/sections/hungryy/hs_folder_structure_section.dart';
-import '../widgets/sections/hungryy/hs_conclusion_section.dart';
-import '../widgets/sections/hungryy/hungryy_section_builders.dart';
+import 'package:portfolio/features/project/hungryy/data/hungryy_data.dart';
+import '../widgets/sections/hs_hero_section.dart';
+import '../widgets/sections/hs_architecture_section.dart';
+import '../widgets/sections/hs_folder_structure_section.dart';
+import '../widgets/sections/hs_conclusion_section.dart';
+import '../widgets/sections/hungryy_section_builders.dart';
 
 class HungryyDetailPage extends StatefulWidget {
   const HungryyDetailPage({super.key});

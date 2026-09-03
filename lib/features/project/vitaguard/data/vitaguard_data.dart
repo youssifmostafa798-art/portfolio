@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'project_data.dart';
+import 'package:portfolio/features/project/data/project_data.dart';
 
 final class VitaguardData implements ProjectData {
   const VitaguardData();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/utils/url_utils.dart';
 import 'package:portfolio/core/constants/app_constants.dart';
-import 'package:portfolio/features/project/data/hungryy_data.dart';
+import 'package:portfolio/features/project/hungryy/data/hungryy_data.dart';
 import 'hungryy_colors.dart';
 
 class HungryyConclusionSection extends StatelessWidget {

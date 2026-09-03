@@ -197,7 +197,7 @@ class _StatsRow extends StatelessWidget {
         ),
         SizedBox(width: isMobile ? 24 : 32),
         _StatItem(
-          value: '2',
+          value: '3',
           label: 'Projects',
           isDark: isDark,
           isMobile: isMobile,
