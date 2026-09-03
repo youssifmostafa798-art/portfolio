@@ -5,6 +5,7 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
 import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
+import 'package:portfolio/core/widgets/case_study_cta.dart';
 import 'package:portfolio/features/project/hungryy/data/hungryy_data.dart';
 import '../widgets/sections/hs_hero_section.dart';
 import '../widgets/sections/hs_architecture_section.dart';
@@ -456,7 +457,12 @@ class _ProjectContentBody extends StatelessWidget {
     ),
     // 37. Conclusion
     (ctx) =>
-        _buildSection(HungryyConclusionSection(data: data, onBackTap: goBack)),
+        _buildSection(HungryyConclusionSection(data: data)),
+    // 38. CTA
+    (ctx) => _buildSection(CaseStudyCta(
+      githubUrl: data.githubUrl,
+      onBackPressed: goBack,
+    )),
   ];
 
   Widget _buildSection(Widget child) {

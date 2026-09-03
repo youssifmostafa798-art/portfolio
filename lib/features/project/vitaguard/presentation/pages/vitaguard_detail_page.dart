@@ -19,7 +19,7 @@ import '../widgets/sections/ps_gallery_section.dart';
 import '../widgets/sections/ps_results_section.dart';
 import '../widgets/sections/ps_lessons_section.dart';
 import '../widgets/sections/ps_future_section.dart';
-import '../widgets/sections/ps_bottom_cta_section.dart';
+import 'package:portfolio/core/widgets/case_study_cta.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   final String projectId;
@@ -163,7 +163,11 @@ class _ProjectContentBody extends StatelessWidget {
     (ctx) => _buildSection(LessonsSection(data: data)),
     (ctx) => const DividerWidget(),
     (ctx) => _buildSection(FutureSection(data: data)),
-    (ctx) => _buildSection(BottomCTASection(data: data, onBackTap: goBack)),
+    (ctx) => _buildSection(CaseStudyCta(
+      githubUrl: data.githubUrl,
+      demoUrl: data.demoUrl,
+      onBackPressed: goBack,
+    )),
   ];
 
   Widget _buildSection(Widget child) {

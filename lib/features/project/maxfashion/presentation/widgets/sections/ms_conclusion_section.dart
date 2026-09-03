@@ -3,12 +3,10 @@ import 'package:portfolio/core/extensions/context_extensions.dart';
 import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/glass_card.dart';
 import 'package:portfolio/features/project/maxfashion/data/maxfashion_data.dart';
-import 'maxfashion_colors.dart';
 
 class MaxfashionConclusionSection extends StatelessWidget {
   final MaxfashionData data;
-  final VoidCallback onBackTap;
-  const MaxfashionConclusionSection({super.key, required this.data, required this.onBackTap});
+  const MaxfashionConclusionSection({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -48,31 +46,6 @@ class MaxfashionConclusionSection extends StatelessWidget {
                       : AppColors.textSecondaryLight,
                   height: 1.7,
                 )),
-          ),
-          SizedBox(height: sectionGap),
-          Center(
-            child: GestureDetector(
-              onTap: onBackTap,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: isMobile ? 24 : 32,
-                    vertical: isMobile ? 12 : 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: const LinearGradient(
-                    colors: [MaxfashionColors.primaryBlack, MaxfashionColors.darkBorder],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: Text('Back to Portfolio',
-                    style: TextStyle(
-                      fontSize: isMobile ? 14 : 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-            ),
           ),
           SizedBox(height: isMobile ? 40 : 64),
         ],

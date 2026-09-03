@@ -119,16 +119,7 @@ class _HomePageState extends State<HomePage> {
                         key: _sectionKeys[3],
                         child: ProjectsSection(
                           onCaseStudyTap: (projectId) {
-                            if (projectId == 'hungryy') {
-                              context.pushNamed('hungryy');
-                            } else if (projectId == 'maxfashion') {
-                              context.pushNamed('maxfashion');
-                            } else {
-                              context.pushNamed(
-                                'project',
-                                pathParameters: {'projectId': projectId},
-                              );
-                            }
+                            context.pushNamed(projectId);
                           },
                         ),
                       ),

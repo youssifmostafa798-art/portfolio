@@ -5,6 +5,7 @@ import 'package:portfolio/core/theme/app_colors.dart';
 import 'package:portfolio/core/widgets/animated_section.dart';
 import 'package:portfolio/core/widgets/app_drawer.dart';
 import 'package:portfolio/core/widgets/app_nav_bar.dart';
+import 'package:portfolio/core/widgets/case_study_cta.dart';
 import 'package:portfolio/features/project/maxfashion/data/maxfashion_data.dart';
 import '../widgets/sections/ms_hero_section.dart';
 import '../widgets/sections/ms_architecture_section.dart';
@@ -326,7 +327,11 @@ class _ProjectContentBody extends StatelessWidget {
       subtitle: 'Planned enhancements and roadmap.',
       items: data.futureItems,
     )),
-    (ctx) => _buildSection(MaxfashionConclusionSection(data: data, onBackTap: goBack)),
+    (ctx) => _buildSection(MaxfashionConclusionSection(data: data)),
+    (ctx) => _buildSection(CaseStudyCta(
+      githubUrl: data.githubUrl,
+      onBackPressed: goBack,
+    )),
   ];
 
   Widget _buildSection(Widget child) {
